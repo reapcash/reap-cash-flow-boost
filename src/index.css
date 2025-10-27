@@ -39,7 +39,8 @@ All colors MUST be HSL.
     --radius: 0.75rem;
     
     /* Custom design tokens */
-    --hero-bg: 0 0% 99%;
+    --hero-bg: 203 89% 25%;
+    --hero-bg-end: 158 64% 35%;
     --section-light: 200 30% 98%;
     --success: 158 64% 52%;
     --info: 219 70% 32%;
@@ -90,7 +91,8 @@ All colors MUST be HSL.
     --input: 219 70% 25%;
     --ring: 158 64% 52%;
     
-    --hero-bg: 219 70% 12%;
+    --hero-bg: 203 89% 15%;
+    --hero-bg-end: 158 64% 25%;
     --section-light: 219 70% 18%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -126,6 +128,17 @@ All colors MUST be HSL.
     animation: dollarFall 4s ease-in infinite;
   }
   
+  .animate-wave {
+    animation: wave 20s linear infinite;
+  }
+  
+  .text-gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
   @keyframes float {
     0%, 100% {
       transform: translateY(0px);
@@ -149,6 +162,18 @@ All colors MUST be HSL.
     100% {
       transform: translateY(400%) rotate(360deg);
       opacity: 0;
+    }
+  }
+  
+  @keyframes wave {
+    0% {
+      transform: translateX(0) translateY(0);
+    }
+    50% {
+      transform: translateX(-25%) translateY(5%);
+    }
+    100% {
+      transform: translateX(0) translateY(0);
     }
   }
 }
