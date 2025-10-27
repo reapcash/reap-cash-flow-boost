@@ -1,9 +1,14 @@
 import { Button } from "@/components/ui/button";
-import heroVisual from "@/assets/hero-visual.png";
+import heroBackground from "@/assets/hero-background.png";
 const Hero = () => {
   return <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Full-Bleed Animated Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--hero-bg))] via-[hsl(var(--hero-bg-end))] to-[hsl(var(--hero-bg))] animate-gradient-shift bg-[length:200%_200%]">
+        {/* Background Image */}
+        <div className="absolute inset-0 opacity-15">
+          <img src={heroBackground} alt="" className="w-full h-full object-cover" />
+        </div>
+        
         {/* Overlay Tint */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-accent/10" />
         
@@ -31,8 +36,8 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10 py-24">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Content */}
+        <div className="max-w-4xl mx-auto">
+          {/* Content */}
           <div className="space-y-8">
             <div className="space-y-6 animate-slide-up">
               <h1 className="text-5xl lg:text-6xl leading-tight">
@@ -91,17 +96,6 @@ const Hero = () => {
                   <span className="text-white font-semibold">Keller Williams</span>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Right Column - Visual */}
-          <div className="relative animate-slide-up" style={{
-          animationDelay: '0.3s'
-        }}>
-            <div className="relative">
-              <img src={heroVisual} alt="Modern fintech visualization for real estate professionals" className="w-full h-auto object-contain drop-shadow-2xl" />
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 blur-3xl -z-10 animate-float" />
             </div>
           </div>
         </div>
