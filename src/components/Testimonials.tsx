@@ -38,13 +38,13 @@ const Testimonials = () => {
   };
 
   return (
-    <section className="py-20 bg-background">
+    <section className="pt-24 pb-28 bg-muted">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-4">
+          <h2 className="text-5xl lg:text-6xl mb-6">
             What Professionals Are Saying
           </h2>
-          <p className="text-lg text-foreground/70">
+          <p className="text-lg text-muted-foreground normal-case">
             Join the waitlist for early access
           </p>
         </div>
@@ -54,18 +54,18 @@ const Testimonials = () => {
             <Quote className="absolute top-8 left-8 w-12 h-12 text-primary/20" />
             
             <div className="relative z-10 min-h-[200px] flex flex-col justify-center">
-              <p className="text-2xl lg:text-3xl text-foreground mb-8 italic leading-relaxed">
+              <p className="text-2xl lg:text-3xl text-foreground mb-8 italic leading-relaxed normal-case">
                 "{testimonials[currentIndex].quote}"
               </p>
               
               <div className="space-y-1">
-                <p className="font-bold text-secondary text-xl">
+                <p className="text-xl normal-case">
                   {testimonials[currentIndex].author}
                 </p>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground normal-case">
                   {testimonials[currentIndex].role}
                 </p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground normal-case">
                   {testimonials[currentIndex].location}
                 </p>
               </div>

@@ -23,11 +23,11 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section id="how-it-works" className="py-20 bg-background">
+    <section id="how-it-works" className="pt-24 pb-28 bg-muted">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-4">
-            How Reap Works in 3 Simple Steps
+          <h2 className="text-5xl lg:text-6xl mb-6">
+            How REAP Works in 3 Simple Steps
           </h2>
         </div>
 
@@ -53,10 +53,10 @@ const HowItWorks = () => {
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-2xl font-bold text-secondary mb-3">
+                  <h3 className="text-2xl mb-4">
                     {step.title}
                   </h3>
-                  <p className="text-foreground/70">
+                  <p className="text-base lg:text-lg text-muted-foreground normal-case leading-relaxed">
                     {step.description}
                   </p>
                 </div>

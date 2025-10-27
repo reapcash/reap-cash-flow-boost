@@ -27,13 +27,13 @@ const Hero = () => {
           {/* Left Column - Content */}
           <div className="space-y-8 animate-fade-in">
             <div className="space-y-6">
-              <h1 className="text-6xl lg:text-7xl font-bold leading-tight">
+              <h1 className="text-5xl lg:text-6xl leading-tight">
                 <span className="text-white">Turn your </span>
                 <span className="text-gradient-primary">real estate income</span>
                 <span className="text-white"> into </span>
                 <span className="text-gradient-primary">instant capital</span>
               </h1>
-              <p className="text-xl text-white/80 max-w-xl leading-relaxed">
+              <p className="text-xl lg:text-2xl text-white/90 max-w-xl leading-relaxed normal-case">
                 Access your earned income today. REAP provides real estate professionals with instant cash advances on confirmed commissions, rentals, and payments.
               </p>
             </div>
@@ -41,7 +41,7 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
-                className="text-lg px-8 bg-white text-secondary hover:bg-white/90 shadow-lg hover:shadow-xl transition-all" 
+                className="text-base px-8 bg-white text-secondary hover:bg-white/90 shadow-lg hover:shadow-xl transition-all" 
                 asChild
               >
                 <a href="#apply">Apply Now</a>
@@ -49,7 +49,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="text-lg px-8 border-2 border-white/30 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm" 
+                className="text-base px-8 border-2 border-white/30 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm" 
                 asChild
               >
                 <a href="#how-it-works">Start Building</a>
@@ -59,18 +59,18 @@ const Hero = () => {
             {/* Trust Indicators */}
             <div className="flex items-center gap-6 pt-4">
               <div className="text-white/90">
-                <div className="text-2xl font-bold">$5M+</div>
-                <div className="text-sm text-white/60">Advanced</div>
+                <div className="text-2xl">$5M+</div>
+                <div className="text-sm text-white/60 normal-case">Advanced</div>
               </div>
               <div className="w-px h-12 bg-white/20" />
               <div className="text-white/90">
-                <div className="text-2xl font-bold">500+</div>
-                <div className="text-sm text-white/60">Professionals</div>
+                <div className="text-2xl">500+</div>
+                <div className="text-sm text-white/60 normal-case">Professionals</div>
               </div>
               <div className="w-px h-12 bg-white/20" />
               <div className="text-white/90">
-                <div className="text-2xl font-bold">24hrs</div>
-                <div className="text-sm text-white/60">To Funding</div>
+                <div className="text-2xl">24hrs</div>
+                <div className="text-sm text-white/60 normal-case">To Funding</div>
               </div>
             </div>
           </div>

@@ -30,13 +30,13 @@ const industries = [
 
 const WhoWeServe = () => {
   return (
-    <section id="industries" className="py-20 bg-background">
+    <section id="industries" className="pt-24 pb-28 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-4">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl lg:text-6xl mb-6">
             Built for Real Estate Professionals
           </h2>
-          <p className="text-xl text-foreground/70 max-w-3xl mx-auto">
+          <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             REAP powers cash flow for everyone who earns from real estate — not just investors or agents. 
             Our technology provides fast access to capital for anyone earning from property-related income.
           </p>
@@ -53,10 +53,10 @@ const WhoWeServe = () => {
                 <div className="mb-4 inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10">
                   <Icon className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-lg font-bold text-secondary mb-2">
+                <h3 className="text-lg mb-2">
                   {industry.title}
                 </h3>
-                <p className="text-sm text-foreground/70">
+                <p className="text-sm text-muted-foreground normal-case">
                   {industry.description}
                 </p>
               </div>

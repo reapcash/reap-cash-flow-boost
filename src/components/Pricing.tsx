@@ -27,14 +27,14 @@ const Pricing = () => {
   };
 
   return (
-    <section id="simulate" className="py-20 bg-section-light">
+    <section id="simulate" className="pt-24 pb-28 bg-muted">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-4">
+            <h2 className="text-5xl lg:text-6xl mb-6">
               Estimate Your Advance
             </h2>
-            <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
+            <p className="text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Enter your upcoming income, payout date, and see how much you can unlock today.
             </p>
           </div>
@@ -45,7 +45,7 @@ const Pricing = () => {
               <div className="space-y-6">
                 <div className="flex items-center gap-3 mb-6">
                   <Calculator className="w-6 h-6 text-primary" />
-                  <h3 className="text-2xl font-bold text-secondary">
+                  <h3 className="text-2xl">
                     Calculate Your Advance
                   </h3>
                 </div>
@@ -117,21 +117,21 @@ const Pricing = () => {
                 {calculatedAdvance !== null && calculatedFee !== null && (
                   <div className="mt-6 p-6 bg-primary/10 rounded-2xl space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-foreground/70">Expected Payout:</span>
-                      <span className="font-bold text-xl">
+                      <span className="text-muted-foreground normal-case">Expected Payout:</span>
+                      <span className="text-xl">
                         ${parseFloat(payoutAmount).toFixed(2)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-foreground/70">Fee Range (2-5%):</span>
-                      <span className="font-bold text-xl text-muted-foreground">
+                      <span className="text-muted-foreground normal-case">Fee Range (2-5%):</span>
+                      <span className="text-xl text-muted-foreground">
                         -${calculatedFee.toFixed(2)}
                       </span>
                     </div>
                     <div className="border-t border-border pt-3">
                       <div className="flex justify-between items-center">
-                        <span className="text-lg font-semibold">Net Cash Today:</span>
-                        <span className="font-bold text-3xl text-primary">
+                        <span className="text-lg normal-case">Net Cash Today:</span>
+                        <span className="text-3xl text-primary">
                           ${calculatedAdvance.toFixed(2)}
                         </span>
                       </div>
@@ -145,8 +145,8 @@ const Pricing = () => {
 
               {/* Fee Structure Info */}
               <div className="border-t border-border pt-8">
-                <h4 className="font-bold text-lg mb-4">Fee Structure</h4>
-                <ul className="space-y-3 text-foreground/70">
+                <h4 className="text-lg mb-4">Fee Structure</h4>
+                <ul className="space-y-3 text-base text-muted-foreground normal-case">
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>
                     <span>Fee structure: 2% - 5% of the total booking value</span>

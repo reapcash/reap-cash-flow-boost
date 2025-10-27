@@ -38,20 +38,20 @@ const Footer = () => {
               <span className="text-2xl font-bold text-primary">REAP</span>
               <span className="block text-sm text-muted-foreground mt-1">Real Estate Advance Partners</span>
             </div>
-            <p className="text-foreground/70 max-w-xs">
+            <p className="text-base text-muted-foreground max-w-xs normal-case leading-relaxed">
               Empowering professionals with smarter cash flow. Built in New York.
             </p>
           </div>
 
           {/* Quick Links Column */}
           <div>
-            <h3 className="font-bold text-secondary mb-4">Quick Links</h3>
+            <h3 className="text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
               {footerLinks.quickLinks.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-foreground/70 hover:text-primary transition-colors"
+                    className="text-base text-muted-foreground hover:text-primary transition-colors normal-case"
                   >
                     {link.name}
                   </a>
@@ -62,13 +62,13 @@ const Footer = () => {
 
           {/* Resources Column */}
           <div>
-            <h3 className="font-bold text-secondary mb-4">Resources</h3>
+            <h3 className="text-lg mb-4">Resources</h3>
             <ul className="space-y-2">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-foreground/70 hover:text-primary transition-colors"
+                    className="text-base text-muted-foreground hover:text-primary transition-colors normal-case"
                   >
                     {link.name}
                   </a>
@@ -79,13 +79,13 @@ const Footer = () => {
 
           {/* Legal Links */}
           <div>
-            <h4 className="font-bold text-secondary mb-4">Legal</h4>
+            <h4 className="text-lg mb-4">Legal</h4>
             <ul className="space-y-2">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-foreground/70 hover:text-primary transition-colors"
+                    className="text-base text-muted-foreground hover:text-primary transition-colors normal-case"
                   >
                     {link.name}
                   </a>
@@ -97,7 +97,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-foreground/70 text-sm">
+          <p className="text-sm text-muted-foreground normal-case">
             © 2025 REAP Cash. All rights reserved. Licensed financial technology provider.
           </p>
 

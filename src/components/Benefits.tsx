@@ -25,13 +25,13 @@ const benefits = [
 
 const Benefits = () => {
   return (
-    <section className="py-20 bg-section-light">
+    <section className="pt-24 pb-28 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-4">
+          <h2 className="text-5xl lg:text-6xl mb-6">
             Why Choose REAP
           </h2>
-          <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
+          <p className="text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Designed to keep you liquid, growing, and in control — not waiting for payouts.
           </p>
         </div>
@@ -49,10 +49,10 @@ const Benefits = () => {
                     <Icon className="w-8 h-8 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold text-secondary mb-3">
+                <h3 className="text-xl mb-4">
                   {benefit.title}
                 </h3>
-                <p className="text-foreground/70">
+                <p className="text-base lg:text-lg text-muted-foreground normal-case leading-relaxed">
                   {benefit.description}
                 </p>
               </div>

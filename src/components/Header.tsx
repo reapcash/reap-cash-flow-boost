@@ -22,8 +22,8 @@ const Header = () => {
             <div className="flex items-center gap-2">
               <div className="relative">
                 <div>
-                  <span className="text-2xl font-bold text-primary">REAP</span>
-                  <span className="block text-xs text-muted-foreground">Real Estate Advance Partners</span>
+                  <span className="text-2xl text-primary normal-case">REAP</span>
+                  <span className="block text-xs text-muted-foreground normal-case">Real Estate Advance Partners</span>
                 </div>
                 {/* Dollar bills falling animation */}
                 <div className="absolute -top-8 left-0 w-full overflow-hidden h-32 pointer-events-none">
@@ -41,7 +41,7 @@ const Header = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-foreground hover:text-primary transition-colors font-medium"
+                className="text-foreground hover:text-primary transition-colors normal-case"
               >
                 {link.name}
               </a>
@@ -80,7 +80,7 @@ const Header = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-foreground hover:text-primary transition-colors font-medium py-2"
+                  className="text-foreground hover:text-primary transition-colors py-2 normal-case"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.name}
