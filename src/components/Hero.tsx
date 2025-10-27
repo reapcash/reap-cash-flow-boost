@@ -3,30 +3,52 @@ import heroVisual from "@/assets/hero-visual.png";
 
 const Hero = () => {
   return (
-    <section id="home" className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-br from-[hsl(var(--hero-bg))] to-[hsl(var(--hero-bg-end))]">
-      {/* Animated Background Patterns */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-0 left-0 w-full h-full">
-          {[...Array(8)].map((_, i) => (
+    <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Full-Bleed Animated Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--hero-bg))] via-[hsl(var(--hero-bg-end))] to-[hsl(var(--hero-bg))] animate-gradient-shift bg-[length:200%_200%]">
+        {/* Overlay Tint */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-accent/10" />
+        
+        {/* Animated Wave Patterns */}
+        <div className="absolute inset-0 opacity-15">
+          <div className="absolute top-0 left-0 w-full h-full">
+            {[...Array(12)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent animate-wave"
+                style={{
+                  width: '150%',
+                  left: '-25%',
+                  top: `${i * 8}%`,
+                  animationDelay: `${i * 0.4}s`,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Floating Particles */}
+        <div className="absolute inset-0 opacity-20">
+          {[...Array(20)].map((_, i) => (
             <div
               key={i}
-              className="absolute h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent animate-wave"
+              className="absolute w-1 h-1 bg-primary rounded-full animate-float"
               style={{
-                width: '150%',
-                left: '-25%',
-                top: `${i * 12}%`,
-                animationDelay: `${i * 0.5}s`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${i * 0.3}s`,
+                animationDuration: `${3 + Math.random() * 2}s`,
               }}
             />
           ))}
         </div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10 py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
-          <div className="space-y-8 animate-fade-in">
-            <div className="space-y-6">
+          <div className="space-y-8">
+            <div className="space-y-6 animate-slide-up">
               <h1 className="text-5xl lg:text-6xl leading-tight">
                 <span className="text-white">Turn your </span>
                 <span className="text-gradient-primary">real estate income</span>
@@ -38,10 +60,10 @@ const Hero = () => {
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 animate-slide-up" style={{ animationDelay: '0.2s' }}>
               <Button 
                 size="lg" 
-                className="text-base px-8 bg-white text-secondary hover:bg-white/90 shadow-lg hover:shadow-xl transition-all" 
+                className="text-base px-8 bg-white text-secondary hover:bg-white/90 shadow-lg hover:shadow-xl transition-all animate-glow-pulse" 
                 asChild
               >
                 <a href="#apply">Apply Now</a>
@@ -57,7 +79,7 @@ const Hero = () => {
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex items-center gap-6 pt-4">
+            <div className="flex items-center gap-6 pt-4 animate-slide-up" style={{ animationDelay: '0.4s' }}>
               <div className="text-white/90">
                 <div className="text-2xl">$5M+</div>
                 <div className="text-sm text-white/60 normal-case">Advanced</div>
@@ -73,10 +95,26 @@ const Hero = () => {
                 <div className="text-sm text-white/60 normal-case">To Funding</div>
               </div>
             </div>
+
+            {/* Credibility Badges */}
+            <div className="pt-8 animate-slide-up" style={{ animationDelay: '0.6s' }}>
+              <p className="text-sm text-white/60 normal-case mb-4">Trusted by professionals from</p>
+              <div className="flex flex-wrap items-center gap-6">
+                <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+                  <span className="text-white font-semibold">Compass</span>
+                </div>
+                <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+                  <span className="text-white font-semibold">eXp Realty</span>
+                </div>
+                <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+                  <span className="text-white font-semibold">Keller Williams</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Right Column - Visual */}
-          <div className="relative animate-scale-in">
+          <div className="relative animate-slide-up" style={{ animationDelay: '0.3s' }}>
             <div className="relative">
               <img
                 src={heroVisual}
@@ -84,7 +122,7 @@ const Hero = () => {
                 className="w-full h-auto object-contain drop-shadow-2xl"
               />
               {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 blur-3xl -z-10" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 blur-3xl -z-10 animate-float" />
             </div>
           </div>
         </div>
