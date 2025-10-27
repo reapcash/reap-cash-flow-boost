@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import heroIllustration from "@/assets/hero-illustration.png";
+import heroVisual from "@/assets/hero-visual.png";
 const Hero = () => {
   return <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Full-Bleed Animated Background */}
@@ -99,12 +99,7 @@ const Hero = () => {
           animationDelay: '0.3s'
         }}>
             <div className="relative">
-              <img 
-                src={heroIllustration} 
-                alt="Real estate professionals network illustration" 
-                className="w-full h-auto object-contain drop-shadow-2xl mix-blend-screen opacity-90" 
-                style={{ filter: 'brightness(1.2) contrast(1.1)' }}
-              />
+              <img src={heroVisual} alt="Modern fintech visualization for real estate professionals" className="w-full h-auto object-contain drop-shadow-2xl" />
               {/* Glow Effect */}
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 blur-3xl -z-10 animate-float" />
             </div>
