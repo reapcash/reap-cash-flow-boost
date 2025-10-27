@@ -9,9 +9,10 @@ const Header = () => {
   const navLinks = [
     { name: "Home", href: "#home" },
     { name: "How It Works", href: "#how-it-works" },
-    { name: "Simulate My Advance", href: "#simulate" },
+    { name: "Industries We Serve", href: "#industries" },
+    { name: "Simulate Advance", href: "#simulate" },
     { name: "FAQs", href: "#faqs" },
-    { name: "Contact Us", href: "#contact" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
@@ -22,9 +23,10 @@ const Header = () => {
           <Link to="/" className="relative group">
             <div className="flex items-center gap-2">
               <div className="relative">
-                <span className="text-3xl font-black text-primary tracking-tight">
-                  REAP
-                </span>
+                <div>
+                  <span className="text-2xl font-bold text-primary">REAP</span>
+                  <span className="block text-xs text-muted-foreground">Real Estate Advance Partners</span>
+                </div>
                 {/* Dollar bills falling animation */}
                 <div className="absolute -top-8 left-0 w-full overflow-hidden h-32 pointer-events-none">
                   <DollarSign className="absolute text-primary/30 w-4 h-4 animate-dollar-fall" style={{ left: "10%", animationDelay: "0s" }} />

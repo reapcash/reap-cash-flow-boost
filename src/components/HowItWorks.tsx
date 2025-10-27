@@ -4,20 +4,20 @@ const steps = [
   {
     number: "01",
     icon: FileText,
-    title: "Apply for an Advance",
-    description: "Submit your booking details and confirm your reservation.",
+    title: "Connect Your Income",
+    description: "Securely link your platform (MLS, Airbnb, or invoices) and verify upcoming payouts.",
   },
   {
     number: "02",
     icon: CheckCircle,
-    title: "Instant Approval",
-    description: "Get approval in minutes.",
+    title: "Get Your Offer",
+    description: "Our system calculates your eligible advance based on verified earnings and risk score.",
   },
   {
     number: "03",
     icon: Wallet,
-    title: "Receive Funds",
-    description: "Receive funds directly in 24 hours.",
+    title: "Receive Your Funds",
+    description: "Sign electronically, and funds are deposited to your bank within 24 hours.",
   },
 ];
 

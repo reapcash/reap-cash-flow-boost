@@ -5,24 +5,24 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 const testimonials = [
   {
     id: 1,
-    quote: "Reap Cash helped me scale my business quickly. The process was seamless and fast!",
-    author: "Sarah Mitchell",
-    role: "Property Manager",
-    location: "Miami, FL",
+    quote: "I no longer wait 45 days for my commission — REAP lets me reinvest faster.",
+    author: "Sarah Martinez",
+    role: "Real Estate Agent",
+    location: "Austin, TX",
   },
   {
     id: 2,
-    quote: "I got the funds I needed in under 24 hours. This is a game-changer!",
-    author: "David Chen",
-    role: "Vacation Rental Host",
+    quote: "The platform feels built for us — clean, transparent, and fast.",
+    author: "James Chen",
+    role: "Property Manager",
     location: "San Diego, CA",
   },
   {
     id: 3,
-    quote: "Finally, a financing solution that understands the short-term rental business. Highly recommended!",
+    quote: "REAP helped me bridge the gap between projects without taking on traditional loans.",
     author: "Emily Rodriguez",
-    role: "Multi-Property Owner",
-    location: "Austin, TX",
+    role: "Contractor",
+    location: "Miami, FL",
   },
 ];
 
@@ -42,8 +42,11 @@ const Testimonials = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-4">
-            What Hosts Are Saying
+            What Professionals Are Saying
           </h2>
+          <p className="text-lg text-foreground/70">
+            Join the waitlist for early access
+          </p>
         </div>
 
         <div className="max-w-4xl mx-auto">

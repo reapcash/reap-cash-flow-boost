@@ -10,10 +10,10 @@ const Hero = () => {
           <div className="space-y-8 animate-fade-in">
             <div className="space-y-4">
               <h1 className="text-5xl lg:text-6xl font-bold text-secondary leading-tight">
-                Unlock Your Earnings
+                Unlock Your Future Income — Today.
               </h1>
               <p className="text-xl text-muted-foreground max-w-xl">
-                Get instant cash advances on your confirmed rental bookings and take control of your cash flow today.
+                Get paid instantly on your upcoming real estate income — whether it's a commission, rental payout, or contractor invoice. REAP gives professionals the financial flexibility to grow faster.
               </p>
             </div>
 
@@ -22,7 +22,7 @@ const Hero = () => {
                 <a href="#apply">Apply Now</a>
               </Button>
               <Button size="lg" variant="outline" className="text-lg px-8" asChild>
-                <a href="#contact">Contact Us</a>
+                <a href="#how-it-works">See How It Works</a>
               </Button>
             </div>
           </div>
@@ -32,7 +32,7 @@ const Hero = () => {
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img
                 src={heroImage}
-                alt="Short-term rental host managing bookings"
+                alt="Real estate professionals managing their income"
                 className="w-full h-auto object-cover"
               />
               {/* Overlay gradient for better text visibility if needed */}

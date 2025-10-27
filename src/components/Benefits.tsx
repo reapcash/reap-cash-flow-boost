@@ -1,25 +1,25 @@
-import { Clock, CreditCard, Calendar, ShieldCheck } from "lucide-react";
+import { Zap, DollarSign, Brain, TrendingUp } from "lucide-react";
 
 const benefits = [
   {
-    icon: Clock,
-    title: "Fast Access to Funds",
-    description: "Receive cash in 24 hours.",
+    icon: Zap,
+    title: "Fast Access to Capital",
+    description: "Get approved and funded within 24 hours.",
   },
   {
-    icon: CreditCard,
-    title: "No Upfront Payments",
-    description: "Repay only when you receive guest payments.",
+    icon: DollarSign,
+    title: "Transparent Fees",
+    description: "Simple pricing, no hidden costs, no compounding interest.",
   },
   {
-    icon: Calendar,
-    title: "Flexible Repayment Terms",
-    description: "Repay in sync with your rental income.",
+    icon: Brain,
+    title: "Smart Risk Engine",
+    description: "We assess verified earnings, not your credit history.",
   },
   {
-    icon: ShieldCheck,
-    title: "Risk-Free Financing",
-    description: "Pay back only if the booking goes through.",
+    icon: TrendingUp,
+    title: "Scalable Platform",
+    description: "Designed for the future of real estate — agents, hosts, contractors, developers.",
   },
 ];
 
@@ -29,8 +29,11 @@ const Benefits = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-4">
-            Why Reap Cash?
+            Why Choose REAP
           </h2>
+          <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
+            Designed to keep you liquid, growing, and in control — not waiting for payouts.
+          </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">

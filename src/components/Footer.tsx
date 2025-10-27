@@ -4,20 +4,20 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const footerLinks = {
-    company: [
-      { name: "About Us", href: "#about" },
+    quickLinks: [
+      { name: "Home", href: "#home" },
       { name: "How It Works", href: "#how-it-works" },
-      { name: "Blog", href: "#blog" },
+      { name: "Industries We Serve", href: "#industries" },
+      { name: "Apply Now", href: "#apply" },
     ],
-    support: [
-      { name: "Contact Us", href: "#contact" },
+    resources: [
       { name: "FAQs", href: "#faqs" },
-      { name: "Help Center", href: "#help" },
+      { name: "Contact", href: "#contact" },
+      { name: "Careers", href: "#careers" },
     ],
     legal: [
       { name: "Terms of Service", href: "#terms" },
       { name: "Privacy Policy", href: "#privacy" },
-      { name: "Cookie Policy", href: "#cookies" },
     ],
   };
 
@@ -25,26 +25,29 @@ const Footer = () => {
     { icon: Facebook, href: "#", label: "Facebook" },
     { icon: Instagram, href: "#", label: "Instagram" },
     { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Twitter, href: "#", label: "Twitter" },
+    { icon: Twitter, href: "https://x.com", label: "X (Twitter)" },
   ];
 
   return (
     <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-          {/* Brand */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-black text-primary">REAP</h3>
-            <p className="text-foreground/70">
-              Unlock your rental earnings today. Fast, flexible, and risk-free financing for short-term rental hosts.
+          {/* Brand Column */}
+          <div>
+            <div className="mb-4">
+              <span className="text-2xl font-bold text-primary">REAP</span>
+              <span className="block text-sm text-muted-foreground mt-1">Real Estate Advance Partners</span>
+            </div>
+            <p className="text-foreground/70 max-w-xs">
+              Empowering professionals with smarter cash flow. Built in New York.
             </p>
           </div>
 
-          {/* Company Links */}
+          {/* Quick Links Column */}
           <div>
-            <h4 className="font-bold text-secondary mb-4">Company</h4>
+            <h3 className="font-bold text-secondary mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              {footerLinks.company.map((link) => (
+              {footerLinks.quickLinks.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
@@ -57,11 +60,11 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Support Links */}
+          {/* Resources Column */}
           <div>
-            <h4 className="font-bold text-secondary mb-4">Support</h4>
+            <h3 className="font-bold text-secondary mb-4">Resources</h3>
             <ul className="space-y-2">
-              {footerLinks.support.map((link) => (
+              {footerLinks.resources.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
@@ -95,7 +98,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-foreground/70 text-sm">
-            © {currentYear} Reap Cash. All rights reserved.
+            © 2025 REAP Cash. All rights reserved. Licensed financial technology provider.
           </p>
 
           {/* Social Links */}
