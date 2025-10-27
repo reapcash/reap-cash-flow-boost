@@ -36,12 +36,14 @@ const Hero = () => {
           <div className="space-y-8">
             <div className="space-y-6 animate-slide-up">
               <h1 className="text-5xl lg:text-6xl leading-tight">
-                <span className="text-white">Turn your </span>
-                <span className="text-gradient-primary">real estate income</span>
-                <span className="text-white"> into </span>
-                <span className="text-gradient-primary">instant capital</span>
+                <span className="text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">Turn your </span>
+                <span className="text-primary drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">real estate income</span>
+                <span className="text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"> into </span>
+                <span className="text-primary drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">instant capital</span>
               </h1>
-              <p className="text-xl lg:text-2xl text-white/90 max-w-xl leading-relaxed normal-case">REAP provides real estate professionals with instant cash advances on confirmed commissions, rentals, and payments.</p>
+              <p className="text-xl lg:text-2xl text-white/90 max-w-xl leading-relaxed normal-case">
+                Access your earned income today. REAP provides real estate professionals with instant cash advances on confirmed commissions, rentals, and payments.
+              </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 animate-slide-up" style={{
