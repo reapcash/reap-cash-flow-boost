@@ -30,18 +30,27 @@ const Hero = () => {
         </div>
       </div>
 
+      {/* Hero Image as Background - Right Side */}
+      <div className="absolute inset-0 flex items-center justify-end opacity-30">
+        <img 
+          src={heroVisual} 
+          alt="Modern fintech visualization for real estate professionals" 
+          className="h-full w-auto object-cover object-left max-w-[60%] lg:max-w-[50%]" 
+        />
+      </div>
+
       <div className="container mx-auto px-4 relative z-10 py-24">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Content */}
+        <div className="max-w-4xl">
+          {/* Content */}
           <div className="space-y-8">
             <div className="space-y-6 animate-slide-up">
               <h1 className="text-5xl lg:text-6xl leading-tight">
-                <span className="text-white">Turn your </span>
-                <span className="text-gradient-primary">real estate income</span>
-                <span className="text-white"> into </span>
-                <span className="text-gradient-primary">instant capital</span>
+                <span className="text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">Turn your </span>
+                <span className="text-primary drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">real estate income</span>
+                <span className="text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"> into </span>
+                <span className="text-primary drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">instant capital</span>
               </h1>
-              <p className="text-xl lg:text-2xl text-white/90 max-w-xl leading-relaxed normal-case">REAP provides real estate professionals with instant cash advances on confirmed commissions, rentals, and payments.</p>
+              <p className="text-xl lg:text-2xl text-white/95 max-w-xl leading-relaxed normal-case drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]">REAP provides real estate professionals with instant cash advances on confirmed commissions, rentals, and payments.</p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 animate-slide-up" style={{
@@ -91,17 +100,6 @@ const Hero = () => {
                   <span className="text-white font-semibold">Keller Williams</span>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Right Column - Visual */}
-          <div className="relative animate-slide-up" style={{
-          animationDelay: '0.3s'
-        }}>
-            <div className="relative">
-              <img src={heroVisual} alt="Modern fintech visualization for real estate professionals" className="w-full h-auto object-contain drop-shadow-2xl" />
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 blur-3xl -z-10 animate-float" />
             </div>
           </div>
         </div>
