@@ -1,4 +1,4 @@
-import { Home, Building2, HardHat, Hotel, Briefcase } from "lucide-react";
+import { Home, Building2, HardHat, Hotel, Briefcase, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 
 const industries = [{
@@ -134,8 +134,8 @@ const WhoWeServe = () => {
 
             <div className="mt-10 p-6 bg-primary/10 rounded-xl border border-primary/20">
               <div className="flex items-start gap-4">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/20 flex-shrink-0">
-                  <span className="text-2xl">✨</span>
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary flex-shrink-0">
+                  <CheckCircle2 className="w-7 h-7 text-primary-foreground" />
                 </div>
                 <div>
                   <h4 className="text-xl font-semibold mb-2 text-primary">
