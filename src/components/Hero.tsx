@@ -97,7 +97,7 @@ const Hero = () => {
           {/* Right Column - Visual */}
           <div className="relative">
             <div className="relative">
-              <img src={heroVisual} alt="Isometric 3D visualization of real estate growth from small properties to large commercial buildings" className="w-full h-auto object-contain drop-shadow-2xl" />
+              <img src={heroVisual} alt="Real estate professionals collaborating with property growth visualization" className="w-full h-auto object-contain drop-shadow-2xl" />
               {/* Glow Effect */}
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 blur-3xl -z-10" />
             </div>
