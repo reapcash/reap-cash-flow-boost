@@ -1,21 +1,23 @@
-import { FileText, CheckCircle, Wallet } from "lucide-react";
+import isoConnect from "@/assets/iso-connect.png";
+import isoApproval from "@/assets/iso-approval.png";
+import isoFunding from "@/assets/iso-funding.png";
 
 const steps = [
   {
     number: "01",
-    icon: FileText,
+    image: isoConnect,
     title: "Connect Your Income",
     description: "Securely link your platform (MLS, Airbnb, or invoices) and verify upcoming payouts.",
   },
   {
     number: "02",
-    icon: CheckCircle,
+    image: isoApproval,
     title: "Get Your Offer",
     description: "Our system calculates your eligible advance based on verified earnings and risk score.",
   },
   {
     number: "03",
-    icon: Wallet,
+    image: isoFunding,
     title: "Receive Your Funds",
     description: "Sign electronically, and funds are deposited to your bank within 24 hours.",
   },
@@ -33,7 +35,6 @@ const HowItWorks = () => {
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {steps.map((step, index) => {
-            const Icon = step.icon;
             return (
               <div
                 key={step.number}
@@ -45,11 +46,13 @@ const HowItWorks = () => {
                     {step.number}
                   </div>
 
-                  {/* Icon */}
-                  <div className="mb-6">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10">
-                      <Icon className="w-8 h-8 text-primary" />
-                    </div>
+                  {/* Isometric Image */}
+                  <div className="mb-6 flex justify-center">
+                    <img 
+                      src={step.image} 
+                      alt={step.title} 
+                      className="w-24 h-24 object-contain"
+                    />
                   </div>
 
                   {/* Content */}

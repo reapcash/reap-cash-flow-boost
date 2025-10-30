@@ -1,5 +1,6 @@
 import { Home, Building2, HardHat, Hotel, Briefcase, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
+import isoGrowth from "@/assets/iso-growth.png";
 
 const industries = [{
   icon: Home,
@@ -90,9 +91,16 @@ const WhoWeServe = () => {
 
           {/* Details - Right Side */}
           <div className="bg-card border border-border rounded-2xl p-8 lg:p-12">
-            <h3 className="text-3xl lg:text-4xl mb-8">
-              The Problem No One Else Solves
-            </h3>
+            <div className="flex items-start gap-8 mb-8">
+              <div className="flex-1">
+                <h3 className="text-3xl lg:text-4xl">
+                  The Problem No One Else Solves
+                </h3>
+              </div>
+              <div className="hidden lg:block flex-shrink-0">
+                <img src={isoGrowth} alt="Real estate growth illustration" className="w-32 h-auto object-contain opacity-80" />
+              </div>
+            </div>
             
             <div className="space-y-6">
               <div className="space-y-3">
