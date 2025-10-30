@@ -37,8 +37,7 @@ const WhoWeServe = () => {
             Built for Real Estate Professionals
           </h2>
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            REAP powers cash flow for everyone who earns from real estate — not just investors or agents. 
-            Our technology provides fast access to capital for anyone earning from property-related income.
+            As a real estate pro, you have future money coming in — but no financial infrastructure designed around that flow. At REAP, we solve this by unlocking your cashflow, so that you can scale your operations to the next level. Our technology platform provided access to your capital on your terms.
           </p>
         </div>
 
