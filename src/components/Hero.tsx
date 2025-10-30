@@ -95,13 +95,11 @@ const Hero = () => {
           </div>
 
           {/* Right Column - Visual */}
-          <div className="relative animate-slide-up" style={{
-          animationDelay: '0.3s'
-        }}>
+          <div className="relative">
             <div className="relative">
-              <img src={heroVisual} alt="Modern fintech visualization for real estate professionals" className="w-full h-auto object-contain drop-shadow-2xl" />
+              <img src={heroVisual} alt="Isometric 3D visualization of real estate growth from small properties to large commercial buildings" className="w-full h-auto object-contain drop-shadow-2xl" />
               {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 blur-3xl -z-10 animate-float" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 blur-3xl -z-10" />
             </div>
           </div>
         </div>
