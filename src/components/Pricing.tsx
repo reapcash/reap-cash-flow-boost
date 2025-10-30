@@ -22,8 +22,12 @@ const Pricing = () => {
       const daysUntilPayout = differenceInDays(payoutDateObj, today);
       
       if (daysUntilPayout > 0) {
-        // Fee formula: payoutAmount * 0.11 * days
-        const fee = payoutAmount * 0.11 * daysUntilPayout;
+        // Fee formula: payoutAmount * 0.11% per day * days
+        let fee = payoutAmount * 0.0011 * daysUntilPayout;
+        
+        // Ensure minimum fee of $45
+        fee = Math.max(fee, 45);
+        
         const advance = payoutAmount - fee;
         
         setCalculatedFee(fee);
@@ -191,6 +195,10 @@ const Pricing = () => {
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>
                     <span>Daily rate: 0.11% per day until payout</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Minimum fee: $45</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>
