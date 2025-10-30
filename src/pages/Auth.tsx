@@ -4,19 +4,28 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { ArrowLeft } from "lucide-react";
+
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
-  return <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[hsl(var(--hero-bg))] to-[hsl(var(--hero-bg-end))] p-4">
-      <div className="w-full max-w-md">
-        {/* Logo/Brand */}
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-block">
+  return <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--hero-bg))] to-[hsl(var(--hero-bg-end))]">
+      {/* Navigation Bar */}
+      <nav className="px-6 py-4">
+        <Link to="/" className="inline-flex items-center gap-2 text-white hover:text-white/80 transition-colors">
+          <ArrowLeft className="w-5 h-5" />
+          <span className="font-semibold">Back to Home</span>
+        </Link>
+      </nav>
+
+      <div className="flex items-center justify-center px-4 pb-8">
+        <div className="w-full max-w-md">
+          {/* Logo/Brand */}
+          <div className="text-center mb-8">
             <h1 className="font-bold text-white mb-2 mx-0 text-2xl">REAL ESTATE ADVANCE PARTNERS</h1>
-          </Link>
-          <p className="text-white/80">
-            {isLogin ? "Welcome back" : "Create your account"}
-          </p>
-        </div>
+            <p className="text-white/80">
+              {isLogin ? "Welcome back" : "Create your account"}
+            </p>
+          </div>
 
         {/* Auth Card */}
         <div className="bg-white rounded-2xl shadow-2xl p-8">
@@ -105,6 +114,7 @@ const Auth = () => {
               Privacy Policy
             </a>
           </p>
+        </div>
         </div>
       </div>
     </div>;
