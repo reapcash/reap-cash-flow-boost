@@ -14,7 +14,6 @@ const Pricing = () => {
   const [industryType, setIndustryType] = useState("");
   const [calculatedFee, setCalculatedFee] = useState<number>(0);
   const [calculatedAdvance, setCalculatedAdvance] = useState<number>(0);
-  const [progressValue, setProgressValue] = useState(0);
 
   // Real-time calculation whenever inputs change
   useEffect(() => {
@@ -30,18 +29,13 @@ const Pricing = () => {
         
         setCalculatedFee(fee);
         setCalculatedAdvance(advance > 0 ? advance : 0);
-        
-        // Animate progress based on completion of form
-        const formCompletion = 
-          (payoutAmount > 0 ? 40 : 0) + 
-          (payoutDate ? 40 : 0) + 
-          (industryType ? 20 : 0);
-        setProgressValue(formCompletion);
+      } else {
+        setCalculatedFee(0);
+        setCalculatedAdvance(0);
       }
     } else {
       setCalculatedFee(0);
       setCalculatedAdvance(0);
-      setProgressValue(payoutAmount > 0 ? 40 : 0);
     }
   }, [payoutAmount, payoutDate, industryType]);
 
@@ -57,17 +51,8 @@ const Pricing = () => {
                 Estimate Your Advance
               </h2>
               <p className="text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                See exactly how much cash you can unlock today. Adjust the sliders and watch your advance update in real-time.
+                See exactly how much cash you can unlock today. Adjust the inputs and watch your advance update in real-time.
               </p>
-            </div>
-
-            {/* Progress Bar */}
-            <div className="mb-8 max-w-4xl mx-auto">
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-muted-foreground normal-case">Pre-Approval Progress</span>
-                <span className="text-primary font-semibold">{progressValue}%</span>
-              </div>
-              <Progress value={progressValue} className="h-3 animate-fade-in" />
             </div>
 
             <div className="bg-card border border-border rounded-3xl p-8 lg:p-12 shadow-xl">
@@ -105,33 +90,34 @@ const Pricing = () => {
                   </h3>
                 </div>
 
-                {/* Payout Amount Slider */}
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <Label htmlFor="amount-slider" className="text-lg">Expected Payout Amount</Label>
-                    <div className="text-2xl font-bold text-primary">
-                      ${payoutAmount.toLocaleString()}
+                {/* All Inputs in Grid */}
+                <div className="grid md:grid-cols-3 gap-6">
+                  {/* Payout Amount */}
+                  <div className="space-y-3">
+                    <Label htmlFor="amount-slider" className="text-base">Payout Amount</Label>
+                    <div className="space-y-2">
+                      <div className="text-xl font-bold text-primary">
+                        ${payoutAmount.toLocaleString()}
+                      </div>
+                      <Slider
+                        id="amount-slider"
+                        min={1000}
+                        max={100000}
+                        step={1000}
+                        value={[payoutAmount]}
+                        onValueChange={(value) => setPayoutAmount(value[0])}
+                        className="py-2"
+                      />
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>$1K</span>
+                        <span>$100K</span>
+                      </div>
                     </div>
                   </div>
-                  <Slider
-                    id="amount-slider"
-                    min={1000}
-                    max={100000}
-                    step={1000}
-                    value={[payoutAmount]}
-                    onValueChange={(value) => setPayoutAmount(value[0])}
-                    className="py-4"
-                  />
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>$1,000</span>
-                    <span>$100,000</span>
-                  </div>
-                </div>
 
-                {/* Payout Date and Industry */}
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <Label htmlFor="date" className="text-base mb-3 block">Expected Payout Date</Label>
+                  {/* Payout Date */}
+                  <div className="space-y-3">
+                    <Label htmlFor="date" className="text-base">Payout Date</Label>
                     <Input
                       id="date"
                       type="date"
@@ -142,11 +128,12 @@ const Pricing = () => {
                     />
                   </div>
 
-                  <div>
-                    <Label htmlFor="industry" className="text-base mb-3 block">Industry Type</Label>
+                  {/* Industry Type */}
+                  <div className="space-y-3">
+                    <Label htmlFor="industry" className="text-base">Industry Type</Label>
                     <Select value={industryType} onValueChange={setIndustryType}>
                       <SelectTrigger id="industry" className="h-12 text-base">
-                        <SelectValue placeholder="Select your industry" />
+                        <SelectValue placeholder="Select industry" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="agent">Real Estate Agent</SelectItem>
@@ -159,12 +146,34 @@ const Pricing = () => {
                   </div>
                 </div>
 
-                {/* Info Message */}
-                {!hasValidInputs && (
+                {/* Info Message or Results */}
+                {!hasValidInputs ? (
                   <div className="text-center py-8 px-4 bg-muted/50 rounded-xl">
                     <p className="text-muted-foreground normal-case">
-                      👆 Adjust the amount and select a payout date to see your advance estimate
+                      Please enter a payout date to see your advance estimate
                     </p>
+                  </div>
+                ) : (
+                  <div className="p-8 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-2xl border border-primary/20 animate-scale-in">
+                    <div className="flex items-center gap-2 mb-6">
+                      <DollarSign className="w-6 h-6 text-primary" />
+                      <h3 className="text-xl text-muted-foreground normal-case">Your Advance Breakdown</h3>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-3 gap-6">
+                      <div className="text-center p-4 bg-card/50 rounded-xl">
+                        <p className="text-sm text-muted-foreground mb-2 normal-case">Expected Payout</p>
+                        <p className="text-3xl font-bold">${payoutAmount.toLocaleString()}</p>
+                      </div>
+                      <div className="text-center p-4 bg-card/50 rounded-xl">
+                        <p className="text-sm text-muted-foreground mb-2 normal-case">Fee</p>
+                        <p className="text-3xl font-bold text-destructive">-${calculatedFee.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
+                      </div>
+                      <div className="text-center p-4 bg-primary/10 rounded-xl border-2 border-primary">
+                        <p className="text-sm text-primary mb-2 normal-case font-semibold">Cash to You Today</p>
+                        <p className="text-4xl font-bold text-primary">${calculatedAdvance.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
