@@ -27,11 +27,9 @@ const WhoWeServe = () => {
           <h2 className="text-5xl lg:text-6xl mb-6">
             Built for Real Estate Professionals
           </h2>
-          <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">As a real estate pro, you have future money coming in — but no financial infrastructure has been designed around your needs...
-
-Until Now!
-
- At REAP, we help you unlock earned cashflow, on your terms, so you can scale your operations to the next level.</p>
+          <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            As a real estate professional, you have future earnings on the way — but traditional financial infrastructure wasn't built around your unique cashflow. That's where <span className="text-primary font-semibold">REAP</span> comes in. We unlock your earned income so you can scale your operations to the next level. Our technology platform gives you access to your capital, on your terms.
+          </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
