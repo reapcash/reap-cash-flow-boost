@@ -99,18 +99,9 @@ const Hero = () => {
           animationDelay: '0.3s'
         }}>
             <div className="relative">
-              <img 
-                src={heroVisual} 
-                alt="Real estate professionals using REAP for instant commission advances" 
-                className="w-full h-auto object-contain rounded-2xl opacity-90 mix-blend-luminosity" 
-                style={{
-                  filter: 'saturate(0.8) brightness(1.1)'
-                }}
-              />
-              {/* Subtle overlay to blend with background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--hero-bg))]/30 to-[hsl(var(--hero-bg-end))]/30 rounded-2xl mix-blend-overlay" />
-              {/* Soft glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-accent/10 blur-2xl -z-10" />
+              <img src={heroVisual} alt="Modern fintech visualization for real estate professionals" className="w-full h-auto object-contain drop-shadow-2xl" />
+              {/* Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 blur-3xl -z-10 animate-float" />
             </div>
           </div>
         </div>
