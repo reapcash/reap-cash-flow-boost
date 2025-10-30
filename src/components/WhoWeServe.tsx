@@ -1,9 +1,15 @@
 import { Home, Building2, HardHat, Hotel, Briefcase, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import isoGrowth from "@/assets/iso-growth.png";
+import isoAgent from "@/assets/iso-agent.png";
+import isoPropertyManager from "@/assets/iso-property-manager.png";
+import isoContractor from "@/assets/iso-contractor.png";
+import isoHost from "@/assets/iso-host.png";
+import isoDeveloper from "@/assets/iso-developer.png";
 
 const industries = [{
   icon: Home,
+  image: isoAgent,
   title: "Real Estate Agents",
   value: "agents",
   description: "Unlock commission payouts early",
@@ -12,6 +18,7 @@ const industries = [{
   problem: "High fees, outdated process, not tech-driven"
 }, {
   icon: Building2,
+  image: isoPropertyManager,
   title: "Property Managers",
   value: "managers",
   description: "Advance on upcoming management fees",
@@ -20,6 +27,7 @@ const industries = [{
   problem: "High interest, not aligned to rental cycle"
 }, {
   icon: HardHat,
+  image: isoContractor,
   title: "Contractors",
   value: "contractors",
   description: "Get paid for progress before invoices clear",
@@ -28,6 +36,7 @@ const industries = [{
   problem: "Complex, expensive, not built for small ops"
 }, {
   icon: Hotel,
+  image: isoHost,
   title: "STR Hosts",
   value: "hosts",
   description: "Receive cash now for future bookings",
@@ -36,6 +45,7 @@ const industries = [{
   problem: "Risky debt, credit-based approvals"
 }, {
   icon: Briefcase,
+  image: isoDeveloper,
   title: "Brokers / Developers",
   value: "developers",
   description: "Manage liquidity during project cycles",
@@ -71,10 +81,12 @@ const WhoWeServe = () => {
                 }`}
               >
                 <div className="flex items-start gap-4">
-                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full flex-shrink-0 ${
-                    isSelected ? 'bg-primary/20' : 'bg-primary/10'
-                  }`}>
-                    <Icon className={`w-6 h-6 ${isSelected ? 'text-primary' : 'text-primary'}`} />
+                  <div className="flex-shrink-0">
+                    <img 
+                      src={industry.image} 
+                      alt={industry.title}
+                      className="w-16 h-16 object-contain"
+                    />
                   </div>
                   <div>
                     <h3 className={`text-lg mb-1 font-semibold ${isSelected ? 'text-primary' : ''}`}>
