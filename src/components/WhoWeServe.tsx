@@ -110,7 +110,11 @@ const WhoWeServe = () => {
                 </h3>
               </div>
               <div className="hidden lg:block flex-shrink-0">
-                <img src={isoGrowth} alt="Real estate growth illustration" className="w-32 h-auto object-contain opacity-80" />
+                <img 
+                  src={selectedIndustry.image} 
+                  alt={selectedIndustry.title} 
+                  className="w-32 h-auto object-contain opacity-80 transition-all duration-300" 
+                />
               </div>
             </div>
             
