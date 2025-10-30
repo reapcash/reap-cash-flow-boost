@@ -11,7 +11,7 @@ const Auth = () => {
         {/* Logo/Brand */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-block">
-            <h1 className="text-3xl font-bold text-white mb-2">REAL ESTATE ADVANCE PARTNERS</h1>
+            <h1 className="font-bold text-white mb-2 mx-0 text-2xl">REAL ESTATE ADVANCE PARTNERS</h1>
           </Link>
           <p className="text-white/80">
             {isLogin ? "Welcome back" : "Create your account"}
