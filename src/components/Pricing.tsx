@@ -59,31 +59,6 @@ const Pricing = () => {
             </div>
 
             <div className="bg-card border border-border rounded-3xl p-8 lg:p-12 shadow-xl">
-              {/* Live Results Display - Top */}
-              {hasResults && (
-                <div className="mb-10 p-8 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-2xl border border-primary/20 animate-scale-in">
-                  <div className="flex items-center gap-2 mb-6">
-                    <DollarSign className="w-6 h-6 text-primary" />
-                    <h3 className="text-xl text-muted-foreground normal-case">Your Advance Breakdown</h3>
-                  </div>
-                  
-                  <div className="grid md:grid-cols-3 gap-6">
-                    <div className="text-center p-4 bg-card/50 rounded-xl">
-                      <p className="text-sm text-muted-foreground mb-2 normal-case">Expected Payout</p>
-                      <p className="text-3xl font-bold">${payoutAmount.toLocaleString()}</p>
-                    </div>
-                    <div className="text-center p-4 bg-card/50 rounded-xl">
-                      <p className="text-sm text-muted-foreground mb-2 normal-case">Fee</p>
-                      <p className="text-3xl font-bold text-destructive">-${calculatedFee.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
-                    </div>
-                    <div className="text-center p-4 bg-primary/10 rounded-xl border-2 border-primary">
-                      <p className="text-sm text-primary mb-2 normal-case font-semibold">Cash to You Today</p>
-                      <p className="text-4xl font-bold text-primary">${calculatedAdvance.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
               {/* Interactive Controls */}
               <div className="space-y-8">
                 <div className="flex items-center gap-3 mb-6">
@@ -97,11 +72,19 @@ const Pricing = () => {
                 <div className="grid md:grid-cols-3 gap-6">
                   {/* Payout Amount */}
                   <div className="space-y-3">
-                    <Label htmlFor="amount-slider" className="text-base">Payout Amount</Label>
+                    <Label htmlFor="amount-input" className="text-base">Payout Amount</Label>
                     <div className="space-y-2">
-                      <div className="text-xl font-bold text-primary">
-                        ${payoutAmount.toLocaleString()}
-                      </div>
+                      <Input
+                        id="amount-input"
+                        type="number"
+                        min={1000}
+                        max={100000}
+                        step={1000}
+                        value={payoutAmount}
+                        onChange={(e) => setPayoutAmount(Number(e.target.value))}
+                        className="h-12 text-base"
+                        placeholder="Enter amount"
+                      />
                       <Slider
                         id="amount-slider"
                         min={1000}
