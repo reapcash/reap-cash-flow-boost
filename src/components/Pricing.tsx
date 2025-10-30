@@ -1,12 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { differenceInDays } from "date-fns";
-import { TrendingUp, ArrowRight, DollarSign } from "lucide-react";
+import { TrendingUp, ArrowRight, DollarSign, Calculator } from "lucide-react";
 
 const Pricing = () => {
   const [payoutAmount, setPayoutAmount] = useState(15000);
@@ -14,9 +13,9 @@ const Pricing = () => {
   const [industryType, setIndustryType] = useState("");
   const [calculatedFee, setCalculatedFee] = useState<number>(0);
   const [calculatedAdvance, setCalculatedAdvance] = useState<number>(0);
+  const [showResults, setShowResults] = useState(false);
 
-  // Real-time calculation whenever inputs change
-  useEffect(() => {
+  const handleCalculate = () => {
     if (payoutAmount > 0 && payoutDate) {
       const today = new Date();
       const payoutDateObj = new Date(payoutDate);
@@ -29,17 +28,17 @@ const Pricing = () => {
         
         setCalculatedFee(fee);
         setCalculatedAdvance(advance > 0 ? advance : 0);
+        setShowResults(true);
       } else {
         setCalculatedFee(0);
         setCalculatedAdvance(0);
+        setShowResults(false);
       }
-    } else {
-      setCalculatedFee(0);
-      setCalculatedAdvance(0);
     }
-  }, [payoutAmount, payoutDate, industryType]);
+  };
 
-  const hasValidInputs = payoutAmount > 0 && payoutDate && calculatedAdvance > 0;
+  const hasValidInputs = payoutAmount > 0 && payoutDate;
+  const hasResults = showResults && calculatedAdvance > 0;
 
   return (
     <>
@@ -57,7 +56,7 @@ const Pricing = () => {
 
             <div className="bg-card border border-border rounded-3xl p-8 lg:p-12 shadow-xl">
               {/* Live Results Display - Top */}
-              {hasValidInputs && (
+              {hasResults && (
                 <div className="mb-10 p-8 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-2xl border border-primary/20 animate-scale-in">
                   <div className="flex items-center gap-2 mb-6">
                     <DollarSign className="w-6 h-6 text-primary" />
@@ -146,14 +145,21 @@ const Pricing = () => {
                   </div>
                 </div>
 
-                {/* Info Message or Results */}
-                {!hasValidInputs ? (
-                  <div className="text-center py-8 px-4 bg-muted/50 rounded-xl">
-                    <p className="text-muted-foreground normal-case">
-                      Please enter a payout date to see your advance estimate
-                    </p>
-                  </div>
-                ) : (
+                {/* Calculate Button */}
+                <div className="flex justify-center">
+                  <Button
+                    size="lg"
+                    onClick={handleCalculate}
+                    disabled={!hasValidInputs}
+                    className="h-14 px-12 text-lg font-semibold"
+                  >
+                    <Calculator className="w-5 h-5 mr-2" />
+                    Calculate My Advance
+                  </Button>
+                </div>
+
+                {/* Results Display */}
+                {hasResults && (
                   <div className="p-8 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-2xl border border-primary/20 animate-scale-in">
                     <div className="flex items-center gap-2 mb-6">
                       <DollarSign className="w-6 h-6 text-primary" />
@@ -202,7 +208,7 @@ const Pricing = () => {
       </section>
 
       {/* Floating Apply Now Button */}
-      {hasValidInputs && (
+      {hasResults && (
         <div className="fixed bottom-8 right-8 z-50 animate-scale-in">
           <Button 
             size="lg"
