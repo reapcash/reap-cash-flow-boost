@@ -147,24 +147,30 @@ const Pricing = () => {
 
                 {/* Results Display */}
                 {hasResults && (
-                  <div className="p-8 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-2xl border border-primary/20 animate-scale-in">
+                  <div className="p-8 bg-gradient-to-br from-primary/5 to-transparent rounded-2xl border border-primary/10 animate-scale-in">
                     <div className="flex items-center gap-2 mb-6">
-                      <DollarSign className="w-6 h-6 text-primary" />
-                      <h3 className="text-xl text-muted-foreground normal-case">Your Advance Breakdown</h3>
+                      <DollarSign className="w-5 h-5 text-muted-foreground" />
+                      <h3 className="text-base text-muted-foreground normal-case">Your Advance Breakdown</h3>
                     </div>
                     
-                    <div className="grid md:grid-cols-3 gap-6">
-                      <div className="text-center p-4 bg-card/50 rounded-xl">
-                        <p className="text-sm text-muted-foreground mb-2 normal-case">Expected Payout</p>
-                        <p className="text-3xl font-bold">${payoutAmount.toLocaleString()}</p>
+                    <div className="space-y-6">
+                      {/* Main Focus: Cash to You Today */}
+                      <div className="text-center p-10 bg-gradient-to-br from-primary via-primary to-primary/90 rounded-2xl border-4 border-primary shadow-2xl">
+                        <p className="text-lg text-primary-foreground/90 mb-3 normal-case font-semibold tracking-wide">Cash to You Today</p>
+                        <p className="text-6xl lg:text-7xl font-bold text-primary-foreground mb-2">${calculatedAdvance.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
+                        <p className="text-sm text-primary-foreground/80 normal-case">Available immediately in your account</p>
                       </div>
-                    <div className="text-center p-4 bg-card/50 rounded-xl">
-                      <p className="text-sm text-muted-foreground mb-2 normal-case">Fee</p>
-                      <p className="text-3xl font-bold text-foreground">${calculatedFee.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
-                    </div>
-                      <div className="text-center p-4 bg-primary/10 rounded-xl border-2 border-primary">
-                        <p className="text-sm text-primary mb-2 normal-case font-semibold">Cash to You Today</p>
-                        <p className="text-4xl font-bold text-primary">${calculatedAdvance.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
+                      
+                      {/* Secondary Details */}
+                      <div className="grid md:grid-cols-2 gap-3 opacity-60">
+                        <div className="text-center p-3 bg-muted/30 rounded-lg">
+                          <p className="text-xs text-muted-foreground mb-1 normal-case">Expected Payout</p>
+                          <p className="text-lg font-semibold">${payoutAmount.toLocaleString()}</p>
+                        </div>
+                        <div className="text-center p-3 bg-muted/30 rounded-lg">
+                          <p className="text-xs text-muted-foreground mb-1 normal-case">Fee</p>
+                          <p className="text-lg font-semibold text-foreground">${calculatedFee.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -173,23 +179,23 @@ const Pricing = () => {
 
               {/* Fee Structure Info */}
               <div className="border-t border-border pt-8 mt-10">
-                <h4 className="text-lg mb-4">How Our Fees Work</h4>
+                <h4 className="text-lg mb-4 font-semibold">Why REAP is the Ideal Financial Solution for Real Estate Professionals</h4>
                 <ul className="space-y-3 text-base text-muted-foreground normal-case">
                   <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">•</span>
-                    <span>Daily rate: 0.11% per day until payout</span>
+                    <span className="text-primary mt-1">✓</span>
+                    <span><span className="font-medium text-foreground">Ultra-low fees</span> — Less than 0.12% per day, making us one of the most affordable options in the industry</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">•</span>
-                    <span>Minimum fee: $45</span>
+                    <span className="text-primary mt-1">✓</span>
+                    <span><span className="font-medium text-foreground">Complete transparency</span> — No hidden charges or surprise fees, ever</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">•</span>
-                    <span>No hidden charges or surprise fees</span>
+                    <span className="text-primary mt-1">✓</span>
+                    <span><span className="font-medium text-foreground">Effortless repayment</span> — Automatic repayment when you receive your payout, no manual action required</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">•</span>
-                    <span>Automatic repayment when you receive your payout</span>
+                    <span className="text-primary mt-1">✓</span>
+                    <span><span className="font-medium text-foreground">Built for your business</span> — Designed specifically around the unique cashflow needs of real estate professionals</span>
                   </li>
                 </ul>
               </div>
