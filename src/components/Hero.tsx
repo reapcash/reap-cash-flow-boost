@@ -1,5 +1,9 @@
 import { Button } from "@/components/ui/button";
-import heroVisual from "@/assets/hero-visual.png";
+import isoHouse from "@/assets/iso-house.png";
+import isoAgent from "@/assets/iso-agent.png";
+import isoKeys from "@/assets/iso-keys.png";
+import isoContract from "@/assets/iso-contract.png";
+import isoMoney from "@/assets/iso-money.png";
 const Hero = () => {
   return <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Full-Bleed Animated Background */}
@@ -94,14 +98,34 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Column - Visual */}
+          {/* Right Column - Isometric Visual Grid */}
           <div className="relative animate-slide-up" style={{
           animationDelay: '0.3s'
         }}>
-            <div className="relative">
-              <img src={heroVisual} alt="Modern fintech visualization for real estate professionals" className="w-full h-auto object-contain drop-shadow-2xl" />
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 blur-3xl -z-10 animate-float" />
+            <div className="relative grid grid-cols-2 gap-8 items-center justify-items-center">
+              {/* Top Row */}
+              <div className="animate-float" style={{ animationDelay: '0s', animationDuration: '4s' }}>
+                <img src={isoHouse} alt="Real estate property visualization" className="w-40 h-40 object-contain drop-shadow-xl" />
+              </div>
+              <div className="animate-float" style={{ animationDelay: '1s', animationDuration: '5s' }}>
+                <img src={isoMoney} alt="Instant capital and funding" className="w-40 h-40 object-contain drop-shadow-xl" />
+              </div>
+              
+              {/* Middle Row - Centered */}
+              <div className="col-span-2 animate-float" style={{ animationDelay: '0.5s', animationDuration: '4.5s' }}>
+                <img src={isoAgent} alt="Real estate professionals" className="w-48 h-48 object-contain drop-shadow-2xl" />
+              </div>
+              
+              {/* Bottom Row */}
+              <div className="animate-float" style={{ animationDelay: '1.5s', animationDuration: '5.5s' }}>
+                <img src={isoKeys} alt="Property keys and access" className="w-40 h-40 object-contain drop-shadow-xl" />
+              </div>
+              <div className="animate-float" style={{ animationDelay: '2s', animationDuration: '4.8s' }}>
+                <img src={isoContract} alt="Contracts and commissions" className="w-40 h-40 object-contain drop-shadow-xl" />
+              </div>
+              
+              {/* Ambient Glow */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-accent/10 blur-3xl -z-10 animate-float" style={{ animationDuration: '6s' }} />
             </div>
           </div>
         </div>
