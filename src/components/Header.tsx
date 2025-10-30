@@ -51,7 +51,7 @@ const Header = () => {
           {/* Desktop CTAs */}
           <div className="hidden lg:flex items-center gap-4">
             <Button variant="outline" asChild>
-              <a href="#login">Login</a>
+              <Link to="/auth">Login</Link>
             </Button>
             <Button asChild>
               <a href="#apply">Apply Now</a>
@@ -88,7 +88,7 @@ const Header = () => {
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
                 <Button variant="outline" asChild className="w-full">
-                  <a href="#login">Login</a>
+                  <Link to="/auth">Login</Link>
                 </Button>
                 <Button asChild className="w-full">
                   <a href="#apply">Apply Now</a>
