@@ -158,10 +158,10 @@ const Pricing = () => {
                         <p className="text-sm text-muted-foreground mb-2 normal-case">Expected Payout</p>
                         <p className="text-3xl font-bold">${payoutAmount.toLocaleString()}</p>
                       </div>
-                      <div className="text-center p-4 bg-card/50 rounded-xl">
-                        <p className="text-sm text-muted-foreground mb-2 normal-case">Fee</p>
-                        <p className="text-3xl font-bold text-destructive">-${calculatedFee.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
-                      </div>
+                    <div className="text-center p-4 bg-card/50 rounded-xl">
+                      <p className="text-sm text-muted-foreground mb-2 normal-case">Fee</p>
+                      <p className="text-3xl font-bold text-foreground">${calculatedFee.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
+                    </div>
                       <div className="text-center p-4 bg-primary/10 rounded-xl border-2 border-primary">
                         <p className="text-sm text-primary mb-2 normal-case font-semibold">Cash to You Today</p>
                         <p className="text-4xl font-bold text-primary">${calculatedAdvance.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
