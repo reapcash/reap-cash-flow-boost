@@ -1,42 +1,64 @@
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
-
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-
   const footerLinks = {
-    quickLinks: [
-      { name: "Home", href: "#home" },
-      { name: "How It Works", href: "#how-it-works" },
-      { name: "Industries We Serve", href: "#industries" },
-      { name: "Apply Now", href: "#apply" },
-    ],
-    resources: [
-      { name: "FAQs", href: "#faqs" },
-      { name: "Contact", href: "#contact" },
-      { name: "Careers", href: "#careers" },
-    ],
-    legal: [
-      { name: "Terms of Service", href: "#terms" },
-      { name: "Privacy Policy", href: "#privacy" },
-    ],
+    quickLinks: [{
+      name: "Home",
+      href: "#home"
+    }, {
+      name: "How It Works",
+      href: "#how-it-works"
+    }, {
+      name: "Industries We Serve",
+      href: "#industries"
+    }, {
+      name: "Apply Now",
+      href: "#apply"
+    }],
+    resources: [{
+      name: "FAQs",
+      href: "#faqs"
+    }, {
+      name: "Contact",
+      href: "#contact"
+    }, {
+      name: "Careers",
+      href: "#careers"
+    }],
+    legal: [{
+      name: "Terms of Service",
+      href: "#terms"
+    }, {
+      name: "Privacy Policy",
+      href: "#privacy"
+    }]
   };
-
-  const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Twitter, href: "https://x.com", label: "X (Twitter)" },
-  ];
-
-  return (
-    <footer className="bg-card border-t border-border">
+  const socialLinks = [{
+    icon: Facebook,
+    href: "#",
+    label: "Facebook"
+  }, {
+    icon: Instagram,
+    href: "#",
+    label: "Instagram"
+  }, {
+    icon: Linkedin,
+    href: "#",
+    label: "LinkedIn"
+  }, {
+    icon: Twitter,
+    href: "https://x.com",
+    label: "X (Twitter)"
+  }];
+  return <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Brand Column */}
           <div>
             <div className="mb-4">
-              <span className="text-2xl font-bold text-primary">REAP</span>
-              <span className="block text-sm text-muted-foreground mt-1">Real Estate Advance Partners</span>
+              <span className="text-2xl font-bold text-primary">REAP.CASH</span>
+              <span className="block text-sm text-muted-foreground mt-1">Real Estate Advance Partners.com
+support@reap.cash</span>
             </div>
             <p className="text-base text-muted-foreground max-w-xs normal-case leading-relaxed">
               Empowering professionals with smarter cash flow. Built in New York.
@@ -47,16 +69,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              {footerLinks.quickLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-base text-muted-foreground hover:text-primary transition-colors normal-case"
-                  >
+              {footerLinks.quickLinks.map(link => <li key={link.name}>
+                  <a href={link.href} className="text-base text-muted-foreground hover:text-primary transition-colors normal-case">
                     {link.name}
                   </a>
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
 
@@ -64,16 +81,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg mb-4">Resources</h3>
             <ul className="space-y-2">
-              {footerLinks.resources.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-base text-muted-foreground hover:text-primary transition-colors normal-case"
-                  >
+              {footerLinks.resources.map(link => <li key={link.name}>
+                  <a href={link.href} className="text-base text-muted-foreground hover:text-primary transition-colors normal-case">
                     {link.name}
                   </a>
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
 
@@ -81,16 +93,11 @@ const Footer = () => {
           <div>
             <h4 className="text-lg mb-4">Legal</h4>
             <ul className="space-y-2">
-              {footerLinks.legal.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-base text-muted-foreground hover:text-primary transition-colors normal-case"
-                  >
+              {footerLinks.legal.map(link => <li key={link.name}>
+                  <a href={link.href} className="text-base text-muted-foreground hover:text-primary transition-colors normal-case">
                     {link.name}
                   </a>
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
         </div>
@@ -103,24 +110,15 @@ const Footer = () => {
 
           {/* Social Links */}
           <div className="flex gap-4">
-            {socialLinks.map((social) => {
-              const Icon = social.icon;
-              return (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  aria-label={social.label}
-                  className="w-10 h-10 rounded-full bg-muted hover:bg-primary hover:text-primary-foreground transition-all flex items-center justify-center"
-                >
+            {socialLinks.map(social => {
+            const Icon = social.icon;
+            return <a key={social.label} href={social.href} aria-label={social.label} className="w-10 h-10 rounded-full bg-muted hover:bg-primary hover:text-primary-foreground transition-all flex items-center justify-center">
                   <Icon className="w-5 h-5" />
-                </a>
-              );
-            })}
+                </a>;
+          })}
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;

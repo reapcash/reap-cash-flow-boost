@@ -2,19 +2,22 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, DollarSign } from "lucide-react";
 import { Link } from "react-router-dom";
-
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "Simulate Advance", href: "#simulate" },
-    { name: "FAQs", href: "#faqs" },
-    { name: "Contact", href: "#contact" },
-  ];
-
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
+  const navLinks = [{
+    name: "Home",
+    href: "#home"
+  }, {
+    name: "Simulate Advance",
+    href: "#simulate"
+  }, {
+    name: "FAQs",
+    href: "#faqs"
+  }, {
+    name: "Contact",
+    href: "#contact"
+  }];
+  return <header className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
@@ -22,14 +25,23 @@ const Header = () => {
             <div className="flex items-center gap-2">
               <div className="relative">
                 <div>
-                  <span className="text-2xl text-primary normal-case">REAP</span>
+                  <span className="text-2xl text-primary normal-case">REAP.CASH</span>
                   <span className="block text-xs text-muted-foreground normal-case">Real Estate Advance Partners</span>
                 </div>
                 {/* Dollar bills falling animation */}
                 <div className="absolute -top-8 left-0 w-full overflow-hidden h-32 pointer-events-none">
-                  <DollarSign className="absolute text-primary/30 w-4 h-4 animate-dollar-fall" style={{ left: "10%", animationDelay: "0s" }} />
-                  <DollarSign className="absolute text-primary/30 w-4 h-4 animate-dollar-fall" style={{ left: "50%", animationDelay: "1s" }} />
-                  <DollarSign className="absolute text-primary/30 w-4 h-4 animate-dollar-fall" style={{ left: "80%", animationDelay: "2s" }} />
+                  <DollarSign className="absolute text-primary/30 w-4 h-4 animate-dollar-fall" style={{
+                  left: "10%",
+                  animationDelay: "0s"
+                }} />
+                  <DollarSign className="absolute text-primary/30 w-4 h-4 animate-dollar-fall" style={{
+                  left: "50%",
+                  animationDelay: "1s"
+                }} />
+                  <DollarSign className="absolute text-primary/30 w-4 h-4 animate-dollar-fall" style={{
+                  left: "80%",
+                  animationDelay: "2s"
+                }} />
                 </div>
               </div>
             </div>
@@ -37,15 +49,9 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-foreground hover:text-primary transition-colors normal-case"
-              >
+            {navLinks.map(link => <a key={link.name} href={link.href} className="text-foreground hover:text-primary transition-colors normal-case">
                 {link.name}
-              </a>
-            ))}
+              </a>)}
           </nav>
 
           {/* Desktop CTAs */}
@@ -59,33 +65,17 @@ const Header = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
+          <button className="lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-border">
+        {isMenuOpen && <div className="lg:hidden py-4 border-t border-border">
             <nav className="flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="text-foreground hover:text-primary transition-colors py-2 normal-case"
-                  onClick={() => setIsMenuOpen(false)}
-                >
+              {navLinks.map(link => <a key={link.name} href={link.href} className="text-foreground hover:text-primary transition-colors py-2 normal-case" onClick={() => setIsMenuOpen(false)}>
                   {link.name}
-                </a>
-              ))}
+                </a>)}
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
                 <Button variant="outline" asChild className="w-full">
                   <Link to="/auth">Login</Link>
@@ -95,11 +85,8 @@ const Header = () => {
                 </Button>
               </div>
             </nav>
-          </div>
-        )}
+          </div>}
       </div>
-    </header>
-  );
+    </header>;
 };
-
 export default Header;
