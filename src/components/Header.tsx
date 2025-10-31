@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, DollarSign } from "lucide-react";
 import { Link } from "react-router-dom";
-import logoSpinningTop from "@/assets/logo-spinning-top.png";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navLinks = [{
@@ -23,12 +22,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="relative group">
-            <div className="flex items-center gap-3">
-              <img 
-                src={logoSpinningTop} 
-                alt="REAP.CASH Logo" 
-                className="w-12 h-12 object-contain hover:scale-110 transition-transform duration-300"
-              />
+            <div className="flex items-center gap-2">
               <div className="relative">
                 <div>
                   <span className="text-2xl text-primary normal-case">REAP.CASH</span>
