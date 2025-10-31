@@ -13,45 +13,50 @@ const industries = [{
   title: "Real Estate Agents",
   value: "agents",
   description: "Unlock commission payouts early",
-  challenge: "Commission payouts take 30–90 days",
+  sectionTitle: "Waiting 30-90 Days for Your Commission?",
+  challenge: "Commission payouts take 30–90 days after closing, leaving agents strapped for cash despite closed deals.",
   currentSolution: "Commission advance companies",
-  problem: "High fees, outdated process, not tech-driven"
+  problem: "High fees (up to 12%), outdated paperwork processes, and no tech-driven transparency."
 }, {
   icon: Building2,
   image: isoPropertyManager,
   title: "Property Managers",
   value: "managers",
   description: "Advance on upcoming management fees",
-  challenge: "Wait on monthly rent disbursements",
-  currentSolution: "Credit cards / lines",
-  problem: "High interest, not aligned to rental cycle"
+  sectionTitle: "Stuck Waiting on Monthly Rent Cycles?",
+  challenge: "Monthly management fees only arrive after tenant rent is collected and disbursed.",
+  currentSolution: "Credit cards or business lines of credit",
+  problem: "High interest rates and repayment schedules that don't align with your rental income cycle."
 }, {
   icon: HardHat,
   image: isoContractor,
   title: "Contractors",
   value: "contractors",
   description: "Get paid for progress before invoices clear",
-  challenge: "Net-30/Net-60 invoice payments",
-  currentSolution: "Factoring services",
-  problem: "Complex, expensive, not built for small ops"
+  sectionTitle: "Tired of Net-30 and Net-60 Payment Terms?",
+  challenge: "Contractors complete the work but wait 30-60+ days for invoice payments to clear.",
+  currentSolution: "Invoice factoring services",
+  problem: "Complex terms, expensive fees, and solutions not designed for smaller contracting operations."
 }, {
   icon: Hotel,
   image: isoHost,
   title: "STR Hosts",
   value: "hosts",
   description: "Receive cash now for future bookings",
-  challenge: "Delayed platform payouts",
-  currentSolution: "Credit cards / short-term loans",
-  problem: "Risky debt, credit-based approvals"
+  sectionTitle: "Platform Payouts Holding Up Your Operations?",
+  challenge: "Short-term rental platforms delay payouts until after guest checkout, creating cashflow gaps.",
+  currentSolution: "Credit cards or short-term business loans",
+  problem: "Risky debt accumulation and credit-based approvals that don't reflect your booking income."
 }, {
   icon: Briefcase,
   image: isoDeveloper,
   title: "Brokers / Developers",
   value: "developers",
   description: "Manage liquidity during project cycles",
-  challenge: "Tied-up equity in projects",
-  currentSolution: "Bank loans",
-  problem: "Bureaucratic, slow underwriting"
+  sectionTitle: "Capital Tied Up in Long Development Cycles?",
+  challenge: "Equity and capital remain locked in projects throughout lengthy development and sales cycles.",
+  currentSolution: "Traditional bank loans and bridge financing",
+  problem: "Bureaucratic approval processes, slow underwriting, and rigid terms that don't match project timelines."
 }];
 const WhoWeServe = () => {
   const [selectedIndustry, setSelectedIndustry] = useState(industries[0]);
@@ -106,7 +111,7 @@ const WhoWeServe = () => {
             <div className="flex items-start gap-8 mb-8">
               <div className="flex-1">
                 <h3 className="text-3xl lg:text-4xl">
-                  The Problem No One Else Solves
+                  {selectedIndustry.sectionTitle}
                 </h3>
               </div>
               <div className="hidden lg:block flex-shrink-0">
