@@ -36,22 +36,22 @@ const Hero = () => {
           <div className="space-y-8">
             <div className="space-y-6 animate-slide-up">
               <h1 className="text-5xl lg:text-6xl leading-tight">
-                <span className="text-white">Turn your </span>
-                <span className="text-gradient-primary">real estate income</span>
-                <span className="text-white"> into </span>
-                <span className="text-gradient-primary">instant capital</span>
+                <span className="text-white">Transform Your </span>
+                <span className="text-gradient-primary">Real Estate Income</span>
+                <span className="text-white"> Into </span>
+                <span className="text-gradient-primary">Working Capital</span>
               </h1>
-              <p className="text-xl lg:text-2xl text-white/90 max-w-xl leading-relaxed normal-case">REAP provides real estate professionals with instant cash advances on confirmed commissions, rentals, and payments.</p>
+              <p className="text-xl lg:text-2xl text-white/90 max-w-xl leading-relaxed normal-case">REAP delivers institutional-grade liquidity solutions for real estate professionals through immediate advances on verified commissions, rental income, and contracted payments.</p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 animate-slide-up" style={{
             animationDelay: '0.2s'
           }}>
-              <Button size="lg" className="text-base px-8 bg-white text-secondary hover:bg-white/90 shadow-lg hover:shadow-xl transition-all animate-glow-pulse" asChild>
-                <a href="#apply">Apply Now</a>
+              <Button size="lg" className="text-base px-8 bg-white text-secondary hover:bg-white/90 shadow-lg hover:shadow-xl transition-all" asChild>
+                <a href="#apply">Get Started</a>
               </Button>
               <Button size="lg" variant="outline" className="text-base px-8 border-2 border-white/30 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm" asChild>
-                <a href="#how-it-works">Contact Us</a>
+                <a href="#how-it-works">Schedule Consultation</a>
               </Button>
             </div>
 
@@ -79,7 +79,7 @@ const Hero = () => {
             <div className="pt-8 animate-slide-up" style={{
             animationDelay: '0.6s'
           }}>
-              <p className="text-sm text-white/60 normal-case mb-4">Trusted by professionals from</p>
+              <p className="text-sm text-white/60 normal-case mb-4">Serving professionals affiliated with</p>
               <div className="flex flex-wrap items-center gap-6">
                 <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
                   <span className="text-white font-semibold">Compass</span>

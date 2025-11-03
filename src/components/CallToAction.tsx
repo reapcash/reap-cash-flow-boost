@@ -6,10 +6,10 @@ const CallToAction = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <h2 className="text-5xl lg:text-6xl">
-            Ready to Unlock Your Real Estate Earnings?
+            Ready to Access Your Real Estate Capital?
           </h2>
           <p className="text-xl lg:text-2xl opacity-90 max-w-2xl mx-auto leading-relaxed normal-case">
-            Apply in minutes. Get approved in hours. Funded within 24.
+            Submit your application in minutes. Receive approval within hours. Access funds in 24 hours.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button 
@@ -18,7 +18,7 @@ const CallToAction = () => {
               className="text-base px-10 py-6 h-auto"
               asChild
             >
-              <a href="#apply">Apply Now</a>
+              <a href="#apply">Begin Application</a>
             </Button>
             <Button 
               size="lg" 
@@ -26,7 +26,7 @@ const CallToAction = () => {
               className="text-base px-10 py-6 h-auto border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 bg-transparent"
               asChild
             >
-              <a href="#simulate">Simulate My Advance</a>
+              <a href="#simulate">Calculate Your Advance</a>
             </Button>
           </div>
         </div>

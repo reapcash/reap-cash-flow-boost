@@ -9,41 +9,42 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 220 26% 14%;
+    --foreground: 215 25% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 26% 14%;
+    --card-foreground: 215 25% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 26% 14%;
+    --popover-foreground: 215 25% 15%;
 
-    --primary: 158 64% 52%;
+    --primary: 210 100% 35%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 219 70% 32%;
+    --secondary: 215 30% 25%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 13% 98%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 15% 45%;
 
-    --accent: 219 70% 32%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 45 90% 50%;
+    --accent-foreground: 215 25% 15%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 158 64% 52%;
+    --border: 210 30% 88%;
+    --input: 210 30% 88%;
+    --ring: 210 100% 35%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
     
     /* Custom design tokens */
-    --hero-bg: 203 89% 25%;
-    --hero-bg-end: 158 64% 35%;
-    --section-light: 220 13% 98%;
-    --success: 158 64% 52%;
-    --info: 219 70% 32%;
+    --hero-bg: 210 100% 25%;
+    --hero-bg-end: 215 60% 20%;
+    --section-light: 210 40% 98%;
+    --success: 142 76% 36%;
+    --info: 210 100% 35%;
+    --trust-indicator: 45 90% 50%;
 
     --sidebar-background: 0 0% 98%;
 
@@ -63,37 +64,38 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 219 70% 10%;
+    --background: 215 30% 8%;
     --foreground: 0 0% 98%;
 
-    --card: 219 70% 15%;
+    --card: 215 30% 12%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 219 70% 15%;
+    --popover: 215 30% 12%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 158 64% 52%;
+    --primary: 210 100% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 219 70% 20%;
+    --secondary: 215 30% 18%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 219 70% 20%;
+    --muted: 215 30% 18%;
     --muted-foreground: 0 0% 70%;
 
-    --accent: 158 64% 52%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 45 90% 55%;
+    --accent-foreground: 215 25% 15%;
 
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 219 70% 25%;
-    --input: 219 70% 25%;
-    --ring: 158 64% 52%;
+    --border: 215 30% 22%;
+    --input: 215 30% 22%;
+    --ring: 210 100% 45%;
     
-    --hero-bg: 203 89% 15%;
-    --hero-bg-end: 158 64% 25%;
-    --section-light: 219 70% 18%;
+    --hero-bg: 210 100% 15%;
+    --hero-bg-end: 215 60% 12%;
+    --section-light: 215 30% 15%;
+    --trust-indicator: 45 90% 55%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -119,7 +121,7 @@ All colors MUST be HSL.
   }
   
   button, .btn {
-    @apply font-['Lato',sans-serif] font-semibold uppercase;
+    @apply font-['Lato',sans-serif] font-semibold;
   }
 }
 
