@@ -3,23 +3,23 @@ import { Zap, DollarSign, Brain, TrendingUp } from "lucide-react";
 const benefits = [
   {
     icon: Zap,
-    title: "Fast Access to Capital",
-    description: "Get approved and funded within 24 hours.",
-  },
-  {
-    icon: DollarSign,
-    title: "Transparent Fees",
-    description: "Simple pricing, no hidden costs, no compounding interest.",
+    title: "Instant Liquidity",
+    description: "Get paid the day you earn — not 30-90 days later.",
   },
   {
     icon: Brain,
-    title: "Smart Risk Engine",
-    description: "We assess verified earnings, not your credit history.",
+    title: "Credit Independent",
+    description: "Approvals based on verified income, not credit scores.",
+  },
+  {
+    icon: DollarSign,
+    title: "No Compounding Interest",
+    description: "Transparent flat fees. We purchase income, we don't lend.",
   },
   {
     icon: TrendingUp,
-    title: "Scalable Platform",
-    description: "Designed for the future of real estate — agents, hosts, contractors, developers.",
+    title: "Automated Repayment",
+    description: "Settles automatically when your income arrives.",
   },
 ];
 
@@ -29,10 +29,10 @@ const Benefits = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-5xl lg:text-6xl mb-6">
-            Why Choose REAP
+            What REAP Does Differently
           </h2>
-          <p className="text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Designed to keep you liquid, growing, and in control — not waiting for payouts.
+          <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            REAP connects to your income sources, verifies upcoming payments, and advances you cash today — settling automatically when income arrives.
           </p>
         </div>
 
