@@ -10,12 +10,12 @@ const TrustSecurity = () => {
           </div>
           
           <h2 className="text-5xl lg:text-6xl mb-6">
-            Bank-Grade Security. Regulatory Compliance. Enterprise Infrastructure.
+            Secure. Compliant. Built for Professionals.
           </h2>
           
           <p className="text-xl lg:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed normal-case">
-            REAP maintains institutional-grade security protocols and regulatory compliance standards. 
-            Our infrastructure partners include Plaid, DocuSign, and AWS, ensuring encrypted transactions and comprehensive data protection.
+            REAP operates on encrypted, compliant financial infrastructure. 
+            We partner with industry leaders like Plaid, DocuSign, and HubSpot to keep your data safe and your transactions fast.
           </p>
 
           <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
