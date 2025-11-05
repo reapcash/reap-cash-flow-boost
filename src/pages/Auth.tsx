@@ -1,13 +1,106 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { z } from "zod";
+
+const signUpSchema = z.object({
+  fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
+  email: z.string().trim().email("Invalid email address").max(255),
+  phone: z.string().trim().min(10, "Phone number must be at least 10 digits").max(20),
+  password: z.string().min(8, "Password must be at least 8 characters").max(100),
+});
+
+const signInSchema = z.object({
+  email: z.string().trim().email("Invalid email address").max(255),
+  password: z.string().min(1, "Password is required"),
+});
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    password: '',
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  
+  const { user, signUp, signIn } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrors({});
+    setLoading(true);
+
+    try {
+      if (isLogin) {
+        const result = signInSchema.safeParse({
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (!result.success) {
+          const fieldErrors: Record<string, string> = {};
+          result.error.errors.forEach((err) => {
+            if (err.path[0]) {
+              fieldErrors[err.path[0].toString()] = err.message;
+            }
+          });
+          setErrors(fieldErrors);
+          return;
+        }
+
+        await signIn(formData.email, formData.password);
+      } else {
+        const result = signUpSchema.safeParse(formData);
+
+        if (!result.success) {
+          const fieldErrors: Record<string, string> = {};
+          result.error.errors.forEach((err) => {
+            if (err.path[0]) {
+              fieldErrors[err.path[0].toString()] = err.message;
+            }
+          });
+          setErrors(fieldErrors);
+          return;
+        }
+
+        await signUp(formData.email, formData.password, formData.fullName, formData.phone);
+      }
+    } catch (error) {
+      console.error('Auth error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.id]: e.target.value
+    }));
+    // Clear error for this field
+    if (errors[e.target.id]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[e.target.id];
+        return newErrors;
+      });
+    }
+  };
   return <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--hero-bg))] to-[hsl(var(--hero-bg-end))]">
       {/* Navigation Bar */}
       <nav className="px-6 py-4">
@@ -67,28 +160,75 @@ const Auth = () => {
           </div>
 
           {/* Email/Password Form */}
-          <form className="space-y-4" onSubmit={e => e.preventDefault()}>
-            {!isLogin && <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input id="name" type="text" placeholder="John Doe" className="h-11" />
-              </div>}
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {!isLogin && (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="fullName">Full Name</Label>
+                  <Input 
+                    id="fullName" 
+                    type="text" 
+                    placeholder="John Doe" 
+                    className="h-11"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    disabled={loading}
+                  />
+                  {errors.fullName && <p className="text-sm text-destructive">{errors.fullName}</p>}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input 
+                    id="phone" 
+                    type="tel" 
+                    placeholder="+1 (555) 123-4567" 
+                    className="h-11"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    disabled={loading}
+                  />
+                  {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
+                </div>
+              </>
+            )}
 
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="you@example.com" className="h-11" />
+              <Input 
+                id="email" 
+                type="email" 
+                placeholder="you@example.com" 
+                className="h-11"
+                value={formData.email}
+                onChange={handleChange}
+                disabled={loading}
+              />
+              {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
             </div>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                {isLogin && <button type="button" className="text-sm text-primary hover:underline" onClick={() => console.log("Forgot password clicked")}>
-                    Forgot password?
-                  </button>}
               </div>
-              <Input id="password" type="password" placeholder="••••••••" className="h-11" />
+              <Input 
+                id="password" 
+                type="password" 
+                placeholder="••••••••" 
+                className="h-11"
+                value={formData.password}
+                onChange={handleChange}
+                disabled={loading}
+              />
+              {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
+              {!isLogin && (
+                <p className="text-xs text-muted-foreground">
+                  Must be at least 8 characters
+                </p>
+              )}
             </div>
 
-            <Button type="submit" className="w-full h-11 text-base">
+            <Button type="submit" className="w-full h-11 text-base" disabled={loading}>
+              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {isLogin ? "Sign In" : "Create Account"}
             </Button>
           </form>
