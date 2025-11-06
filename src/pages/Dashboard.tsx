@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Loader2, LogOut, FileText, Plus } from 'lucide-react';
 import AirbnbConnectionStatus from '@/components/dashboard/AirbnbConnectionStatus';
 import QuickAdvanceCalculator from '@/components/dashboard/QuickAdvanceCalculator';
+import NotificationBell from '@/components/dashboard/NotificationBell';
 
 const Dashboard = () => {
   const { user, loading, signOut, isAdmin } = useAuth();
@@ -41,10 +42,13 @@ const Dashboard = () => {
             <h1 className="text-xl font-bold">REAL ESTATE ADVANCE PARTNERS</h1>
             <p className="text-sm text-muted-foreground">Property Owner Portal</p>
           </div>
-          <Button variant="outline" onClick={signOut}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Sign Out
-          </Button>
+          <div className="flex items-center gap-2">
+            <NotificationBell />
+            <Button variant="outline" onClick={signOut}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Sign Out
+            </Button>
+          </div>
         </div>
       </header>
 

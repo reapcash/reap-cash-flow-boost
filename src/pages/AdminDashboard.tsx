@@ -2,14 +2,43 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
-import { Loader2, LogOut, FileText, Users, DollarSign, TrendingUp } from 'lucide-react';
+import { Loader2, LogOut, FileText, Users, DollarSign } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { supabase } from '@/integrations/supabase/client';
 import ApplicationReviewQueue from '@/components/admin/ApplicationReviewQueue';
 
 const AdminDashboard = () => {
   const { user, loading, signOut, isAdmin } = useAuth();
   const navigate = useNavigate();
+  const [stats, setStats] = useState({
+    totalApplications: 0,
+    pendingReview: 0,
+    activeUsers: 0,
+    totalFunded: 0,
+  });
+
+  const fetchStats = async () => {
+    try {
+      const [appsResult, pendingResult, usersResult, advancesResult] = await Promise.all([
+        supabase.from('applications').select('id', { count: 'exact', head: true }),
+        supabase.from('applications').select('id', { count: 'exact', head: true }).in('status', ['submitted', 'under_review']),
+        supabase.from('profiles').select('id', { count: 'exact', head: true }),
+        supabase.from('advances').select('disbursed_amount'),
+      ]);
+
+      const totalFunded = advancesResult.data?.reduce((sum, adv) => sum + (adv.disbursed_amount || 0), 0) || 0;
+
+      setStats({
+        totalApplications: appsResult.count || 0,
+        pendingReview: pendingResult.count || 0,
+        activeUsers: usersResult.count || 0,
+        totalFunded,
+      });
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+    }
+  };
 
   useEffect(() => {
     if (!loading && !user) {
@@ -17,6 +46,9 @@ const AdminDashboard = () => {
     }
     if (!loading && user && !isAdmin) {
       navigate('/dashboard');
+    }
+    if (user && isAdmin) {
+      fetchStats();
     }
   }, [user, loading, isAdmin, navigate]);
 
@@ -56,8 +88,8 @@ const AdminDashboard = () => {
               <FileText className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">0</div>
-              <p className="text-xs text-muted-foreground">No applications yet</p>
+              <div className="text-2xl font-bold">{stats.totalApplications}</div>
+              <p className="text-xs text-muted-foreground">All time</p>
             </CardContent>
           </Card>
           
@@ -67,7 +99,7 @@ const AdminDashboard = () => {
               <FileText className="h-4 w-4 text-yellow-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">0</div>
+              <div className="text-2xl font-bold">{stats.pendingReview}</div>
               <p className="text-xs text-muted-foreground">Awaiting review</p>
             </CardContent>
           </Card>
@@ -78,7 +110,7 @@ const AdminDashboard = () => {
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">0</div>
+              <div className="text-2xl font-bold">{stats.activeUsers}</div>
               <p className="text-xs text-muted-foreground">Registered users</p>
             </CardContent>
           </Card>
@@ -89,7 +121,7 @@ const AdminDashboard = () => {
               <DollarSign className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">$0</div>
+              <div className="text-2xl font-bold">${stats.totalFunded.toLocaleString()}</div>
               <p className="text-xs text-muted-foreground">Total advances</p>
             </CardContent>
           </Card>

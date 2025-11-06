@@ -14,6 +14,65 @@ export type Database = {
   }
   public: {
     Tables: {
+      advances: {
+        Row: {
+          amount_repaid: number
+          application_id: string
+          approved_amount: number
+          approved_at: string
+          created_at: string
+          disbursed_amount: number | null
+          disbursed_at: string | null
+          expected_completion_date: string | null
+          id: string
+          repayment_percentage: number
+          status: string
+          total_repayment_amount: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount_repaid?: number
+          application_id: string
+          approved_amount: number
+          approved_at?: string
+          created_at?: string
+          disbursed_amount?: number | null
+          disbursed_at?: string | null
+          expected_completion_date?: string | null
+          id?: string
+          repayment_percentage?: number
+          status?: string
+          total_repayment_amount: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount_repaid?: number
+          application_id?: string
+          approved_amount?: number
+          approved_at?: string
+          created_at?: string
+          disbursed_amount?: number | null
+          disbursed_at?: string | null
+          expected_completion_date?: string | null
+          id?: string
+          repayment_percentage?: number
+          status?: string
+          total_repayment_amount?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "advances_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       airbnb_bookings: {
         Row: {
           booking_end_date: string
@@ -323,6 +382,57 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          read: boolean
+          related_advance_id: string | null
+          related_application_id: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          read?: boolean
+          related_advance_id?: string | null
+          related_application_id?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          read?: boolean
+          related_advance_id?: string | null
+          related_application_id?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_related_advance_id_fkey"
+            columns: ["related_advance_id"]
+            isOneToOne: false
+            referencedRelation: "advances"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_related_application_id_fkey"
+            columns: ["related_application_id"]
+            isOneToOne: false
+            referencedRelation: "applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string | null
@@ -438,6 +548,57 @@ export type Database = {
             columns: ["application_id"]
             isOneToOne: false
             referencedRelation: "applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      repayment_transactions: {
+        Row: {
+          advance_id: string
+          amount: number
+          booking_id: string | null
+          created_at: string
+          id: string
+          notes: string | null
+          source: string
+          stripe_payment_id: string | null
+          transaction_date: string
+        }
+        Insert: {
+          advance_id: string
+          amount: number
+          booking_id?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          source: string
+          stripe_payment_id?: string | null
+          transaction_date?: string
+        }
+        Update: {
+          advance_id?: string
+          amount?: number
+          booking_id?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          source?: string
+          stripe_payment_id?: string | null
+          transaction_date?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "repayment_transactions_advance_id_fkey"
+            columns: ["advance_id"]
+            isOneToOne: false
+            referencedRelation: "advances"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "repayment_transactions_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "airbnb_bookings"
             referencedColumns: ["id"]
           },
         ]
