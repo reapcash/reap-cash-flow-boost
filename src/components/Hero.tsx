@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import heroVisual from "@/assets/hero-visual.png";
 const Hero = () => {
   return <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
@@ -51,7 +52,7 @@ const Hero = () => {
                 <a href="#apply">Apply Now</a>
               </Button>
               <Button size="lg" variant="outline" className="text-base px-8 border-2 border-white/30 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm" asChild>
-                <a href="#how-it-works">Contact Us</a>
+                <Link to="/contact">Contact Us</Link>
               </Button>
             </div>
 
