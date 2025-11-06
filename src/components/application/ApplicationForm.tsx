@@ -12,6 +12,7 @@ import STRDetailsSection from './STRDetailsSection';
 import FinancialInformationSection from './FinancialInformationSection';
 import ConsentSection from './ConsentSection';
 import DocumentUploadSection from './DocumentUploadSection';
+import AirbnbConnectionSection from './AirbnbConnectionSection';
 
 const applicationSchema = z.object({
   // Property Information

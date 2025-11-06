@@ -14,6 +14,100 @@ export type Database = {
   }
   public: {
     Tables: {
+      airbnb_bookings: {
+        Row: {
+          booking_end_date: string
+          booking_start_date: string
+          booking_status: string | null
+          connection_id: string
+          created_at: string
+          estimated_revenue: number | null
+          guest_name: string | null
+          id: string
+          nights: number | null
+          raw_data: Json | null
+          updated_at: string
+        }
+        Insert: {
+          booking_end_date: string
+          booking_start_date: string
+          booking_status?: string | null
+          connection_id: string
+          created_at?: string
+          estimated_revenue?: number | null
+          guest_name?: string | null
+          id?: string
+          nights?: number | null
+          raw_data?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          booking_end_date?: string
+          booking_start_date?: string
+          booking_status?: string | null
+          connection_id?: string
+          created_at?: string
+          estimated_revenue?: number | null
+          guest_name?: string | null
+          id?: string
+          nights?: number | null
+          raw_data?: Json | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "airbnb_bookings_connection_id_fkey"
+            columns: ["connection_id"]
+            isOneToOne: false
+            referencedRelation: "airbnb_connections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      airbnb_connections: {
+        Row: {
+          created_at: string
+          ical_url: string
+          id: string
+          last_synced_at: string | null
+          listing_name: string | null
+          property_id: string
+          sync_error: string | null
+          sync_status: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          ical_url: string
+          id?: string
+          last_synced_at?: string | null
+          listing_name?: string | null
+          property_id: string
+          sync_error?: string | null
+          sync_status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          ical_url?: string
+          id?: string
+          last_synced_at?: string | null
+          listing_name?: string | null
+          property_id?: string
+          sync_error?: string | null
+          sync_status?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "airbnb_connections_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       application_notes: {
         Row: {
           admin_id: string | null

@@ -1,1 +1,4 @@
 project_id = "ifyqxztzhjayqnrfttsr"
+
+[functions.sync-airbnb-ical]
+verify_jwt = true

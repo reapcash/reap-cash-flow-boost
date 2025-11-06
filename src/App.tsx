@@ -8,6 +8,7 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import ApplicationNew from "./pages/ApplicationNew";
 import AdminDashboard from "./pages/AdminDashboard";
+import ManageAirbnb from "./pages/ManageAirbnb";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/application/new" element={<ApplicationNew />} />
+          <Route path="/manage-airbnb" element={<ManageAirbnb />} />
           <Route path="/admin" element={<AdminDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
