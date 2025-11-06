@@ -1,5 +1,3 @@
-import { Shield, Zap, Link, TrendingUp, Database, Users } from "lucide-react";
-
 const WhyReap = () => {
   const comparisons = [
     {
@@ -21,29 +19,6 @@ const WhyReap = () => {
     {
       traditional: "Bank-centric",
       reap: "Platform-centric (MLS, Airbnb, QuickBooks)"
-    }
-  ];
-
-  const barriers = [
-    {
-      icon: Link,
-      title: "Cross-Vertical Integration",
-      description: "Connects to Airbnb, MLS, and QuickBooks together"
-    },
-    {
-      icon: Shield,
-      title: "Receivables Model",
-      description: "Avoids lending hurdles through receivables purchases"
-    },
-    {
-      icon: Zap,
-      title: "Fintech Infrastructure",
-      description: "API-driven with Plaid, DocuSign, and HubSpot"
-    },
-    {
-      icon: Users,
-      title: "Real Estate Specialization",
-      description: "Built for commission, escrow, and booking cycles"
     }
   ];
 
@@ -83,36 +58,6 @@ const WhyReap = () => {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-
-        {/* Competitive Barriers */}
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h3 className="text-4xl mb-4">Built to Last</h3>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              <span className="text-primary">REAP</span>'s infrastructure creates a moat competitors can't easily replicate
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {barriers.map((barrier) => {
-              const Icon = barrier.icon;
-              return (
-                <div
-                  key={barrier.title}
-                  className="bg-card rounded-xl p-6 border border-border hover:border-primary/50 transition-all"
-                >
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
-                    <Icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <h4 className="text-lg font-semibold mb-2">{barrier.title}</h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {barrier.description}
-                  </p>
-                </div>
-              );
-            })}
           </div>
         </div>
       </div>
