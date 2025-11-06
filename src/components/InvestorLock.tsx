@@ -38,7 +38,7 @@ const InvestorLock = ({ onUnlock }: InvestorLockProps) => {
             Building the Future of Real Estate Finance
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto mb-12">
-            REAP is transforming how real estate professionals access capital and manage their finances
+            We unlock your earned income so you can scale your operations.
           </p>
         </section>
 
