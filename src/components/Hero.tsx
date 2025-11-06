@@ -60,7 +60,7 @@ const Hero = () => {
                 className="text-lg px-10 py-7 bg-white text-secondary hover:bg-white/90 shadow-2xl hover:shadow-3xl transition-all animate-glow-pulse group" 
                 asChild
               >
-                <a href="#apply" className="flex items-center gap-2">
+                <a href="/auth" className="flex items-center gap-2">
                   Apply Now
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
