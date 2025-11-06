@@ -212,7 +212,7 @@ const Pricing = () => {
             className="h-16 px-8 text-lg shadow-2xl animate-glow-pulse bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
             asChild
           >
-            <a href="/auth" className="flex items-center gap-3">
+            <a href="/auth?mode=signup" className="flex items-center gap-3">
               Apply Now
               <ArrowRight className="w-5 h-5" />
             </a>

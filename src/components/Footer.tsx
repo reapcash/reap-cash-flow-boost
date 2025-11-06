@@ -14,7 +14,7 @@ const Footer = () => {
       href: "#industries"
     }, {
       name: "Apply Now",
-      href: "/auth"
+      href: "/auth?mode=signup"
     }],
     resources: [{
       name: "FAQs",

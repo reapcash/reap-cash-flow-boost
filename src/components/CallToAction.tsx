@@ -18,7 +18,7 @@ const CallToAction = () => {
               className="text-base px-10 py-6 h-auto"
               asChild
             >
-              <a href="/auth">Apply Now</a>
+              <a href="/auth?mode=signup">Apply Now</a>
             </Button>
             <Button 
               size="lg" 
