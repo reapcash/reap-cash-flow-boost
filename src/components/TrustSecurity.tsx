@@ -11,7 +11,7 @@ const TrustSecurity = () => {
             Secure. Compliant. Built for Professionals.
           </h2>
           
-          <p className="text-xl lg:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed normal-case">REAP operates on encrypted, compliant financial infrastructure. We partner with industry leaders like Stripe, DocuSign, and leading technology to keep your data safe and your transactions fast.</p>
+          <p className="text-xl lg:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed normal-case"><span className="text-primary">REAP</span> operates on encrypted, compliant financial infrastructure. We partner with industry leaders like Stripe, DocuSign, and leading technology to keep your data safe and your transactions fast.</p>
 
         </div>
       </div>

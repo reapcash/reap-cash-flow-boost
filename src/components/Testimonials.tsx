@@ -55,7 +55,14 @@ const Testimonials = () => {
             
             <div className="relative z-10 min-h-[200px] flex flex-col justify-center">
               <p className="text-2xl lg:text-3xl text-foreground mb-8 italic leading-relaxed normal-case">
-                "{testimonials[currentIndex].quote}"
+                "{testimonials[currentIndex].quote.split('REAP').map((part, i, arr) => 
+                  i < arr.length - 1 ? (
+                    <span key={i}>
+                      {part}
+                      <span className="text-primary">REAP</span>
+                    </span>
+                  ) : part
+                )}"
               </p>
               
               <div className="space-y-1">

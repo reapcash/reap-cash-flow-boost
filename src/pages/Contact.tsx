@@ -131,7 +131,7 @@ const Contact = () => {
                           href="mailto:support@reap.cash" 
                           className="text-sm text-muted-foreground hover:text-primary"
                         >
-                          support@reap.cash
+                          support@<span className="text-primary">reap</span>.cash
                         </a>
                       </div>
                     </div>

@@ -36,7 +36,7 @@ const AdminDashboard = () => {
       <header className="bg-background border-b">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-bold">REAP Admin Dashboard</h1>
+            <h1 className="text-xl font-bold"><span className="text-primary">REAP</span> Admin Dashboard</h1>
             <p className="text-sm text-muted-foreground">Manage applications and users</p>
           </div>
           <Button variant="outline" onClick={signOut}>

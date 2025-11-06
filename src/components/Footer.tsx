@@ -58,9 +58,9 @@ const Footer = () => {
           {/* Brand Column */}
           <div>
             <div className="mb-4">
-              <span className="text-2xl font-bold text-primary">REAP.CASH</span>
+              <span className="text-2xl font-bold text-primary"><span className="text-primary">REAP</span>.CASH</span>
               <span className="block text-sm text-muted-foreground mt-1">Real Estate Advance Partners.com
-support@reap.cash</span>
+support@<span className="text-primary">reap</span>.cash</span>
             </div>
             <p className="text-base text-muted-foreground max-w-xs normal-case leading-relaxed">
               Empowering professionals with smarter cash flow. Built in New York.
@@ -113,7 +113,7 @@ support@reap.cash</span>
         {/* Bottom Bar */}
         <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground normal-case">
-            © 2025 REAP Cash. All rights reserved. Licensed financial technology provider.
+            © 2025 <span className="text-primary">REAP</span> Cash. All rights reserved. Licensed financial technology provider.
           </p>
 
           {/* Social Links */}

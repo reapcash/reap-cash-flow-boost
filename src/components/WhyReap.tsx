@@ -56,7 +56,7 @@ const WhyReap = () => {
             Not a Lender. A Cashflow Platform.
           </h2>
           <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed">
-            REAP purchases your verified future income at a transparent discount — no credit checks, no compounding interest, no paperwork delays.
+            <span className="text-primary">REAP</span> purchases your verified future income at a transparent discount — no credit checks, no compounding interest, no paperwork delays.
           </p>
         </div>
 
@@ -68,7 +68,7 @@ const WhyReap = () => {
                 <h3 className="text-2xl text-muted-foreground">Traditional Finance</h3>
               </div>
               <div className="px-8 py-6">
-                <h3 className="text-2xl text-primary font-semibold">REAP's Model</h3>
+                <h3 className="text-2xl text-primary font-semibold"><span className="text-primary">REAP</span>'s Model</h3>
               </div>
             </div>
             <div className="divide-y divide-border">
@@ -91,7 +91,7 @@ const WhyReap = () => {
           <div className="text-center mb-12">
             <h3 className="text-4xl mb-4">Built to Last</h3>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              REAP's infrastructure creates a moat competitors can't easily replicate
+              <span className="text-primary">REAP</span>'s infrastructure creates a moat competitors can't easily replicate
             </p>
           </div>
 

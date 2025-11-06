@@ -179,7 +179,7 @@ const Pricing = () => {
 
               {/* Fee Structure Info */}
               <div className="border-t border-border pt-8 mt-10">
-                <h4 className="text-lg mb-4 font-semibold">Why REAP is the Ideal Financial Solution for Real Estate Professionals</h4>
+                <h4 className="text-lg mb-4 font-semibold">Why <span className="text-primary">REAP</span> is the Ideal Financial Solution for Real Estate Professionals</h4>
                 <ul className="space-y-3 text-base text-muted-foreground normal-case">
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">✓</span>

@@ -29,10 +29,10 @@ const Benefits = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-5xl lg:text-6xl mb-6">
-            What REAP Does Differently
+            What <span className="text-primary">REAP</span> Does Differently
           </h2>
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            REAP connects to your income sources, verifies upcoming payments, and advances you cash today — settling automatically when income arrives.
+            <span className="text-primary">REAP</span> connects to your income sources, verifies upcoming payments, and advances you cash today — settling automatically when income arrives.
           </p>
         </div>
 
