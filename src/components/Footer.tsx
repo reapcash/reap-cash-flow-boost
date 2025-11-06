@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Link } from "react-router-dom";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const footerLinks = {
@@ -20,7 +21,8 @@ const Footer = () => {
       href: "#faqs"
     }, {
       name: "Contact",
-      href: "#contact"
+      href: "/contact",
+      isRoute: true
     }, {
       name: "Careers",
       href: "#careers"
@@ -82,9 +84,15 @@ support@reap.cash</span>
             <h3 className="text-lg mb-4">Resources</h3>
             <ul className="space-y-2">
               {footerLinks.resources.map(link => <li key={link.name}>
-                  <a href={link.href} className="text-base text-muted-foreground hover:text-primary transition-colors normal-case">
-                    {link.name}
-                  </a>
+                  {link.isRoute ? (
+                    <Link to={link.href} className="text-base text-muted-foreground hover:text-primary transition-colors normal-case">
+                      {link.name}
+                    </Link>
+                  ) : (
+                    <a href={link.href} className="text-base text-muted-foreground hover:text-primary transition-colors normal-case">
+                      {link.name}
+                    </a>
+                  )}
                 </li>)}
             </ul>
           </div>

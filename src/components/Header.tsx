@@ -15,7 +15,8 @@ const Header = () => {
     href: "#faqs"
   }, {
     name: "Contact",
-    href: "#contact"
+    href: "/contact",
+    isRoute: true
   }];
   return <header className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4">
@@ -49,9 +50,17 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map(link => <a key={link.name} href={link.href} className="text-foreground hover:text-primary transition-colors normal-case">
-                {link.name}
-              </a>)}
+            {navLinks.map(link => 
+              link.isRoute ? (
+                <Link key={link.name} to={link.href} className="text-foreground hover:text-primary transition-colors normal-case">
+                  {link.name}
+                </Link>
+              ) : (
+                <a key={link.name} href={link.href} className="text-foreground hover:text-primary transition-colors normal-case">
+                  {link.name}
+                </a>
+              )
+            )}
           </nav>
 
           {/* Desktop CTAs */}
@@ -73,9 +82,17 @@ const Header = () => {
         {/* Mobile Menu */}
         {isMenuOpen && <div className="lg:hidden py-4 border-t border-border">
             <nav className="flex flex-col gap-4">
-              {navLinks.map(link => <a key={link.name} href={link.href} className="text-foreground hover:text-primary transition-colors py-2 normal-case" onClick={() => setIsMenuOpen(false)}>
-                  {link.name}
-                </a>)}
+              {navLinks.map(link => 
+                link.isRoute ? (
+                  <Link key={link.name} to={link.href} className="text-foreground hover:text-primary transition-colors py-2 normal-case" onClick={() => setIsMenuOpen(false)}>
+                    {link.name}
+                  </Link>
+                ) : (
+                  <a key={link.name} href={link.href} className="text-foreground hover:text-primary transition-colors py-2 normal-case" onClick={() => setIsMenuOpen(false)}>
+                    {link.name}
+                  </a>
+                )
+              )}
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
                 <Button variant="outline" asChild className="w-full">
                   <Link to="/auth">Login</Link>
