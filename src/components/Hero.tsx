@@ -49,8 +49,7 @@ const Hero = () => {
                 <span className="text-white block mt-2">Into Instant Capital</span>
               </h1>
               <p className="text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed normal-case">
-                Get instant cash advances on confirmed commissions, rentals, and payments. 
-                <span className="block mt-2 text-white/80">No waiting. No hassle. Just fast funding.</span>
+                Get instant cash advances on confirmed commissions, rentals, and payments. No waiting. No hassle. Just fast funding.
               </p>
             </div>
 
@@ -103,39 +102,6 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Stats Bar */}
-            <div className="flex flex-wrap items-center justify-center gap-8 pt-8 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-              <div className="text-center">
-                <div className="text-4xl lg:text-5xl font-bold text-white mb-1">$5M+</div>
-                <div className="text-sm text-white/60 normal-case">Advanced to Professionals</div>
-              </div>
-              <div className="hidden sm:block w-px h-16 bg-white/20" />
-              <div className="text-center">
-                <div className="text-4xl lg:text-5xl font-bold text-white mb-1">500+</div>
-                <div className="text-sm text-white/60 normal-case">Happy Clients</div>
-              </div>
-              <div className="hidden sm:block w-px h-16 bg-white/20" />
-              <div className="text-center">
-                <div className="text-4xl lg:text-5xl font-bold text-white mb-1">24hrs</div>
-                <div className="text-sm text-white/60 normal-case">Average Funding Time</div>
-              </div>
-            </div>
-
-            {/* Trust Badges */}
-            <div className="pt-12 animate-slide-up" style={{ animationDelay: '0.5s' }}>
-              <p className="text-sm text-white/60 normal-case mb-6">Trusted by professionals from leading brokerages</p>
-              <div className="flex flex-wrap items-center justify-center gap-6">
-                <div className="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/15 transition-all">
-                  <span className="text-white font-semibold text-lg">Compass</span>
-                </div>
-                <div className="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/15 transition-all">
-                  <span className="text-white font-semibold text-lg">eXp Realty</span>
-                </div>
-                <div className="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/15 transition-all">
-                  <span className="text-white font-semibold text-lg">Keller Williams</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
