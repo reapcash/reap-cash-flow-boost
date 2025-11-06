@@ -154,8 +154,11 @@ Deno.serve(async (req) => {
       throw new Error('Connection not found');
     }
 
-    // Verify user owns this connection
-    if (connection.property.application.user_id !== user.id) {
+    // Verify user owns this connection (property and application are arrays due to inner join)
+    const propertyData = connection.property as any;
+    const applicationData = propertyData?.[0]?.application?.[0];
+    
+    if (!applicationData || applicationData.user_id !== user.id) {
       console.error(`Unauthorized access attempt by user ${user.id} for connection ${connectionId}`);
       throw new Error('Unauthorized: You do not own this connection');
     }
@@ -253,7 +256,7 @@ Deno.serve(async (req) => {
       );
     } catch (fetchError) {
       clearTimeout(timeoutId);
-      if (fetchError.name === 'AbortError') {
+      if (fetchError instanceof Error && fetchError.name === 'AbortError') {
         throw new Error('Request timeout: iCal fetch took too long');
       }
       throw fetchError;
