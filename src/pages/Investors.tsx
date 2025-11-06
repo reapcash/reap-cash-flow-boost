@@ -507,7 +507,7 @@ const Investors = () => {
               </div>
 
               <div className="flex flex-wrap justify-center gap-4">
-                <Button size="lg" variant="outline" className="text-lg px-8 border-white text-white hover:bg-white/10" asChild>
+                <Button size="lg" variant="outline" className="text-lg px-8 border-white/30 text-white bg-white/10 hover:bg-white/20 backdrop-blur" asChild>
                   <a href="/contact">Schedule Due Diligence Call</a>
                 </Button>
               </div>
