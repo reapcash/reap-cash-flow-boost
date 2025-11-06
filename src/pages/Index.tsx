@@ -17,9 +17,9 @@ const Index = () => {
       <main>
         <Hero />
         <HowItWorks />
+        <WhyReap />
         <WhoWeServe />
         <Benefits />
-        <WhyReap />
         <Pricing />
         <TrustSecurity />
         <Testimonials />
