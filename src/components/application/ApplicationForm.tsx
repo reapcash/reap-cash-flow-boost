@@ -13,6 +13,7 @@ import FinancialInformationSection from './FinancialInformationSection';
 import ConsentSection from './ConsentSection';
 import DocumentUploadSection from './DocumentUploadSection';
 import AirbnbConnectionSection from './AirbnbConnectionSection';
+import BookingSelectionSection from './BookingSelectionSection';
 
 const applicationSchema = z.object({
   // Property Information
@@ -122,6 +123,19 @@ const ApplicationForm = () => {
 
               <TabsContent value="str" className="space-y-6 pt-6">
                 <STRDetailsSection form={form} />
+                
+                {/* Show booking selection if property exists */}
+                {form.watch('properties')?.[0]?.propertyAddress && (
+                  <div className="mt-8 pt-8 border-t">
+                    <BookingSelectionSection 
+                      propertyId={form.watch('properties')?.[0]?.propertyAddress}
+                      onSelectionChange={(bookingIds, totalRevenue) => {
+                        console.log('Selected bookings:', bookingIds, 'Total revenue:', totalRevenue);
+                        // You can update form state here if needed
+                      }}
+                    />
+                  </div>
+                )}
               </TabsContent>
 
               <TabsContent value="financial" className="space-y-6 pt-6">

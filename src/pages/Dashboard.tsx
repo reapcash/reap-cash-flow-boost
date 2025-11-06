@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Loader2, LogOut, FileText, Plus } from 'lucide-react';
+import AirbnbConnectionStatus from '@/components/dashboard/AirbnbConnectionStatus';
 
 const Dashboard = () => {
   const { user, loading, signOut, isAdmin } = useAuth();
@@ -77,7 +78,7 @@ const Dashboard = () => {
         </div>
 
         {/* Applications List */}
-        <div className="bg-background rounded-lg border p-6">
+        <div className="bg-background rounded-lg border p-6 mb-8">
           <h3 className="text-lg font-semibold mb-4">Recent Applications</h3>
           <div className="text-center py-12 text-muted-foreground">
             <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
@@ -85,6 +86,9 @@ const Dashboard = () => {
             <p className="text-sm">Click "New Application" to get started</p>
           </div>
         </div>
+
+        {/* Airbnb Connection Status */}
+        <AirbnbConnectionStatus />
       </main>
     </div>
   );
