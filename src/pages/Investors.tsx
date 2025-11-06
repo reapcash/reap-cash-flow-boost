@@ -1,9 +1,34 @@
+import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import InvestorLock from '@/components/InvestorLock';
 import { TrendingUp, DollarSign, Building2, Users, Zap, Lock, BarChart3, Target, Rocket, ArrowRight, CheckCircle2, Globe, PieChart, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Investors = () => {
+  const [isUnlocked, setIsUnlocked] = useState(false);
+
+  useEffect(() => {
+    // Check if previously unlocked
+    const unlocked = localStorage.getItem('investor_access') === 'true';
+    setIsUnlocked(unlocked);
+  }, []);
+
+  const handleUnlock = () => {
+    localStorage.setItem('investor_access', 'true');
+    setIsUnlocked(true);
+  };
+
+  if (!isUnlocked) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <InvestorLock onUnlock={handleUnlock} />
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-muted/20">
       <Header />
