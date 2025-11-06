@@ -14,7 +14,7 @@ const Header = () => {
     name: "FAQs",
     href: "#faqs"
   }, {
-    name: "Contact",
+    name: "Contact Us",
     href: "/contact",
     isRoute: true
   }];
