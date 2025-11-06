@@ -23,7 +23,7 @@ const WhyReap = () => {
   ];
 
   return (
-    <section className="pt-24 pb-28 bg-muted/30">
+    <section className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16 max-w-3xl mx-auto">

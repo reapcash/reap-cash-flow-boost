@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 const CallToAction = () => {
-  return <section id="apply" className="pt-24 pb-28 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground">
+  return <section id="apply" className="py-20 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <h2 className="text-5xl lg:text-6xl">

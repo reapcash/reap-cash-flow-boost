@@ -46,10 +46,10 @@ const Pricing = () => {
 
   return (
     <>
-      <section id="simulate" className="pt-24 pb-28 bg-muted relative">
+      <section id="simulate" className="py-20 bg-muted relative">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-16">
               <h2 className="text-5xl lg:text-6xl mb-6">
                 Estimate Your Advance
               </h2>

@@ -28,7 +28,7 @@ const Testimonials = () => {
   const previous = () => {
     setCurrentIndex(prev => (prev - 1 + testimonials.length) % testimonials.length);
   };
-  return <section className="pt-24 pb-28 bg-muted">
+  return <section className="py-20 bg-muted">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-5xl lg:text-6xl mb-6">

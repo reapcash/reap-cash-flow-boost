@@ -59,7 +59,7 @@ const industries = [{
 }];
 const WhoWeServe = () => {
   const [selectedIndustry, setSelectedIndustry] = useState(industries[0]);
-  return <section id="industries" className="pt-24 pb-28 bg-background">
+  return <section id="industries" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-5xl lg:text-6xl mb-6">
