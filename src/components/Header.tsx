@@ -12,7 +12,8 @@ const Header = () => {
     href: "#simulate"
   }, {
     name: "FAQs",
-    href: "#faqs"
+    href: "/faq",
+    isRoute: true
   }, {
     name: "Contact Us",
     href: "/contact",

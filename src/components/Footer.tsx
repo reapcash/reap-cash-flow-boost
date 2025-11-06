@@ -18,7 +18,8 @@ const Footer = () => {
     }],
     resources: [{
       name: "FAQs",
-      href: "#faqs"
+      href: "/faq",
+      isRoute: true
     }, {
       name: "Contact",
       href: "/contact",
