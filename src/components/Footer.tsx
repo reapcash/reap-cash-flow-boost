@@ -62,9 +62,7 @@ const Footer = () => {
               <span className="block text-sm text-muted-foreground mt-1">Real Estate Advance Partners.com
 support@<span className="text-primary">reap</span>.cash</span>
             </div>
-            <p className="text-base text-muted-foreground max-w-xs normal-case leading-relaxed">
-              Empowering professionals with smarter cash flow. Built in New York.
-            </p>
+            <p className="text-base text-muted-foreground max-w-xs normal-case leading-relaxed">Empowering professionals with smarter cash flow.</p>
           </div>
 
           {/* Quick Links Column */}
@@ -84,15 +82,11 @@ support@<span className="text-primary">reap</span>.cash</span>
             <h3 className="text-lg mb-4">Resources</h3>
             <ul className="space-y-2">
               {footerLinks.resources.map(link => <li key={link.name}>
-                  {link.isRoute ? (
-                    <Link to={link.href} className="text-base text-muted-foreground hover:text-primary transition-colors normal-case">
+                  {link.isRoute ? <Link to={link.href} className="text-base text-muted-foreground hover:text-primary transition-colors normal-case">
                       {link.name}
-                    </Link>
-                  ) : (
-                    <a href={link.href} className="text-base text-muted-foreground hover:text-primary transition-colors normal-case">
+                    </Link> : <a href={link.href} className="text-base text-muted-foreground hover:text-primary transition-colors normal-case">
                       {link.name}
-                    </a>
-                  )}
+                    </a>}
                 </li>)}
             </ul>
           </div>
