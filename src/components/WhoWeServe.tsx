@@ -61,11 +61,11 @@ const WhoWeServe = () => {
   const [selectedIndustry, setSelectedIndustry] = useState(industries[0]);
   return <section id="industries" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl lg:text-6xl mb-6">
+        <div className="text-center mb-16 px-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6">
             Built for Real Estate Professionals
           </h2>
-          <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             We unlock your earned income so you can scale your operations.
           </p>
         </div>
@@ -95,10 +95,10 @@ const WhoWeServe = () => {
           </div>
 
           {/* Details - Right Side */}
-          <div className="bg-card border border-border rounded-2xl p-8 lg:p-12">
-            <div className="flex items-start gap-8 mb-8">
+          <div className="bg-card border border-border rounded-2xl p-6 sm:p-8 lg:p-12">
+            <div className="flex items-start gap-4 sm:gap-8 mb-8">
               <div className="flex-1">
-                <h3 className="text-3xl lg:text-4xl">
+                <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl break-words">
                   {selectedIndustry.sectionTitle}
                 </h3>
               </div>

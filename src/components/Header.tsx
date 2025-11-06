@@ -26,8 +26,8 @@ const Header = () => {
             <div className="flex items-center gap-2">
               <div className="relative">
                 <div>
-                  <span className="text-2xl text-primary normal-case"><span className="text-primary">REAP</span>.CASH</span>
-                  <span className="block text-xs text-muted-foreground normal-case">Real Estate Advance Partners</span>
+                  <span className="text-xl sm:text-2xl text-primary normal-case break-words"><span className="text-primary">REAP</span>.CASH</span>
+                  <span className="block text-xs text-muted-foreground normal-case hidden sm:block">Real Estate Advance Partners</span>
                 </div>
                 {/* Dollar bills falling animation */}
                 <div className="absolute -top-8 left-0 w-full overflow-hidden h-32 pointer-events-none">

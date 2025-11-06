@@ -112,14 +112,28 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-['Inter',sans-serif];
+    overflow-x: hidden;
   }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-['Lato',sans-serif] font-bold;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   
   button, .btn {
     @apply font-['Lato',sans-serif] font-semibold uppercase;
+  }
+
+  /* Prevent text overflow globally */
+  p, span, div {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Prevent horizontal overflow */
+  html {
+    overflow-x: hidden;
   }
 }
 

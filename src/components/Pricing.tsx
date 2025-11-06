@@ -49,11 +49,11 @@ const Pricing = () => {
       <section id="simulate" className="py-20 bg-muted relative">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-5xl lg:text-6xl mb-6">
+            <div className="text-center mb-16 px-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6">
                 Estimate Your Advance
               </h2>
-              <p className="text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                 See exactly how much cash you can unlock today. Adjust the inputs and watch your advance update in real-time.
               </p>
             </div>
@@ -155,10 +155,10 @@ const Pricing = () => {
                     
                     <div className="space-y-6">
                       {/* Main Focus: Cash to You Today */}
-                      <div className="text-center p-10 bg-gradient-to-br from-primary via-primary to-primary/90 rounded-2xl border-4 border-primary shadow-2xl">
-                        <p className="text-lg text-primary-foreground/90 mb-3 normal-case font-semibold tracking-wide">Cash to You Today</p>
-                        <p className="text-6xl lg:text-7xl font-bold text-primary-foreground mb-2">${calculatedAdvance.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
-                        <p className="text-sm text-primary-foreground/80 normal-case">Available immediately in your account</p>
+                      <div className="text-center p-6 sm:p-8 md:p-10 bg-gradient-to-br from-primary via-primary to-primary/90 rounded-2xl border-4 border-primary shadow-2xl">
+                        <p className="text-base sm:text-lg text-primary-foreground/90 mb-3 normal-case font-semibold tracking-wide">Cash to You Today</p>
+                        <p className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-2 break-words">${calculatedAdvance.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
+                        <p className="text-xs sm:text-sm text-primary-foreground/80 normal-case">Available immediately in your account</p>
                       </div>
                       
                       {/* Secondary Details */}

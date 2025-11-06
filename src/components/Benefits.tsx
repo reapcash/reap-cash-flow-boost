@@ -27,11 +27,11 @@ const Benefits = () => {
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl lg:text-6xl mb-6">
+        <div className="text-center mb-16 px-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6">
             What <span className="text-primary">REAP</span> Does Differently
           </h2>
-          <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             <span className="text-primary">REAP</span> connects to your income sources, verifies upcoming payments, and advances you cash today — settling automatically when income arrives.
           </p>
         </div>

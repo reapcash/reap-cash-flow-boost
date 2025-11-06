@@ -28,7 +28,7 @@ const HowItWorks = () => {
     <section id="how-it-works" className="py-20 bg-muted">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-5xl lg:text-6xl mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6">
             How <span className="text-primary">REAP</span> Works
           </h2>
         </div>

@@ -30,8 +30,8 @@ const Testimonials = () => {
   };
   return <section className="py-20 bg-muted">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl lg:text-6xl mb-6">
+        <div className="text-center mb-16 px-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6">
             What Professionals Are Saying
           </h2>
           
@@ -41,8 +41,8 @@ const Testimonials = () => {
           <div className="bg-card border border-border rounded-3xl p-8 lg:p-12 relative">
             <Quote className="absolute top-8 left-8 w-12 h-12 text-primary/20" />
             
-            <div className="relative z-10 min-h-[200px] flex flex-col justify-center">
-              <p className="text-2xl lg:text-3xl text-foreground mb-8 italic leading-relaxed normal-case">
+            <div className="relative z-10 min-h-[200px] flex flex-col justify-center px-4">
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-foreground mb-8 italic leading-relaxed normal-case break-words">
                 "{testimonials[currentIndex].quote.split('REAP').map((part, i, arr) => i < arr.length - 1 ? <span key={i}>
                       {part}
                       <span className="text-primary">REAP</span>

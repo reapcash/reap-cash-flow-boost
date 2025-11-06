@@ -43,12 +43,12 @@ const Hero = () => {
 
             {/* Main Headline */}
             <div className="space-y-6 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-              <h1 className="text-6xl lg:text-7xl xl:text-8xl leading-tight font-bold">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-tight font-bold">
                 <span className="text-white">Turn Your </span>
                 <span className="block text-gradient-primary mt-2">Real Estate Income</span>
                 <span className="text-white block mt-2">Into Instant Capital</span>
               </h1>
-              <p className="text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed normal-case">
+              <p className="text-lg sm:text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed normal-case px-4">
                 Get instant cash advances on confirmed commissions, rentals, and payments. No waiting. No hassle. Just fast funding.
               </p>
             </div>
