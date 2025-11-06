@@ -150,7 +150,10 @@ export type Database = {
           id: string
           preferred_advance_amount: number | null
           repayment_terms: Database["public"]["Enums"]["repayment_terms"] | null
+          requested_advance_amount: number | null
           reviewed_at: string | null
+          selected_booking_ids: string[] | null
+          selected_bookings_revenue: number | null
           signature_data: string | null
           signature_date: string | null
           status: Database["public"]["Enums"]["application_status"]
@@ -168,7 +171,10 @@ export type Database = {
           repayment_terms?:
             | Database["public"]["Enums"]["repayment_terms"]
             | null
+          requested_advance_amount?: number | null
           reviewed_at?: string | null
+          selected_booking_ids?: string[] | null
+          selected_bookings_revenue?: number | null
           signature_data?: string | null
           signature_date?: string | null
           status?: Database["public"]["Enums"]["application_status"]
@@ -186,7 +192,10 @@ export type Database = {
           repayment_terms?:
             | Database["public"]["Enums"]["repayment_terms"]
             | null
+          requested_advance_amount?: number | null
           reviewed_at?: string | null
+          selected_booking_ids?: string[] | null
+          selected_bookings_revenue?: number | null
           signature_data?: string | null
           signature_date?: string | null
           status?: Database["public"]["Enums"]["application_status"]

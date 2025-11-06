@@ -6,11 +6,13 @@ import { Loader2, ArrowLeft } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import AirbnbConnectionSection from '@/components/application/AirbnbConnectionSection';
 import { Card } from '@/components/ui/card';
+import AirbnbSetupGuide from '@/components/application/AirbnbSetupGuide';
 
 const ManageAirbnb = () => {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const propertyId = searchParams.get('propertyId');
   const applicationId = searchParams.get('applicationId');
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,18 +24,78 @@ const ManageAirbnb = () => {
   }, [user, authLoading, navigate]);
 
   useEffect(() => {
-    if (user && applicationId) {
-      loadProperties();
+    if (user) {
+      if (propertyId) {
+        // Load single property
+        loadSingleProperty();
+      } else if (applicationId) {
+        // Load properties for application
+        loadPropertiesByApplication();
+      } else {
+        // Load all properties for user
+        loadAllProperties();
+      }
     }
-  }, [user, applicationId]);
+  }, [user, propertyId, applicationId]);
 
-  const loadProperties = async () => {
+  const loadSingleProperty = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .eq('id', propertyId)
+        .single();
+
+      if (error) throw error;
+
+      setProperties(data ? [data] : []);
+    } catch (error) {
+      console.error('Error loading property:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadPropertiesByApplication = async () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
         .from('properties')
         .select('*')
         .eq('application_id', applicationId);
+
+      if (error) throw error;
+
+      setProperties(data || []);
+    } catch (error) {
+      console.error('Error loading properties:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadAllProperties = async () => {
+    try {
+      setLoading(true);
+      
+      // Get user's applications first
+      const { data: applications, error: appError } = await supabase
+        .from('applications')
+        .select('id');
+
+      if (appError) throw appError;
+
+      if (!applications || applications.length === 0) {
+        setProperties([]);
+        return;
+      }
+
+      // Get all properties for these applications
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .in('application_id', applications.map(a => a.id));
 
       if (error) throw error;
 
@@ -55,12 +117,12 @@ const ManageAirbnb = () => {
 
   if (!user) return null;
 
-  if (!applicationId) {
+  if (!propertyId && !applicationId && properties.length === 0 && !loading) {
     return (
       <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <Card className="p-6 max-w-md">
           <p className="text-center text-muted-foreground">
-            No application selected. Please go back to your dashboard.
+            No properties found. Please create an application first.
           </p>
           <Button className="mt-4 w-full" onClick={() => navigate('/dashboard')}>
             Back to Dashboard
@@ -89,6 +151,11 @@ const ManageAirbnb = () => {
           <p className="text-muted-foreground">
             Connect your Airbnb listings to automatically import booking data
           </p>
+        </div>
+
+        {/* Setup Guide */}
+        <div className="mb-8">
+          <AirbnbSetupGuide />
         </div>
 
         {properties.length === 0 ? (

@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Loader2, LogOut, FileText, Plus } from 'lucide-react';
 import AirbnbConnectionStatus from '@/components/dashboard/AirbnbConnectionStatus';
+import QuickAdvanceCalculator from '@/components/dashboard/QuickAdvanceCalculator';
 
 const Dashboard = () => {
   const { user, loading, signOut, isAdmin } = useAuth();
@@ -88,7 +89,10 @@ const Dashboard = () => {
         </div>
 
         {/* Airbnb Connection Status */}
-        <AirbnbConnectionStatus />
+        <div className="grid lg:grid-cols-2 gap-6">
+          <AirbnbConnectionStatus />
+          <QuickAdvanceCalculator />
+        </div>
       </main>
     </div>
   );
