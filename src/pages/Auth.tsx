@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { z } from "zod";
+import PhoneVerification from "@/components/auth/PhoneVerification";
 
 const signUpSchema = z.object({
   fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -23,6 +24,8 @@ const signInSchema = z.object({
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [showPhoneVerification, setShowPhoneVerification] = useState(false);
+  const [verificationError, setVerificationError] = useState('');
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -31,7 +34,7 @@ const Auth = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   
-  const { user, signUp, signIn } = useAuth();
+  const { user, signUp, signIn, sendPhoneOTP, verifyPhoneOTP } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -78,10 +81,56 @@ const Auth = () => {
           return;
         }
 
-        await signUp(formData.email, formData.password, formData.fullName, formData.phone);
+        // Send OTP to phone number
+        const { error: otpError } = await sendPhoneOTP(formData.phone);
+        
+        if (otpError) {
+          setErrors({ phone: otpError.message || 'Failed to send verification code. Please check your phone number.' });
+          return;
+        }
+
+        // Show phone verification screen
+        setShowPhoneVerification(true);
       }
     } catch (error) {
       console.error('Auth error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyCode = async (code: string) => {
+    setLoading(true);
+    setVerificationError('');
+
+    try {
+      const { error } = await verifyPhoneOTP(
+        formData.phone,
+        code,
+        formData.email,
+        formData.password,
+        formData.fullName
+      );
+
+      if (error) {
+        setVerificationError(error.message || 'Invalid verification code. Please try again.');
+      }
+    } catch (error) {
+      setVerificationError('Verification failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResendCode = async () => {
+    setLoading(true);
+    setVerificationError('');
+
+    try {
+      const { error } = await sendPhoneOTP(formData.phone);
+      if (error) {
+        setVerificationError(error.message || 'Failed to resend code');
+      }
     } finally {
       setLoading(false);
     }

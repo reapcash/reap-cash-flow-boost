@@ -12,6 +12,8 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   isAdmin: boolean;
+  sendPhoneOTP: (phoneNumber: string) => Promise<{ error: any }>;
+  verifyPhoneOTP: (phoneNumber: string, code: string, email: string, password: string, fullName: string) => Promise<{ error: any }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -120,8 +122,68 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     navigate('/');
   };
 
+  const sendPhoneOTP = async (phoneNumber: string) => {
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        phone: phoneNumber,
+      });
+      return { error };
+    } catch (error: any) {
+      return { error };
+    }
+  };
+
+  const verifyPhoneOTP = async (phoneNumber: string, code: string, email: string, password: string, fullName: string) => {
+    try {
+      // First verify the phone OTP
+      const { error: verifyError } = await supabase.auth.verifyOtp({
+        phone: phoneNumber,
+        token: code,
+        type: 'sms',
+      });
+
+      if (verifyError) {
+        return { error: verifyError };
+      }
+
+      // Phone is verified, now create the email/password account
+      const redirectUrl = `${window.location.origin}/`;
+      const { error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: redirectUrl,
+          data: {
+            full_name: fullName,
+            phone_number: phoneNumber,
+          },
+        },
+      });
+
+      if (signUpError) {
+        return { error: signUpError };
+      }
+
+      toast.success('Account created successfully!');
+      navigate('/dashboard');
+      return { error: null };
+    } catch (error: any) {
+      return { error };
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, session, loading, signUp, signIn, signOut, isAdmin }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      session, 
+      loading, 
+      signUp, 
+      signIn, 
+      signOut, 
+      isAdmin,
+      sendPhoneOTP,
+      verifyPhoneOTP 
+    }}>
       {children}
     </AuthContext.Provider>
   );
