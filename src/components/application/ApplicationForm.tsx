@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Save, Send } from 'lucide-react';
+import { Save, Send, Loader2 } from 'lucide-react';
 import PropertyInformationSection from './PropertyInformationSection';
 import STRDetailsSection from './STRDetailsSection';
 import FinancialInformationSection from './FinancialInformationSection';
@@ -64,6 +68,14 @@ type ApplicationFormData = z.infer<typeof applicationSchema>;
 
 const ApplicationForm = () => {
   const [activeTab, setActiveTab] = useState('property');
+  const [applicationId, setApplicationId] = useState<string | null>(null);
+  const [propertyId, setPropertyId] = useState<string | null>(null);
+  const [selectedBookingIds, setSelectedBookingIds] = useState<string[]>([]);
+  const [selectedBookingsRevenue, setSelectedBookingsRevenue] = useState<number>(0);
+  const [saving, setSaving] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
   
   const form = useForm<ApplicationFormData>({
     resolver: zodResolver(applicationSchema),
@@ -87,14 +99,119 @@ const ApplicationForm = () => {
     },
   });
 
+  const saveApplicationAndProperty = async (data: ApplicationFormData, isDraft: boolean = true) => {
+    if (!user) return;
+    
+    try {
+      setSaving(true);
+
+      // Create or update application
+      const applicationData = {
+        user_id: user.id,
+        status: (isDraft ? 'draft' : 'submitted') as 'draft' | 'submitted',
+        preferred_advance_amount: data.preferredAdvanceAmount,
+        repayment_terms: data.repaymentTerms,
+        credit_report_authorized: data.creditReportAuthorized,
+        verification_consent: data.verificationConsent,
+        terms_agreed: data.termsAgreed,
+        selected_booking_ids: selectedBookingIds,
+        requested_advance_amount: data.preferredAdvanceAmount,
+        selected_bookings_revenue: selectedBookingsRevenue,
+        submitted_at: isDraft ? null : new Date().toISOString(),
+      };
+
+      let appId = applicationId;
+      
+      if (!applicationId) {
+        const { data: newApp, error: appError } = await supabase
+          .from('applications')
+          .insert([applicationData])
+          .select()
+          .single();
+
+        if (appError) throw appError;
+        appId = newApp.id;
+        setApplicationId(appId);
+      } else {
+        const { error: updateError } = await supabase
+          .from('applications')
+          .update(applicationData)
+          .eq('id', applicationId);
+
+        if (updateError) throw updateError;
+      }
+
+      // Create or update property
+      const propertyData = {
+        application_id: appId,
+        property_address: data.properties[0].propertyAddress,
+        property_type: data.properties[0].propertyType,
+        property_type_other: data.properties[0].propertyTypeOther,
+        number_of_bedrooms: data.properties[0].numberOfBedrooms,
+        number_of_bathrooms: data.properties[0].numberOfBathrooms,
+        square_footage: data.properties[0].squareFootage,
+        ownership_status: data.properties[0].ownershipStatus,
+        year_of_purchase: data.properties[0].yearOfPurchase,
+        estimated_property_value: data.properties[0].estimatedPropertyValue,
+        booking_platforms: data.properties[0].bookingPlatforms,
+        average_occupancy_rate: data.properties[0].averageOccupancyRate,
+        average_nightly_rate: data.properties[0].averageNightlyRate,
+        average_monthly_revenue: data.properties[0].averageMonthlyRevenue,
+        booking_history_summary: data.properties[0].bookingHistorySummary,
+        future_bookings_nights: data.properties[0].futureBookingsNights,
+        future_bookings_revenue: data.properties[0].futureBookingsRevenue,
+        current_mortgage_balance: data.properties[0].currentMortgageBalance,
+        monthly_mortgage_payment: data.properties[0].monthlyMortgagePayment,
+        outstanding_debts: data.properties[0].outstandingDebts,
+        bank_name: data.properties[0].bankName,
+      };
+
+      if (!propertyId) {
+        const { data: newProperty, error: propError } = await supabase
+          .from('properties')
+          .insert([propertyData])
+          .select()
+          .single();
+
+        if (propError) throw propError;
+        setPropertyId(newProperty.id);
+      } else {
+        const { error: updateError } = await supabase
+          .from('properties')
+          .update(propertyData)
+          .eq('id', propertyId);
+
+        if (updateError) throw updateError;
+      }
+
+      toast({
+        title: isDraft ? 'Draft saved' : 'Application submitted',
+        description: isDraft 
+          ? 'Your application has been saved as a draft' 
+          : 'Your application has been submitted successfully',
+      });
+
+      if (!isDraft) {
+        navigate('/dashboard');
+      }
+
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        description: error.message,
+        variant: 'destructive',
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const onSaveDraft = async (data: ApplicationFormData) => {
-    console.log('Saving draft:', data);
-    // TODO: Implement save draft functionality
+    await saveApplicationAndProperty(data, true);
   };
 
   const onSubmit = async (data: ApplicationFormData) => {
-    console.log('Submitting application:', data);
-    // TODO: Implement submit functionality
+    await saveApplicationAndProperty(data, false);
   };
 
   return (
@@ -124,14 +241,48 @@ const ApplicationForm = () => {
               <TabsContent value="str" className="space-y-6 pt-6">
                 <STRDetailsSection form={form} />
                 
-                {/* Show booking selection if property exists */}
-                {form.watch('properties')?.[0]?.propertyAddress && (
+                {/* Save property first to enable Airbnb connection */}
+                {!propertyId && form.watch('properties')?.[0]?.propertyAddress && (
+                  <div className="mt-8 p-4 bg-muted/50 rounded-lg">
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Save your property information to connect your Airbnb account and import bookings
+                    </p>
+                    <Button 
+                      type="button" 
+                      variant="outline"
+                      onClick={() => form.handleSubmit(onSaveDraft)()}
+                      disabled={saving}
+                    >
+                      {saving ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Saving...
+                        </>
+                      ) : (
+                        <>
+                          <Save className="mr-2 h-4 w-4" />
+                          Save & Continue
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                )}
+
+                {/* Airbnb Connection Section */}
+                {propertyId && (
+                  <div className="mt-8 pt-8 border-t">
+                    <AirbnbConnectionSection propertyId={propertyId} />
+                  </div>
+                )}
+
+                {/* Booking Selection Section */}
+                {propertyId && (
                   <div className="mt-8 pt-8 border-t">
                     <BookingSelectionSection 
-                      propertyId={form.watch('properties')?.[0]?.propertyAddress}
+                      propertyId={propertyId}
                       onSelectionChange={(bookingIds, totalRevenue) => {
-                        console.log('Selected bookings:', bookingIds, 'Total revenue:', totalRevenue);
-                        // You can update form state here if needed
+                        setSelectedBookingIds(bookingIds);
+                        setSelectedBookingsRevenue(totalRevenue);
                       }}
                     />
                   </div>
@@ -158,12 +309,21 @@ const ApplicationForm = () => {
             type="button" 
             variant="outline"
             onClick={form.handleSubmit(onSaveDraft)}
+            disabled={saving}
           >
-            <Save className="mr-2 h-4 w-4" />
+            {saving ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Save className="mr-2 h-4 w-4" />
+            )}
             Save Draft
           </Button>
-          <Button type="submit">
-            <Send className="mr-2 h-4 w-4" />
+          <Button type="submit" disabled={saving}>
+            {saving ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Send className="mr-2 h-4 w-4" />
+            )}
             Submit Application
           </Button>
         </div>
