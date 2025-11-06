@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import InvestorLock from '@/components/InvestorLock';
@@ -47,7 +48,7 @@ const Investors = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button size="lg" className="text-lg px-8" asChild>
-              <a href="/contact">Request Investment Deck</a>
+              <Link to="/contact">Request Investment Deck</Link>
             </Button>
             <Button size="lg" variant="outline" className="text-lg px-8">
               Schedule Call
@@ -508,7 +509,7 @@ const Investors = () => {
 
               <div className="flex flex-wrap justify-center gap-4">
                 <Button size="lg" variant="outline" className="text-lg px-8 border-white/30 text-white bg-white/10 hover:bg-white/20 backdrop-blur" asChild>
-                  <a href="/contact">Schedule Due Diligence Call</a>
+                  <Link to="/contact">Schedule Due Diligence Call</Link>
                 </Button>
               </div>
             </div>
@@ -523,7 +524,7 @@ const Investors = () => {
               Reach out to discuss investment opportunities, partnership inquiries, or learn more about REAP
             </p>
             <Button size="lg" asChild>
-              <a href="/contact">Contact Investor Relations</a>
+              <Link to="/contact">Contact Investor Relations</Link>
             </Button>
           </div>
         </section>

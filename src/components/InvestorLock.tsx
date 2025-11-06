@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Lock, TrendingUp, DollarSign, Building2, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -118,7 +119,7 @@ const InvestorLock = ({ onUnlock }: InvestorLockProps) => {
                     Interested in learning more about investment opportunities?
                   </p>
                   <Button variant="outline" asChild>
-                    <a href="/contact">Contact Investor Relations</a>
+                    <Link to="/contact">Contact Investor Relations</Link>
                   </Button>
                 </div>
               </div>
@@ -135,10 +136,10 @@ const InvestorLock = ({ onUnlock }: InvestorLockProps) => {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button size="lg" variant="secondary" className="text-lg px-8" asChild>
-                <a href="/application/new">Apply Now</a>
+                <Link to="/application/new">Apply Now</Link>
               </Button>
               <Button size="lg" variant="outline" className="text-lg px-8 border-white text-white hover:bg-white/10" asChild>
-                <a href="/contact">Learn More</a>
+                <Link to="/contact">Learn More</Link>
               </Button>
             </div>
           </div>
