@@ -65,7 +65,8 @@ const WhoWeServe = () => {
           <h2 className="text-5xl lg:text-6xl mb-6">
             Built for Real Estate Professionals
           </h2>
-          <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">We unlock your earned income so you can scale your operations<span className="text-primary font-semibold">REAP</span> comes in. We unlock your earned income so you can scale your operations to the next level. Our technology platform gives you access to your capital, on your terms.
+          <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            We unlock your earned income so you can scale your operations.
           </p>
         </div>
 
