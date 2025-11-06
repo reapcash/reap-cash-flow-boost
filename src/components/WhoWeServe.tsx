@@ -6,7 +6,6 @@ import isoPropertyManager from "@/assets/iso-property-manager.png";
 import isoContractor from "@/assets/iso-contractor.png";
 import isoHost from "@/assets/iso-host.png";
 import isoDeveloper from "@/assets/iso-developer.png";
-
 const industries = [{
   icon: Home,
   image: isoAgent,
@@ -60,15 +59,13 @@ const industries = [{
 }];
 const WhoWeServe = () => {
   const [selectedIndustry, setSelectedIndustry] = useState(industries[0]);
-
   return <section id="industries" className="pt-24 pb-28 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-5xl lg:text-6xl mb-6">
             Built for Real Estate Professionals
           </h2>
-          <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            As a real estate professional, you have future earnings on the way — but traditional financial infrastructure wasn't built around your unique cashflow. That's where <span className="text-primary font-semibold">REAP</span> comes in. We unlock your earned income so you can scale your operations to the next level. Our technology platform gives you access to your capital, on your terms.
+          <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">We unlock your earned income so you can scale your operations<span className="text-primary font-semibold">REAP</span> comes in. We unlock your earned income so you can scale your operations to the next level. Our technology platform gives you access to your capital, on your terms.
           </p>
         </div>
 
@@ -76,22 +73,12 @@ const WhoWeServe = () => {
           {/* Industry Cards - Left Side */}
           <div className="space-y-4">
             {industries.map(industry => {
-              const Icon = industry.icon;
-              const isSelected = selectedIndustry.value === industry.value;
-              return <button
-                key={industry.value}
-                onClick={() => setSelectedIndustry(industry)}
-                className={`w-full bg-card border rounded-2xl p-6 text-left transition-all duration-300 hover:shadow-lg hover:scale-[1.02] ${
-                  isSelected ? 'border-primary bg-primary/5 shadow-lg' : 'border-border'
-                }`}
-              >
+            const Icon = industry.icon;
+            const isSelected = selectedIndustry.value === industry.value;
+            return <button key={industry.value} onClick={() => setSelectedIndustry(industry)} className={`w-full bg-card border rounded-2xl p-6 text-left transition-all duration-300 hover:shadow-lg hover:scale-[1.02] ${isSelected ? 'border-primary bg-primary/5 shadow-lg' : 'border-border'}`}>
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0">
-                    <img 
-                      src={industry.image} 
-                      alt={industry.title}
-                      className="w-16 h-16 object-contain"
-                    />
+                    <img src={industry.image} alt={industry.title} className="w-16 h-16 object-contain" />
                   </div>
                   <div>
                     <h3 className={`text-lg mb-1 font-semibold ${isSelected ? 'text-primary' : ''}`}>
@@ -103,7 +90,7 @@ const WhoWeServe = () => {
                   </div>
                 </div>
               </button>;
-            })}
+          })}
           </div>
 
           {/* Details - Right Side */}
@@ -115,11 +102,7 @@ const WhoWeServe = () => {
                 </h3>
               </div>
               <div className="hidden lg:block flex-shrink-0">
-                <img 
-                  src={selectedIndustry.image} 
-                  alt={selectedIndustry.title} 
-                  className="w-32 h-auto object-contain opacity-80 transition-all duration-300" 
-                />
+                <img src={selectedIndustry.image} alt={selectedIndustry.title} className="w-32 h-auto object-contain opacity-80 transition-all duration-300" />
               </div>
             </div>
             
