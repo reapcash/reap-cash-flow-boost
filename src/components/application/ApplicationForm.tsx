@@ -25,6 +25,7 @@ import ContractorSection from './ContractorSection';
 import BrokerSection from './BrokerSection';
 import DeveloperSection from './DeveloperSection';
 import { SaveDraftDialog } from './SaveDraftDialog';
+import { LeaveConfirmationDialog } from './LeaveConfirmationDialog';
 
 const applicationSchema = z.object({
   // Property Information
@@ -134,6 +135,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   const [selectedBookingsRevenue, setSelectedBookingsRevenue] = useState<number>(0);
   const [saving, setSaving] = useState(false);
   const [showSaveDraftDialog, setShowSaveDraftDialog] = useState(false);
+  const [showLeaveDialog, setShowLeaveDialog] = useState(false);
   const [draftName, setDraftName] = useState('');
   const [pendingDraftData, setPendingDraftData] = useState<ApplicationFormData | null>(null);
   const { user } = useAuth();
@@ -370,6 +372,28 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
     if (!open) {
       setPendingDraftData(null);
     }
+  };
+
+  const handleBackToDashboard = () => {
+    const isDirty = form.formState.isDirty;
+    
+    if (isDirty) {
+      setShowLeaveDialog(true);
+    } else {
+      navigate('/dashboard');
+    }
+  };
+
+  const handleLeaveAndSave = () => {
+    const data = form.getValues();
+    setPendingDraftData(data as ApplicationFormData);
+    setShowLeaveDialog(false);
+    setShowSaveDraftDialog(true);
+  };
+
+  const handleLeaveAndDiscard = () => {
+    setShowLeaveDialog(false);
+    navigate('/dashboard');
   };
 
   const onSubmit = async (data: ApplicationFormData) => {
@@ -678,31 +702,42 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
           </CardContent>
         </Card>
 
-        <div className="flex gap-4 justify-end">
+        <div className="flex gap-4 justify-between">
           <Button 
             type="button" 
-            variant="outline"
-            onClick={() => {
-              const data = form.getValues();
-              handleSaveDraftClick(data as ApplicationFormData);
-            }}
+            variant="ghost"
+            onClick={handleBackToDashboard}
             disabled={saving}
           >
-            {saving ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              <Save className="mr-2 h-4 w-4" />
-            )}
-            Save Draft
+            Back to Dashboard
           </Button>
-          <Button type="submit" disabled={saving}>
-            {saving ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              <Send className="mr-2 h-4 w-4" />
-            )}
-            Submit Application
-          </Button>
+          
+          <div className="flex gap-4">
+            <Button 
+              type="button" 
+              variant="outline"
+              onClick={() => {
+                const data = form.getValues();
+                handleSaveDraftClick(data as ApplicationFormData);
+              }}
+              disabled={saving}
+            >
+              {saving ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Save className="mr-2 h-4 w-4" />
+              )}
+              Save Draft
+            </Button>
+            <Button type="submit" disabled={saving}>
+              {saving ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Send className="mr-2 h-4 w-4" />
+              )}
+              Submit Application
+            </Button>
+          </div>
         </div>
         
         <SaveDraftDialog
@@ -711,6 +746,13 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
           onSave={onSaveDraft}
           onDiscard={onDiscardDraft}
           defaultName={draftName || 'Untitled Application'}
+        />
+
+        <LeaveConfirmationDialog
+          open={showLeaveDialog}
+          onOpenChange={setShowLeaveDialog}
+          onSaveDraft={handleLeaveAndSave}
+          onDiscard={handleLeaveAndDiscard}
         />
       </form>
     </Form>
