@@ -668,6 +668,10 @@ export type Database = {
         | "insurance_proof"
         | "utility_bill"
         | "bank_statements"
+        | "proof_of_identity"
+        | "proof_of_income"
+        | "property_documents"
+        | "additional_documents"
       ownership_status: "owned_outright" | "mortgaged"
       property_type:
         | "single_family"
@@ -819,6 +823,10 @@ export const Constants = {
         "insurance_proof",
         "utility_bill",
         "bank_statements",
+        "proof_of_identity",
+        "proof_of_income",
+        "property_documents",
+        "additional_documents",
       ],
       ownership_status: ["owned_outright", "mortgaged"],
       property_type: [

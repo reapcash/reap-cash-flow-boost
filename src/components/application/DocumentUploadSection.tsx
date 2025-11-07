@@ -82,14 +82,14 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete }: DocumentUplo
       // Store document metadata in documents table
       const { error: dbError } = await supabase
         .from('documents')
-        .insert({
+        .insert([{
           application_id: applicationId,
-          document_type: documentId,
+          document_type: documentId as any,
           file_path: fileName,
           file_name: file.name,
           file_size: file.size,
           mime_type: file.type,
-        });
+        }]);
 
       if (dbError) throw dbError;
 
