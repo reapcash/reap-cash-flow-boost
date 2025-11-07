@@ -354,15 +354,22 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   const onSaveDraft = async (name: string) => {
     if (!pendingDraftData) return;
     setDraftName(name);
-    setShowSaveDraftDialog(false);
     await saveApplicationAndProperty(pendingDraftData, true, name);
     setPendingDraftData(null);
+    // Dialog will stay open to show success message
   };
 
   const onDiscardDraft = () => {
     setPendingDraftData(null);
     setShowSaveDraftDialog(false);
     navigate('/dashboard');
+  };
+
+  const handleDialogOpenChange = (open: boolean) => {
+    setShowSaveDraftDialog(open);
+    if (!open) {
+      setPendingDraftData(null);
+    }
   };
 
   const onSubmit = async (data: ApplicationFormData) => {
@@ -700,7 +707,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         
         <SaveDraftDialog
           open={showSaveDraftDialog}
-          onOpenChange={setShowSaveDraftDialog}
+          onOpenChange={handleDialogOpenChange}
           onSave={onSaveDraft}
           onDiscard={onDiscardDraft}
           defaultName={draftName || 'Untitled Application'}
