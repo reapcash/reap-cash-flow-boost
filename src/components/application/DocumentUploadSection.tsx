@@ -55,9 +55,18 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete }: DocumentUplo
   const { toast } = useToast();
 
   const handleFileUpload = async (documentId: string, file: File) => {
-    if (!user || !applicationId) {
+    if (!user) {
       toast({
-        title: 'Error',
+        title: 'Authentication Required',
+        description: 'Please log in to upload documents',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (!applicationId) {
+      toast({
+        title: 'Save Required',
         description: 'Please save your application as a draft first before uploading documents',
         variant: 'destructive',
       });
@@ -70,14 +79,17 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete }: DocumentUplo
       const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}/${applicationId}/${documentId}_${Date.now()}.${fileExt}`;
 
-      const { error: uploadError, data } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from('application-documents')
         .upload(fileName, file, {
           cacheControl: '3600',
           upsert: false,
         });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('Storage upload error:', uploadError);
+        throw new Error(uploadError.message);
+      }
 
       // Store document metadata in documents table
       const { error: dbError } = await supabase
@@ -91,7 +103,10 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete }: DocumentUplo
           mime_type: file.type,
         }]);
 
-      if (dbError) throw dbError;
+      if (dbError) {
+        console.error('Database insert error:', dbError);
+        throw new Error(dbError.message);
+      }
 
       setDocumentStatus(prev => ({ ...prev, [documentId]: 'uploaded' }));
       setUploadedFiles(prev => ({ ...prev, [documentId]: fileName }));
@@ -106,8 +121,8 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete }: DocumentUplo
       console.error('Upload error:', error);
       setDocumentStatus(prev => ({ ...prev, [documentId]: 'error' }));
       toast({
-        title: 'Upload failed',
-        description: error.message || 'Failed to upload document',
+        title: 'Upload Failed',
+        description: error.message || 'An error occurred while uploading the document. Please try again.',
         variant: 'destructive',
       });
     }

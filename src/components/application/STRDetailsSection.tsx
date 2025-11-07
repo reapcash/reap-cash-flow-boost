@@ -86,8 +86,8 @@ const STRDetailsSection = ({ form }: STRDetailsSectionProps) => {
                       type="number" 
                       step="0.1"
                       placeholder="75"
-                      {...field} 
-                      onChange={e => field.onChange(parseFloat(e.target.value) || 0)}
+                      value={field.value || ''} 
+                      onChange={e => field.onChange(e.target.value === '' ? 0 : parseFloat(e.target.value))}
                     />
                   </FormControl>
                   <FormMessage />
@@ -106,8 +106,8 @@ const STRDetailsSection = ({ form }: STRDetailsSectionProps) => {
                       type="number" 
                       step="0.01"
                       placeholder="150"
-                      {...field} 
-                      onChange={e => field.onChange(parseFloat(e.target.value) || 0)}
+                      value={field.value || ''} 
+                      onChange={e => field.onChange(e.target.value === '' ? 0 : parseFloat(e.target.value))}
                     />
                   </FormControl>
                   <FormMessage />
@@ -126,8 +126,8 @@ const STRDetailsSection = ({ form }: STRDetailsSectionProps) => {
                       type="number" 
                       step="0.01"
                       placeholder="4500"
-                      {...field} 
-                      onChange={e => field.onChange(parseFloat(e.target.value) || 0)}
+                      value={field.value || ''} 
+                      onChange={e => field.onChange(e.target.value === '' ? 0 : parseFloat(e.target.value))}
                     />
                   </FormControl>
                   <FormMessage />
@@ -169,8 +169,8 @@ const STRDetailsSection = ({ form }: STRDetailsSectionProps) => {
                       <Input 
                         type="number" 
                         placeholder="60"
-                        {...field} 
-                        onChange={e => field.onChange(parseInt(e.target.value) || 0)}
+                        value={field.value || ''} 
+                        onChange={e => field.onChange(e.target.value === '' ? 0 : parseInt(e.target.value))}
                       />
                     </FormControl>
                     <FormMessage />
@@ -189,8 +189,8 @@ const STRDetailsSection = ({ form }: STRDetailsSectionProps) => {
                         type="number" 
                         step="0.01"
                         placeholder="9000"
-                        {...field} 
-                        onChange={e => field.onChange(parseFloat(e.target.value) || 0)}
+                        value={field.value || ''} 
+                        onChange={e => field.onChange(e.target.value === '' ? 0 : parseFloat(e.target.value))}
                       />
                     </FormControl>
                     <FormMessage />

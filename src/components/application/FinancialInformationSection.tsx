@@ -140,8 +140,8 @@ const FinancialInformationSection = ({ form }: FinancialInformationSectionProps)
                   type="number" 
                   step="0.01"
                   placeholder="10000"
-                  {...field} 
-                  onChange={e => field.onChange(parseFloat(e.target.value) || 0)}
+                  value={field.value || ''} 
+                  onChange={e => field.onChange(e.target.value === '' ? 0 : parseFloat(e.target.value))}
                 />
               </FormControl>
               <FormMessage />

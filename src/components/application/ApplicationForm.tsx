@@ -43,10 +43,10 @@ const applicationSchema = z.object({
     estimatedPropertyValue: z.number().min(10000),
     
     // STR Details
-    bookingPlatforms: z.array(z.string()).min(1, 'Select at least one platform'),
-    averageOccupancyRate: z.number().min(0).max(100),
-    averageNightlyRate: z.number().min(0),
-    averageMonthlyRevenue: z.number().min(0),
+    bookingPlatforms: z.array(z.string()).optional(),
+    averageOccupancyRate: z.number().min(0).max(100).optional(),
+    averageNightlyRate: z.number().min(0).optional(),
+    averageMonthlyRevenue: z.number().min(0).optional(),
     bookingHistorySummary: z.string().optional(),
     futureBookingsNights: z.number().min(0).optional(),
     futureBookingsRevenue: z.number().min(0).optional(),
@@ -604,7 +604,10 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
           <Button 
             type="button" 
             variant="outline"
-            onClick={form.handleSubmit(handleSaveDraftClick)}
+            onClick={() => {
+              const data = form.getValues();
+              handleSaveDraftClick(data as ApplicationFormData);
+            }}
             disabled={saving}
           >
             {saving ? (
@@ -623,6 +626,14 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             Submit Application
           </Button>
         </div>
+        
+        <SaveDraftDialog
+          open={showSaveDraftDialog}
+          onOpenChange={setShowSaveDraftDialog}
+          onSave={onSaveDraft}
+          onDiscard={onDiscardDraft}
+          defaultName={draftName || 'Untitled Application'}
+        />
       </form>
     </Form>
   );
