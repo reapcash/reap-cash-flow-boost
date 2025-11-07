@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Loader2, LogOut, FileText, Plus, DollarSign, TrendingUp, Clock, CheckCircle2, AlertCircle, Calendar, ArrowUpRight } from 'lucide-react';
+import { Loader2, LogOut, FileText, Plus, DollarSign, TrendingUp, Clock, CheckCircle2, AlertCircle, ArrowUpRight } from 'lucide-react';
 import AirbnbConnectionStatus from '@/components/dashboard/AirbnbConnectionStatus';
 import NotificationBell from '@/components/dashboard/NotificationBell';
 import { supabase } from '@/integrations/supabase/client';
@@ -190,7 +190,7 @@ const Dashboard = () => {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
+        <div className="max-w-2xl mx-auto mb-8">
           <Card className="border-2 hover:shadow-lg transition-all cursor-pointer group" onClick={() => navigate('/application/new')}>
             <CardContent className="flex items-center gap-4 p-6">
               <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all">
@@ -201,19 +201,6 @@ const Dashboard = () => {
                 <p className="text-sm text-muted-foreground">Apply for a new cash advance</p>
               </div>
               <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
-            </CardContent>
-          </Card>
-
-          <Card className="border-2 hover:shadow-lg transition-all cursor-pointer group" onClick={() => navigate('/manage-airbnb')}>
-            <CardContent className="flex items-center gap-4 p-6">
-              <div className="h-16 w-16 rounded-2xl bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500 group-hover:scale-110 transition-all">
-                <Calendar className="h-8 w-8 text-blue-500 group-hover:text-white" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold mb-1">Manage Airbnb</h3>
-                <p className="text-sm text-muted-foreground">Connect and sync bookings</p>
-              </div>
-              <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:text-blue-500 transition-colors" />
             </CardContent>
           </Card>
         </div>
