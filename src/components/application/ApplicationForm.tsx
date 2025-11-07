@@ -212,14 +212,15 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         if (updateError) throw updateError;
       }
 
-      // Only create/update property if we have property data
+      // Only create/update property for STR Host applications that have property data
+      const isSTRApplication = applicantType === 'str_host';
       const hasPropertyData = data.properties?.[0] && 
         data.properties[0].propertyStreet && 
         data.properties[0].propertyCity && 
         data.properties[0].propertyState && 
         data.properties[0].propertyZipcode;
 
-      if (hasPropertyData) {
+      if (isSTRApplication && hasPropertyData) {
         const propertyData = {
           application_id: appId,
           property_address: `${data.properties[0].propertyStreet}, ${data.properties[0].propertyCity}, ${data.properties[0].propertyState} ${data.properties[0].propertyZipcode}`,
@@ -251,7 +252,10 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             .select()
             .single();
 
-          if (propError) throw propError;
+          if (propError) {
+            console.error('Property creation error:', propError);
+            throw new Error(`Failed to save property: ${propError.message}`);
+          }
           setPropertyId(newProperty.id);
         } else {
           const { error: updateError } = await supabase
@@ -259,7 +263,10 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             .update(propertyData)
             .eq('id', propertyId);
 
-          if (updateError) throw updateError;
+          if (updateError) {
+            console.error('Property update error:', updateError);
+            throw new Error(`Failed to update property: ${updateError.message}`);
+          }
         }
       }
 
@@ -293,12 +300,14 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   const onSaveDraft = async (name: string) => {
     if (!pendingDraftData) return;
     setDraftName(name);
+    setShowSaveDraftDialog(false);
     await saveApplicationAndProperty(pendingDraftData, true, name);
     setPendingDraftData(null);
   };
 
   const onDiscardDraft = () => {
     setPendingDraftData(null);
+    setShowSaveDraftDialog(false);
     navigate('/dashboard');
   };
 

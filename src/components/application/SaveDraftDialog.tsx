@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,14 +30,19 @@ export const SaveDraftDialog = ({
 }: SaveDraftDialogProps) => {
   const [draftName, setDraftName] = useState(defaultName);
 
+  // Update draft name when dialog opens with new default
+  useEffect(() => {
+    if (open) {
+      setDraftName(defaultName);
+    }
+  }, [open, defaultName]);
+
   const handleSave = () => {
     onSave(draftName || 'Untitled Draft');
-    onOpenChange(false);
   };
 
   const handleDiscard = () => {
     onDiscard();
-    onOpenChange(false);
   };
 
   return (
