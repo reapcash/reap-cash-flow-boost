@@ -42,16 +42,18 @@ export const SaveDraftDialog = ({
 
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="max-w-md">
+      <AlertDialogContent className="max-w-md mx-4">
         <AlertDialogHeader>
           <AlertDialogTitle>Save Draft</AlertDialogTitle>
-          <AlertDialogDescription>
+          <AlertDialogDescription className="text-sm">
             Give your draft a name so you can easily find it later.
           </AlertDialogDescription>
         </AlertDialogHeader>
         
         <div className="space-y-2 py-4">
-          <Label htmlFor="draft-name">Draft Name</Label>
+          <Label htmlFor="draft-name" className="text-sm font-medium">
+            Draft Name
+          </Label>
           <Input
             id="draft-name"
             placeholder="e.g., Main Street Property Application"
@@ -59,24 +61,31 @@ export const SaveDraftDialog = ({
             onChange={(e) => setDraftName(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
+                e.preventDefault();
                 handleSave();
               }
             }}
+            className="w-full"
+            maxLength={100}
           />
         </div>
 
-        <AlertDialogFooter className="flex-col sm:flex-row gap-2">
+        <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-2">
           <Button
+            type="button"
             variant="outline"
             onClick={handleDiscard}
-            className="sm:order-1"
+            className="w-full sm:w-auto"
           >
-            Discard Draft
+            Discard
           </Button>
-          <AlertDialogCancel className="sm:order-2 mt-0">
+          <AlertDialogCancel className="w-full sm:w-auto mt-0">
             Continue Editing
           </AlertDialogCancel>
-          <AlertDialogAction onClick={handleSave} className="sm:order-3">
+          <AlertDialogAction 
+            onClick={handleSave} 
+            className="w-full sm:w-auto"
+          >
             Save Draft
           </AlertDialogAction>
         </AlertDialogFooter>

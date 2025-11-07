@@ -179,13 +179,13 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         user_id: user.id,
         applicant_type: applicantType,
         status: (isDraft ? 'draft' : 'submitted') as 'draft' | 'submitted',
-        preferred_advance_amount: data.preferredAdvanceAmount,
-        repayment_terms: data.repaymentTerms,
-        credit_report_authorized: data.creditReportAuthorized,
-        verification_consent: data.verificationConsent,
-        terms_agreed: data.termsAgreed,
+        preferred_advance_amount: data.preferredAdvanceAmount || 0,
+        repayment_terms: data.repaymentTerms || 'monthly',
+        credit_report_authorized: data.creditReportAuthorized || false,
+        verification_consent: data.verificationConsent || false,
+        terms_agreed: data.termsAgreed || false,
         selected_booking_ids: selectedBookingIds,
-        requested_advance_amount: data.preferredAdvanceAmount,
+        requested_advance_amount: data.preferredAdvanceAmount || 0,
         selected_bookings_revenue: selectedBookingsRevenue,
         submitted_at: isDraft ? null : new Date().toISOString(),
         form_data: formData, // Store all form data as JSONB including draft name
@@ -212,47 +212,55 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         if (updateError) throw updateError;
       }
 
-      // Create or update property
-      const propertyData = {
-        application_id: appId,
-        property_address: `${data.properties[0].propertyStreet}, ${data.properties[0].propertyCity}, ${data.properties[0].propertyState} ${data.properties[0].propertyZipcode}`,
-        property_type: data.properties[0].propertyType,
-        property_type_other: data.properties[0].propertyTypeOther,
-        number_of_bedrooms: data.properties[0].numberOfBedrooms,
-        number_of_bathrooms: data.properties[0].numberOfBathrooms,
-        square_footage: data.properties[0].squareFootage,
-        ownership_status: data.properties[0].ownershipStatus,
-        year_of_purchase: data.properties[0].yearOfPurchase,
-        estimated_property_value: data.properties[0].estimatedPropertyValue,
-        booking_platforms: data.properties[0].bookingPlatforms,
-        average_occupancy_rate: data.properties[0].averageOccupancyRate,
-        average_nightly_rate: data.properties[0].averageNightlyRate,
-        average_monthly_revenue: data.properties[0].averageMonthlyRevenue,
-        booking_history_summary: data.properties[0].bookingHistorySummary,
-        future_bookings_nights: data.properties[0].futureBookingsNights,
-        future_bookings_revenue: data.properties[0].futureBookingsRevenue,
-        current_mortgage_balance: data.properties[0].currentMortgageBalance,
-        monthly_mortgage_payment: data.properties[0].monthlyMortgagePayment,
-        outstanding_debts: data.properties[0].outstandingDebts,
-        bank_name: data.properties[0].bankName,
-      };
+      // Only create/update property if we have property data
+      const hasPropertyData = data.properties?.[0] && 
+        data.properties[0].propertyStreet && 
+        data.properties[0].propertyCity && 
+        data.properties[0].propertyState && 
+        data.properties[0].propertyZipcode;
 
-      if (!propertyId) {
-        const { data: newProperty, error: propError } = await supabase
-          .from('properties')
-          .insert([propertyData])
-          .select()
-          .single();
+      if (hasPropertyData) {
+        const propertyData = {
+          application_id: appId,
+          property_address: `${data.properties[0].propertyStreet}, ${data.properties[0].propertyCity}, ${data.properties[0].propertyState} ${data.properties[0].propertyZipcode}`,
+          property_type: data.properties[0].propertyType || 'single_family',
+          property_type_other: data.properties[0].propertyTypeOther,
+          number_of_bedrooms: data.properties[0].numberOfBedrooms || 1,
+          number_of_bathrooms: data.properties[0].numberOfBathrooms || 1,
+          square_footage: data.properties[0].squareFootage || 1000,
+          ownership_status: data.properties[0].ownershipStatus || 'mortgaged',
+          year_of_purchase: data.properties[0].yearOfPurchase || new Date().getFullYear(),
+          estimated_property_value: data.properties[0].estimatedPropertyValue || 0,
+          booking_platforms: data.properties[0].bookingPlatforms || [],
+          average_occupancy_rate: data.properties[0].averageOccupancyRate || 0,
+          average_nightly_rate: data.properties[0].averageNightlyRate || 0,
+          average_monthly_revenue: data.properties[0].averageMonthlyRevenue || 0,
+          booking_history_summary: data.properties[0].bookingHistorySummary,
+          future_bookings_nights: data.properties[0].futureBookingsNights || 0,
+          future_bookings_revenue: data.properties[0].futureBookingsRevenue || 0,
+          current_mortgage_balance: data.properties[0].currentMortgageBalance,
+          monthly_mortgage_payment: data.properties[0].monthlyMortgagePayment,
+          outstanding_debts: data.properties[0].outstandingDebts,
+          bank_name: data.properties[0].bankName,
+        };
 
-        if (propError) throw propError;
-        setPropertyId(newProperty.id);
-      } else {
-        const { error: updateError } = await supabase
-          .from('properties')
-          .update(propertyData)
-          .eq('id', propertyId);
+        if (!propertyId) {
+          const { data: newProperty, error: propError } = await supabase
+            .from('properties')
+            .insert([propertyData])
+            .select()
+            .single();
 
-        if (updateError) throw updateError;
+          if (propError) throw propError;
+          setPropertyId(newProperty.id);
+        } else {
+          const { error: updateError } = await supabase
+            .from('properties')
+            .update(propertyData)
+            .eq('id', propertyId);
+
+          if (updateError) throw updateError;
+        }
       }
 
       toast({
