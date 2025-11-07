@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useAuth } from '@/hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -139,6 +139,8 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+  const draftId = searchParams.get('draft');
   
   const form = useForm<ApplicationFormData>({
     resolver: zodResolver(applicationSchema),
@@ -161,6 +163,58 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
       termsAgreed: false,
     },
   });
+
+  // Load draft data if draftId is present
+  useEffect(() => {
+    const loadDraft = async () => {
+      if (!draftId || !user) return;
+
+      try {
+        const { data, error } = await supabase
+          .from('applications')
+          .select('*')
+          .eq('id', draftId)
+          .eq('user_id', user.id)
+          .eq('status', 'draft')
+          .maybeSingle();
+
+        if (error) throw error;
+        
+        if (data && data.form_data) {
+          setApplicationId(data.id);
+          
+          // Type guard for form_data
+          const formData = data.form_data as any;
+          if (formData.draftName) {
+            setDraftName(formData.draftName);
+          }
+          
+          // Populate form with saved data
+          form.reset(formData);
+
+          // Load property data if exists
+          const { data: propertyData } = await supabase
+            .from('properties')
+            .select('*')
+            .eq('application_id', data.id)
+            .maybeSingle();
+
+          if (propertyData) {
+            setPropertyId(propertyData.id);
+          }
+        }
+      } catch (error) {
+        console.error('Error loading draft:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load draft",
+          variant: "destructive",
+        });
+      }
+    };
+
+    loadDraft();
+  }, [draftId, user, form, toast]);
 
   const saveApplicationAndProperty = async (data: ApplicationFormData, isDraft: boolean = true, draftNameParam?: string) => {
     if (!user) return;

@@ -6,7 +6,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Loader2, LogOut, FileText, Plus, DollarSign, TrendingUp, Clock, CheckCircle2, AlertCircle, ArrowUpRight } from 'lucide-react';
+import { Loader2, LogOut, FileText, Plus, DollarSign, TrendingUp, Clock, CheckCircle2, AlertCircle, ArrowUpRight, Edit2, Trash2 } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import AirbnbConnectionStatus from '@/components/dashboard/AirbnbConnectionStatus';
 import NotificationBell from '@/components/dashboard/NotificationBell';
 import { supabase } from '@/integrations/supabase/client';
@@ -17,6 +27,8 @@ const Dashboard = () => {
   const [applications, setApplications] = useState<any[]>([]);
   const [advances, setAdvances] = useState<any[]>([]);
   const [loadingData, setLoadingData] = useState(true);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [applicationToDelete, setApplicationToDelete] = useState<string | null>(null);
 
   // Fetch user's applications and advances
   useEffect(() => {
@@ -86,6 +98,34 @@ const Dashboard = () => {
       case 'rejected': return 'bg-red-500/10 text-red-500 border-red-500/20';
       default: return 'bg-muted text-muted-foreground';
     }
+  };
+
+  const handleEditDraft = (applicationId: string) => {
+    navigate(`/application/new?draft=${applicationId}`);
+  };
+
+  const handleDeleteDraft = async () => {
+    if (!applicationToDelete) return;
+    
+    try {
+      const { error } = await supabase
+        .from('applications')
+        .delete()
+        .eq('id', applicationToDelete);
+      
+      if (error) throw error;
+      
+      setApplications(prev => prev.filter(app => app.id !== applicationToDelete));
+      setDeleteDialogOpen(false);
+      setApplicationToDelete(null);
+    } catch (error) {
+      console.error('Error deleting draft:', error);
+    }
+  };
+
+  const openDeleteDialog = (applicationId: string) => {
+    setApplicationToDelete(applicationId);
+    setDeleteDialogOpen(true);
   };
 
   return (
@@ -293,12 +333,12 @@ const Dashboard = () => {
                       
                       return (
                         <div key={app.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-                          <div className="flex items-center gap-4">
-                            <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                          <div className="flex items-center gap-4 flex-1 min-w-0">
+                            <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                               <FileText className="h-6 w-6 text-primary" />
                             </div>
-                            <div>
-                              <p className="font-semibold">
+                            <div className="flex-1 min-w-0">
+                              <p className="font-semibold truncate">
                                 {displayName}
                               </p>
                               <p className="text-sm text-muted-foreground">
@@ -306,7 +346,7 @@ const Dashboard = () => {
                               </p>
                             </div>
                           </div>
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-3 flex-shrink-0">
                             {app.preferred_advance_amount && (
                               <div className="text-right hidden sm:block">
                                 <p className="text-sm text-muted-foreground">Amount</p>
@@ -316,6 +356,26 @@ const Dashboard = () => {
                             <Badge variant="outline" className={getStatusColor(app.status)}>
                               {app.status}
                             </Badge>
+                            {app.status === 'draft' && (
+                              <div className="flex gap-2">
+                                <Button 
+                                  size="icon" 
+                                  variant="outline"
+                                  onClick={() => handleEditDraft(app.id)}
+                                  className="h-9 w-9"
+                                >
+                                  <Edit2 className="h-4 w-4" />
+                                </Button>
+                                <Button 
+                                  size="icon" 
+                                  variant="outline"
+                                  onClick={() => openDeleteDialog(app.id)}
+                                  className="h-9 w-9 text-destructive hover:text-destructive"
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            )}
                           </div>
                         </div>
                       );
@@ -393,6 +453,23 @@ const Dashboard = () => {
           </TabsContent>
         </Tabs>
       </main>
+
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Draft</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this draft? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteDraft} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
