@@ -1,5 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Building2, Home, Briefcase, Hammer, TrendingUp, Users } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Building2, Home, Briefcase, Hammer, TrendingUp, Users, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 export type ApplicantType = 'str_host' | 'real_estate_agent' | 'property_manager' | 'contractor' | 'broker' | 'developer';
@@ -62,9 +64,18 @@ interface ApplicantTypeSelectionProps {
 }
 
 const ApplicantTypeSelection = ({ onSelect }: ApplicantTypeSelectionProps) => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-muted/30 py-8 px-4">
       <div className="container mx-auto max-w-6xl">
+        <div className="mb-6">
+          <Button variant="ghost" onClick={() => navigate('/dashboard')}>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Dashboard
+          </Button>
+        </div>
+        
         <div className="text-center mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold mb-4">Select Your Application Type</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
