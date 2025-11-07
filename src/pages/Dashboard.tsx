@@ -285,34 +285,41 @@ const Dashboard = () => {
                   </div>
                 ) : (
                   <div className="space-y-3">
-                    {applications.map((app) => (
-                      <div key={app.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-                        <div className="flex items-center gap-4">
-                          <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                            <FileText className="h-6 w-6 text-primary" />
-                          </div>
-                          <div>
-                            <p className="font-semibold">
-                              {app.applicant_type ? app.applicant_type.replace(/_/g, ' ').toUpperCase() : 'Application'}
-                            </p>
-                            <p className="text-sm text-muted-foreground">
-                              Applied {new Date(app.created_at).toLocaleDateString()}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          {app.preferred_advance_amount && (
-                            <div className="text-right hidden sm:block">
-                              <p className="text-sm text-muted-foreground">Amount</p>
-                              <p className="font-semibold">${parseFloat(app.preferred_advance_amount).toLocaleString()}</p>
+                    {applications.map((app) => {
+                      const draftName = app.form_data?.draftName;
+                      const displayName = app.status === 'draft' && draftName 
+                        ? draftName 
+                        : (app.applicant_type ? app.applicant_type.replace(/_/g, ' ').toUpperCase() : 'Application');
+                      
+                      return (
+                        <div key={app.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                          <div className="flex items-center gap-4">
+                            <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                              <FileText className="h-6 w-6 text-primary" />
                             </div>
-                          )}
-                          <Badge variant="outline" className={getStatusColor(app.status)}>
-                            {app.status}
-                          </Badge>
+                            <div>
+                              <p className="font-semibold">
+                                {displayName}
+                              </p>
+                              <p className="text-sm text-muted-foreground">
+                                {app.status === 'draft' ? 'Saved' : 'Applied'} {new Date(app.created_at).toLocaleDateString()}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            {app.preferred_advance_amount && (
+                              <div className="text-right hidden sm:block">
+                                <p className="text-sm text-muted-foreground">Amount</p>
+                                <p className="font-semibold">${parseFloat(app.preferred_advance_amount).toLocaleString()}</p>
+                              </div>
+                            )}
+                            <Badge variant="outline" className={getStatusColor(app.status)}>
+                              {app.status}
+                            </Badge>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </CardContent>

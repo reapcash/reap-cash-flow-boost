@@ -24,6 +24,7 @@ import PropertyManagerSection from './PropertyManagerSection';
 import ContractorSection from './ContractorSection';
 import BrokerSection from './BrokerSection';
 import DeveloperSection from './DeveloperSection';
+import { SaveDraftDialog } from './SaveDraftDialog';
 
 const applicationSchema = z.object({
   // Property Information
@@ -132,6 +133,9 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   const [selectedBookingIds, setSelectedBookingIds] = useState<string[]>([]);
   const [selectedBookingsRevenue, setSelectedBookingsRevenue] = useState<number>(0);
   const [saving, setSaving] = useState(false);
+  const [showSaveDraftDialog, setShowSaveDraftDialog] = useState(false);
+  const [draftName, setDraftName] = useState('');
+  const [pendingDraftData, setPendingDraftData] = useState<ApplicationFormData | null>(null);
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -158,14 +162,17 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
     },
   });
 
-  const saveApplicationAndProperty = async (data: ApplicationFormData, isDraft: boolean = true) => {
+  const saveApplicationAndProperty = async (data: ApplicationFormData, isDraft: boolean = true, draftNameParam?: string) => {
     if (!user) return;
     
     try {
       setSaving(true);
 
       // Collect all form data based on applicant type
-      const formData: any = { ...data };
+      const formData: any = { 
+        ...data,
+        draftName: draftNameParam || draftName || 'Untitled Draft'
+      };
       
       // Create or update application
       const applicationData = {
@@ -181,7 +188,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         requested_advance_amount: data.preferredAdvanceAmount,
         selected_bookings_revenue: selectedBookingsRevenue,
         submitted_at: isDraft ? null : new Date().toISOString(),
-        form_data: formData, // Store all form data as JSONB
+        form_data: formData, // Store all form data as JSONB including draft name
       };
 
       let appId = applicationId;
@@ -270,8 +277,21 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
     }
   };
 
-  const onSaveDraft = async (data: ApplicationFormData) => {
-    await saveApplicationAndProperty(data, true);
+  const handleSaveDraftClick = (data: ApplicationFormData) => {
+    setPendingDraftData(data);
+    setShowSaveDraftDialog(true);
+  };
+
+  const onSaveDraft = async (name: string) => {
+    if (!pendingDraftData) return;
+    setDraftName(name);
+    await saveApplicationAndProperty(pendingDraftData, true, name);
+    setPendingDraftData(null);
+  };
+
+  const onDiscardDraft = () => {
+    setPendingDraftData(null);
+    navigate('/dashboard');
   };
 
   const onSubmit = async (data: ApplicationFormData) => {
@@ -343,7 +363,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
                   <Button 
                     type="button" 
                     variant="outline"
-                    onClick={() => form.handleSubmit(onSaveDraft)()}
+                    onClick={() => form.handleSubmit(handleSaveDraftClick)()}
                     disabled={saving}
                   >
                     {saving ? (
@@ -584,7 +604,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
           <Button 
             type="button" 
             variant="outline"
-            onClick={form.handleSubmit(onSaveDraft)}
+            onClick={form.handleSubmit(handleSaveDraftClick)}
             disabled={saving}
           >
             {saving ? (
