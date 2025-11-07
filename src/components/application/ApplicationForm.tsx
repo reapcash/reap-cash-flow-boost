@@ -161,9 +161,13 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
     try {
       setSaving(true);
 
+      // Collect all form data based on applicant type
+      const formData: any = { ...data };
+      
       // Create or update application
       const applicationData = {
         user_id: user.id,
+        applicant_type: applicantType,
         status: (isDraft ? 'draft' : 'submitted') as 'draft' | 'submitted',
         preferred_advance_amount: data.preferredAdvanceAmount,
         repayment_terms: data.repaymentTerms,
@@ -174,6 +178,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         requested_advance_amount: data.preferredAdvanceAmount,
         selected_bookings_revenue: selectedBookingsRevenue,
         submitted_at: isDraft ? null : new Date().toISOString(),
+        form_data: formData, // Store all form data as JSONB
       };
 
       let appId = applicationId;
@@ -384,7 +389,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
-              <DocumentUploadSection />
+              <DocumentUploadSection applicationId={applicationId} />
               {renderTabNavigation()}
             </TabsContent>
           </>
@@ -416,7 +421,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
-              <DocumentUploadSection />
+              <DocumentUploadSection applicationId={applicationId} />
               {renderTabNavigation()}
             </TabsContent>
           </>
@@ -448,7 +453,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
-              <DocumentUploadSection />
+              <DocumentUploadSection applicationId={applicationId} />
               {renderTabNavigation()}
             </TabsContent>
           </>
@@ -480,7 +485,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
-              <DocumentUploadSection />
+              <DocumentUploadSection applicationId={applicationId} />
               {renderTabNavigation()}
             </TabsContent>
           </>
@@ -512,7 +517,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
-              <DocumentUploadSection />
+              <DocumentUploadSection applicationId={applicationId} />
               {renderTabNavigation()}
             </TabsContent>
           </>
@@ -544,7 +549,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
-              <DocumentUploadSection />
+              <DocumentUploadSection applicationId={applicationId} />
               {renderTabNavigation()}
             </TabsContent>
           </>

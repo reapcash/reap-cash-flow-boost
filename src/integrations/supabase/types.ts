@@ -204,8 +204,10 @@ export type Database = {
       }
       applications: {
         Row: {
+          applicant_type: string | null
           created_at: string | null
           credit_report_authorized: boolean | null
+          form_data: Json | null
           id: string
           preferred_advance_amount: number | null
           repayment_terms: Database["public"]["Enums"]["repayment_terms"] | null
@@ -223,8 +225,10 @@ export type Database = {
           verification_consent: boolean | null
         }
         Insert: {
+          applicant_type?: string | null
           created_at?: string | null
           credit_report_authorized?: boolean | null
+          form_data?: Json | null
           id?: string
           preferred_advance_amount?: number | null
           repayment_terms?:
@@ -244,8 +248,10 @@ export type Database = {
           verification_consent?: boolean | null
         }
         Update: {
+          applicant_type?: string | null
           created_at?: string | null
           credit_report_authorized?: boolean | null
+          form_data?: Json | null
           id?: string
           preferred_advance_amount?: number | null
           repayment_terms?:
