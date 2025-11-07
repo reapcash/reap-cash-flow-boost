@@ -100,8 +100,30 @@ const getApplicationDescription = (type: ApplicantType): string => {
   return descriptions[type];
 };
 
+const getTabOrder = (type: ApplicantType): string[] => {
+  switch (type) {
+    case 'str_host':
+      return ['property', 'str', 'financial', 'consent', 'documents'];
+    case 'real_estate_agent':
+      return ['agent', 'financial', 'consent', 'documents'];
+    case 'property_manager':
+      return ['manager', 'financial', 'consent', 'documents'];
+    case 'contractor':
+      return ['contractor', 'financial', 'consent', 'documents'];
+    case 'broker':
+      return ['broker', 'financial', 'consent', 'documents'];
+    case 'developer':
+      return ['developer', 'financial', 'consent', 'documents'];
+    default:
+      return [];
+  }
+};
+
 const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
-  const [activeTab, setActiveTab] = useState('property');
+  const [activeTab, setActiveTab] = useState(() => {
+    const tabOrders = getTabOrder(applicantType);
+    return tabOrders[0];
+  });
   const [applicationId, setApplicationId] = useState<string | null>(null);
   const [propertyId, setPropertyId] = useState<string | null>(null);
   const [selectedBookingIds, setSelectedBookingIds] = useState<string[]>([]);
@@ -248,6 +270,41 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
     await saveApplicationAndProperty(data, false);
   };
 
+  const tabOrder = getTabOrder(applicantType);
+  const currentTabIndex = tabOrder.indexOf(activeTab);
+  const isFirstTab = currentTabIndex === 0;
+  const isLastTab = currentTabIndex === tabOrder.length - 1;
+
+  const handleNext = () => {
+    if (!isLastTab) {
+      setActiveTab(tabOrder[currentTabIndex + 1]);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (!isFirstTab) {
+      setActiveTab(tabOrder[currentTabIndex - 1]);
+    }
+  };
+
+  const renderTabNavigation = () => (
+    <div className="flex justify-between pt-6 border-t">
+      <Button
+        type="button"
+        variant="outline"
+        onClick={handlePrevious}
+        disabled={isFirstTab}
+      >
+        Previous
+      </Button>
+      {!isLastTab ? (
+        <Button type="button" onClick={handleNext}>
+          Next
+        </Button>
+      ) : null}
+    </div>
+  );
+
   // Render different tabs based on applicant type
   const renderTabs = () => {
     switch (applicantType) {
@@ -264,6 +321,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
 
             <TabsContent value="property" className="space-y-6 pt-6">
               <PropertyInformationSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="str" className="space-y-6 pt-6">
@@ -312,18 +370,22 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
                   />
                 </div>
               )}
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="financial" className="space-y-6 pt-6">
               <FinancialInformationSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="consent" className="space-y-6 pt-6">
               <ConsentSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
               <DocumentUploadSection />
+              {renderTabNavigation()}
             </TabsContent>
           </>
         );
@@ -340,18 +402,22 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
 
             <TabsContent value="agent" className="space-y-6 pt-6">
               <RealEstateAgentSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="financial" className="space-y-6 pt-6">
               <FinancialInformationSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="consent" className="space-y-6 pt-6">
               <ConsentSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
               <DocumentUploadSection />
+              {renderTabNavigation()}
             </TabsContent>
           </>
         );
@@ -368,18 +434,22 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
 
             <TabsContent value="manager" className="space-y-6 pt-6">
               <PropertyManagerSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="financial" className="space-y-6 pt-6">
               <FinancialInformationSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="consent" className="space-y-6 pt-6">
               <ConsentSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
               <DocumentUploadSection />
+              {renderTabNavigation()}
             </TabsContent>
           </>
         );
@@ -396,18 +466,22 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
 
             <TabsContent value="contractor" className="space-y-6 pt-6">
               <ContractorSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="financial" className="space-y-6 pt-6">
               <FinancialInformationSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="consent" className="space-y-6 pt-6">
               <ConsentSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
               <DocumentUploadSection />
+              {renderTabNavigation()}
             </TabsContent>
           </>
         );
@@ -424,18 +498,22 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
 
             <TabsContent value="broker" className="space-y-6 pt-6">
               <BrokerSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="financial" className="space-y-6 pt-6">
               <FinancialInformationSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="consent" className="space-y-6 pt-6">
               <ConsentSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
               <DocumentUploadSection />
+              {renderTabNavigation()}
             </TabsContent>
           </>
         );
@@ -452,18 +530,22 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
 
             <TabsContent value="developer" className="space-y-6 pt-6">
               <DeveloperSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="financial" className="space-y-6 pt-6">
               <FinancialInformationSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="consent" className="space-y-6 pt-6">
               <ConsentSection form={form} />
+              {renderTabNavigation()}
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
               <DocumentUploadSection />
+              {renderTabNavigation()}
             </TabsContent>
           </>
         );
