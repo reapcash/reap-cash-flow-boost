@@ -28,7 +28,10 @@ import DeveloperSection from './DeveloperSection';
 const applicationSchema = z.object({
   // Property Information
   properties: z.array(z.object({
-    propertyAddress: z.string().min(5, 'Address is required'),
+    propertyStreet: z.string().min(3, 'Street address is required').max(200),
+    propertyCity: z.string().min(2, 'City is required').max(100),
+    propertyState: z.string().length(2, 'State must be 2 letters').regex(/^[A-Z]{2}$/, 'State must be 2 uppercase letters'),
+    propertyZipcode: z.string().length(5, 'ZIP code must be 5 digits').regex(/^\d{5}$/, 'ZIP code must be numeric'),
     propertyType: z.enum(['single_family', 'multi_family', 'condo_apartment', 'other']),
     propertyTypeOther: z.string().optional(),
     numberOfBedrooms: z.number().min(1).max(50),
@@ -205,7 +208,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
       // Create or update property
       const propertyData = {
         application_id: appId,
-        property_address: data.properties[0].propertyAddress,
+        property_address: `${data.properties[0].propertyStreet}, ${data.properties[0].propertyCity}, ${data.properties[0].propertyState} ${data.properties[0].propertyZipcode}`,
         property_type: data.properties[0].propertyType,
         property_type_other: data.properties[0].propertyTypeOther,
         number_of_bedrooms: data.properties[0].numberOfBedrooms,
@@ -332,7 +335,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             <TabsContent value="str" className="space-y-6 pt-6">
               <STRDetailsSection form={form} />
               
-              {!propertyId && form.watch('properties')?.[0]?.propertyAddress && (
+              {!propertyId && form.watch('properties')?.[0]?.propertyStreet && (
                 <div className="mt-8 p-4 bg-muted/50 rounded-lg">
                   <p className="text-sm text-muted-foreground mb-3">
                     Save your property information to connect your Airbnb account and import bookings

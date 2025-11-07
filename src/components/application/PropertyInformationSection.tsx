@@ -57,19 +57,80 @@ const PropertyInformationSection = ({ form }: PropertyInformationSectionProps) =
           
           <h3 className="text-lg font-semibold">Property #{index + 1}</h3>
 
-          <FormField
-            control={form.control}
-            name={`properties.${index}.propertyAddress`}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Property Address</FormLabel>
-                <FormControl>
-                  <Input placeholder="123 Main St, City, State ZIP" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="space-y-4">
+            <FormField
+              control={form.control}
+              name={`properties.${index}.propertyStreet`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Street Address</FormLabel>
+                  <FormControl>
+                    <Input placeholder="123 Main St" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name={`properties.${index}.propertyCity`}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>City/Town</FormLabel>
+                    <FormControl>
+                      <Input placeholder="City name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="grid grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name={`properties.${index}.propertyState`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>State</FormLabel>
+                      <FormControl>
+                        <Input 
+                          placeholder="CA" 
+                          maxLength={2}
+                          {...field}
+                          onChange={(e) => field.onChange(e.target.value.toUpperCase())}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name={`properties.${index}.propertyZipcode`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>ZIP Code</FormLabel>
+                      <FormControl>
+                        <Input 
+                          placeholder="12345" 
+                          maxLength={5}
+                          {...field}
+                          onChange={(e) => {
+                            const value = e.target.value.replace(/\D/g, '');
+                            field.onChange(value);
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+          </div>
 
           <div className="grid md:grid-cols-2 gap-4">
             <FormField
