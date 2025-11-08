@@ -17,8 +17,7 @@ const ApplicationReviewQueue = () => {
         .from('applications')
         .select(`
           *,
-          properties (*),
-          profiles (*)
+          properties (*)
         `)
         .order('submitted_at', { ascending: false });
 
@@ -33,7 +32,24 @@ const ApplicationReviewQueue = () => {
       const { data, error } = await query;
 
       if (error) throw error;
-      setApplications(data || []);
+
+      // Hydrate profiles without a direct FK relationship
+      const userIds = Array.from(new Set((data || []).map((app: any) => app.user_id).filter(Boolean)));
+      let profilesMap: Record<string, any> = {};
+      if (userIds.length) {
+        const { data: profilesData, error: profilesError } = await supabase
+          .from('profiles')
+          .select('*')
+          .in('id', userIds);
+        if (profilesError) {
+          console.error('Error fetching profiles:', profilesError);
+        } else {
+          profilesMap = Object.fromEntries((profilesData || []).map((p: any) => [p.id, p]));
+        }
+      }
+
+      const hydrated = (data || []).map((app: any) => ({ ...app, profiles: profilesMap[app.user_id] || null }));
+      setApplications(hydrated);
     } catch (error) {
       console.error('Error fetching applications:', error);
     } finally {
