@@ -2,11 +2,15 @@ import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, XCircle, Eye, Calendar, DollarSign, Home, User, Phone, Mail, FileText, Building, TrendingUp, Shield, ChevronDown, ChevronUp } from 'lucide-react';
+import { CheckCircle, XCircle, Eye, Calendar, DollarSign, Home, User, Phone, Mail, FileText, Building, TrendingUp, Shield, ChevronDown, ChevronUp, Clock } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Separator } from '@/components/ui/separator';
 import { format } from 'date-fns';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 import ApplicationApprovalDialog from './ApplicationApprovalDialog';
+import DocumentViewer from './DocumentViewer';
+import AdminNotesSection from './AdminNotesSection';
 
 interface ApplicationReviewCardProps {
   application: any;
@@ -39,6 +43,23 @@ const ApplicationReviewCard = ({ application, onStatusUpdate }: ApplicationRevie
   const handleReject = () => {
     setActionType('reject');
     setShowApprovalDialog(true);
+  };
+
+  const handleMarkUnderReview = async () => {
+    try {
+      const { error } = await supabase
+        .from('applications')
+        .update({ status: 'under_review' })
+        .eq('id', application.id);
+
+      if (error) throw error;
+      
+      toast.success('Application marked as under review');
+      onStatusUpdate();
+    } catch (error) {
+      console.error('Error updating status:', error);
+      toast.error('Failed to update status');
+    }
   };
 
   const property = application.properties?.[0];
@@ -249,12 +270,41 @@ const ApplicationReviewCard = ({ application, onStatusUpdate }: ApplicationRevie
 
           <Separator />
 
+          {/* Documents */}
+          <DocumentViewer applicationId={application.id} />
+
+          {/* Admin Notes */}
+          <AdminNotesSection applicationId={application.id} />
+
+          <Separator />
+
           {/* Actions */}
-          {(application.status === 'submitted' || application.status === 'under_review') && (
+          {application.status === 'submitted' && (
+            <div className="space-y-2">
+              <div className="flex gap-2">
+                <Button onClick={handleMarkUnderReview} variant="secondary" className="flex-1">
+                  <Clock className="mr-2 h-4 w-4" />
+                  Start Review
+                </Button>
+              </div>
+              <div className="flex gap-2">
+                <Button onClick={handleApprove} className="flex-1">
+                  <CheckCircle className="mr-2 h-4 w-4" />
+                  Approve
+                </Button>
+                <Button onClick={handleReject} variant="destructive" className="flex-1">
+                  <XCircle className="mr-2 h-4 w-4" />
+                  Reject
+                </Button>
+              </div>
+            </div>
+          )}
+          
+          {application.status === 'under_review' && (
             <div className="flex gap-2">
               <Button onClick={handleApprove} className="flex-1">
                 <CheckCircle className="mr-2 h-4 w-4" />
-                {application.status === 'under_review' ? 'Approve Application' : 'Review & Approve'}
+                Approve Application
               </Button>
               <Button onClick={handleReject} variant="destructive" className="flex-1">
                 <XCircle className="mr-2 h-4 w-4" />
