@@ -18,7 +18,7 @@ const ApplicationReviewQueue = () => {
         .select(`
           *,
           properties (*),
-          profiles!applications_user_id_fkey (*)
+          profiles (*)
         `)
         .order('submitted_at', { ascending: false });
 
