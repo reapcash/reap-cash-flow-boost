@@ -250,16 +250,36 @@ const ApplicationReviewCard = ({ application, onStatusUpdate }: ApplicationRevie
           <Separator />
 
           {/* Actions */}
-          {application.status === 'submitted' && (
+          {(application.status === 'submitted' || application.status === 'under_review') && (
             <div className="flex gap-2">
               <Button onClick={handleApprove} className="flex-1">
                 <CheckCircle className="mr-2 h-4 w-4" />
-                Approve Application
+                {application.status === 'under_review' ? 'Approve Application' : 'Review & Approve'}
               </Button>
               <Button onClick={handleReject} variant="destructive" className="flex-1">
                 <XCircle className="mr-2 h-4 w-4" />
                 Reject Application
               </Button>
+            </div>
+          )}
+          
+          {application.status === 'approved' && (
+            <div className="p-4 bg-primary/10 border border-primary/20 rounded-lg text-center">
+              <CheckCircle className="h-6 w-6 mx-auto mb-2 text-primary" />
+              <p className="font-medium text-primary">Application Approved</p>
+              <p className="text-sm text-muted-foreground">
+                Approved on {format(new Date(application.reviewed_at || application.updated_at), 'MMM d, yyyy h:mm a')}
+              </p>
+            </div>
+          )}
+          
+          {application.status === 'rejected' && (
+            <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg text-center">
+              <XCircle className="h-6 w-6 mx-auto mb-2 text-destructive" />
+              <p className="font-medium text-destructive">Application Rejected</p>
+              <p className="text-sm text-muted-foreground">
+                Rejected on {format(new Date(application.reviewed_at || application.updated_at), 'MMM d, yyyy h:mm a')}
+              </p>
             </div>
           )}
         </CardContent>
