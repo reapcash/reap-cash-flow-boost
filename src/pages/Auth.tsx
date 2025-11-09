@@ -12,9 +12,33 @@ import PhoneVerification from "@/components/auth/PhoneVerification";
 const signUpSchema = z.object({
   fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
   email: z.string().trim().email("Invalid email address").max(255),
-  phone: z.string().trim().min(10, "Phone number must be at least 10 digits").max(20),
+  phone: z.string().trim().min(10, "Phone number must be 10 digits").regex(/^[\d\s\-\+\(\)]+$/, "Invalid phone number format"),
   password: z.string().min(8, "Password must be at least 8 characters").max(100),
 });
+
+// Format phone number to E.164 format (required by Supabase)
+const formatPhoneE164 = (phone: string): string => {
+  // Remove all non-digit characters
+  const digits = phone.replace(/\D/g, '');
+  
+  // If 10 digits, assume US number and prepend +1
+  if (digits.length === 10) {
+    return `+1${digits}`;
+  }
+  
+  // If 11 digits starting with 1, prepend +
+  if (digits.length === 11 && digits.startsWith('1')) {
+    return `+${digits}`;
+  }
+  
+  // If already starts with +, return as is
+  if (phone.startsWith('+')) {
+    return `+${digits}`;
+  }
+  
+  // Default: prepend + if not present
+  return `+${digits}`;
+};
 
 const signInSchema = z.object({
   email: z.string().trim().email("Invalid email address").max(255),
@@ -82,8 +106,9 @@ const Auth = () => {
           return;
         }
 
-        // Send OTP to phone number
-        const { error: otpError } = await sendPhoneOTP(formData.phone);
+        // Send OTP to phone number (format to E.164)
+        const formattedPhone = formatPhoneE164(formData.phone);
+        const { error: otpError } = await sendPhoneOTP(formattedPhone);
         
         if (otpError) {
           setErrors({ phone: otpError.message || 'Failed to send verification code. Please check your phone number.' });
@@ -105,8 +130,9 @@ const Auth = () => {
     setVerificationError('');
 
     try {
+      const formattedPhone = formatPhoneE164(formData.phone);
       const { error } = await verifyPhoneOTP(
-        formData.phone,
+        formattedPhone,
         code,
         formData.email,
         formData.password,
@@ -128,7 +154,8 @@ const Auth = () => {
     setVerificationError('');
 
     try {
-      const { error } = await sendPhoneOTP(formData.phone);
+      const formattedPhone = formatPhoneE164(formData.phone);
+      const { error } = await sendPhoneOTP(formattedPhone);
       if (error) {
         setVerificationError(error.message || 'Failed to resend code');
       }
@@ -231,13 +258,18 @@ const Auth = () => {
                   <Input 
                     id="phone" 
                     type="tel" 
-                    placeholder="+1 (555) 123-4567" 
+                    placeholder="(555) 123-4567 or 5551234567" 
                     className="h-11"
                     value={formData.phone}
                     onChange={handleChange}
                     disabled={loading}
                   />
                   {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
+                  {!errors.phone && (
+                    <p className="text-xs text-muted-foreground">
+                      Enter 10-digit US phone number
+                    </p>
+                  )}
                 </div>
               </>
             )}
