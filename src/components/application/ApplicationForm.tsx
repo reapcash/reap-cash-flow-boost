@@ -26,6 +26,8 @@ import BrokerSection from './BrokerSection';
 import DeveloperSection from './DeveloperSection';
 import { SaveDraftDialog } from './SaveDraftDialog';
 import { LeaveConfirmationDialog } from './LeaveConfirmationDialog';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { CheckCircle, Sparkles } from 'lucide-react';
 
 const applicationSchema = z.object({
   // Property Information
@@ -143,6 +145,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   const [showLeaveDialog, setShowLeaveDialog] = useState(false);
   const [draftName, setDraftName] = useState('');
   const [pendingDraftData, setPendingDraftData] = useState<ApplicationFormData | null>(null);
+  const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -362,16 +365,8 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
           description: 'Your application has been saved as a draft',
         });
       } else {
-        // Show success message before navigating
-        toast({
-          title: 'Application submitted successfully!',
-          description: 'Thank you for your submission. We will review your application shortly.',
-        });
-        
-        // Navigate to success screen
-        setTimeout(() => {
-          navigate('/application-success');
-        }, 500);
+        // Show success dialog
+        setIsSuccessDialogOpen(true);
       }
 
     } catch (error: any) {
@@ -821,6 +816,50 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
           onSaveDraft={handleLeaveAndSave}
           onDiscard={handleLeaveAndDiscard}
         />
+
+        <Dialog open={isSuccessDialogOpen} onOpenChange={setIsSuccessDialogOpen}>
+          <DialogContent className="sm:max-w-md border-primary/20">
+            <div className="flex flex-col items-center text-center space-y-6 py-6">
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl animate-pulse" />
+                <div className="relative rounded-full bg-gradient-to-br from-primary to-primary-glow p-6">
+                  <CheckCircle className="h-16 w-16 text-white" />
+                </div>
+                <Sparkles className="absolute -top-2 -right-2 h-8 w-8 text-primary animate-pulse" />
+              </div>
+              
+              <div className="space-y-3">
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
+                  Application Submitted!
+                </h2>
+                <p className="text-muted-foreground text-lg">
+                  Thank you for submitting your application. The REAP team is currently reviewing your submission and will get back to you shortly.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 w-full pt-4">
+                <Button 
+                  onClick={() => {
+                    setIsSuccessDialogOpen(false);
+                    navigate('/dashboard');
+                  }}
+                  className="flex-1"
+                  size="lg"
+                >
+                  Go to Dashboard
+                </Button>
+                <Button 
+                  onClick={() => setIsSuccessDialogOpen(false)}
+                  variant="outline"
+                  className="flex-1"
+                  size="lg"
+                >
+                  Close
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </form>
     </Form>
   );
