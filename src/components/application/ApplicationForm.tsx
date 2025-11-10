@@ -416,25 +416,31 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
       } else {
         // Show success dialog after successful submission
         console.log('Application submitted successfully, showing success dialog');
+        console.log('Setting isSuccessDialogOpen to true');
+        setSaving(false); // Ensure saving is false before showing dialog
         setIsSuccessDialogOpen(true);
+        console.log('isSuccessDialogOpen set to true');
         // Don't reset the lock here - keep it locked to prevent resubmission
       }
 
     } catch (error: any) {
       // Only show error toasts for non-draft submissions
       // During draft saves (including auto-saves during document uploads), silently log errors
+      console.error('Error in saveApplicationAndProperty:', error);
       if (!isDraft) {
         finalSubmitLockRef.current = false;
         toast({
-          title: 'Error',
-          description: error.message,
+          title: 'Error Submitting Application',
+          description: error.message || 'An unexpected error occurred',
           variant: 'destructive',
         });
       } else {
         console.log('Draft save error (non-critical):', error.message);
       }
     } finally {
-      setSaving(false);
+      if (isDraft || !isSuccessDialogOpen) {
+        setSaving(false);
+      }
     }
   };
 
@@ -488,11 +494,20 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
 
   const onSubmit = async (data: ApplicationFormData) => {
     console.log('Form submitted, calling saveApplicationAndProperty');
+    console.log('Form data:', data);
+    console.log('Applicant type:', applicantType);
+    
     try {
       await saveApplicationAndProperty(data, false);
       console.log('saveApplicationAndProperty completed successfully');
+      console.log('isSuccessDialogOpen should be true now');
     } catch (error) {
       console.error('Error in onSubmit:', error);
+      toast({
+        title: 'Submission Error',
+        description: error instanceof Error ? error.message : 'Failed to submit application',
+        variant: 'destructive',
+      });
     }
   };
 
