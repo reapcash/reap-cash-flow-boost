@@ -48,14 +48,22 @@ interface DocumentUploadSectionProps {
   onUploadComplete?: () => void;
   onApplicationCreated?: (appId: string) => void;
   applicantType?: string;
+  onDocumentStatusChange?: (allRequiredUploaded: boolean) => void;
 }
 
-const DocumentUploadSection = ({ applicationId, onUploadComplete, onApplicationCreated, applicantType }: DocumentUploadSectionProps) => {
+const DocumentUploadSection = ({ applicationId, onUploadComplete, onApplicationCreated, applicantType, onDocumentStatusChange }: DocumentUploadSectionProps) => {
   const [documentStatus, setDocumentStatus] = useState<DocumentStatus>({});
   const [uploadedFiles, setUploadedFiles] = useState<{ [key: string]: string }>({});
   const [localApplicationId, setLocalApplicationId] = useState<string | null>(applicationId);
   const { user } = useAuth();
   const { toast } = useToast();
+
+  // Check if all required documents are uploaded
+  const checkRequiredDocuments = () => {
+    const requiredDocs = REQUIRED_DOCUMENTS.filter(doc => doc.required);
+    const allUploaded = requiredDocs.every(doc => documentStatus[doc.id] === 'uploaded');
+    return allUploaded;
+  };
 
   // Sync localApplicationId with applicationId prop
   useEffect(() => {
@@ -63,6 +71,12 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete, onApplicationC
       setLocalApplicationId(applicationId);
     }
   }, [applicationId]);
+
+  // Notify parent component when document status changes
+  useEffect(() => {
+    const allRequiredUploaded = checkRequiredDocuments();
+    onDocumentStatusChange?.(allRequiredUploaded);
+  }, [documentStatus, onDocumentStatusChange]);
 
   const createDraftApplication = async () => {
     if (!user || !applicantType) return null;
@@ -165,7 +179,10 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete, onApplicationC
         throw new Error(dbError.message);
       }
 
-      setDocumentStatus(prev => ({ ...prev, [documentId]: 'uploaded' }));
+      setDocumentStatus(prev => {
+        const newStatus: DocumentStatus = { ...prev, [documentId]: 'uploaded' };
+        return newStatus;
+      });
       setUploadedFiles(prev => ({ ...prev, [documentId]: fileName }));
 
       console.log('✓ Document uploaded successfully - application remains in current status');
@@ -223,6 +240,10 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete, onApplicationC
     }
   };
 
+  const missingRequiredDocs = REQUIRED_DOCUMENTS
+    .filter(doc => doc.required && documentStatus[doc.id] !== 'uploaded')
+    .map(doc => doc.title);
+
   return (
     <div className="space-y-6">
       <div>
@@ -230,6 +251,13 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete, onApplicationC
         <p className="text-sm text-muted-foreground">
           Please upload the following documents to complete your application. All required documents must be submitted before final submission.
         </p>
+        {missingRequiredDocs.length > 0 && (
+          <div className="mt-3 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+            <p className="text-sm font-medium text-destructive">
+              Missing required documents: {missingRequiredDocs.join(', ')}
+            </p>
+          </div>
+        )}
       </div>
 
       <div className="grid gap-4">

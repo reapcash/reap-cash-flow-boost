@@ -147,6 +147,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   const [draftName, setDraftName] = useState('');
   const [pendingDraftData, setPendingDraftData] = useState<ApplicationFormData | null>(null);
   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
+  const [allRequiredDocsUploaded, setAllRequiredDocsUploaded] = useState(false);
   const finalSubmitLockRef = useRef(false);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const lastSubmitTimeRef = useRef<number>(0);
@@ -516,6 +517,19 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   };
 
   const onSubmit = async (data: ApplicationFormData) => {
+    // CRITICAL: Check if all required documents are uploaded
+    if (!allRequiredDocsUploaded) {
+      console.log('⛔ SUBMISSION BLOCKED: Required documents not uploaded');
+      toast({
+        title: 'Missing Required Documents',
+        description: 'Please upload all required documents before submitting your application.',
+        variant: 'destructive',
+      });
+      // Switch to documents tab to show user what's missing
+      setActiveTab('documents');
+      return;
+    }
+
     // CRITICAL: Prevent double-click submissions (debounce 2 seconds)
     const now = Date.now();
     if (now - lastSubmitTimeRef.current < 2000) {
@@ -856,6 +870,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
                 applicationId={applicationId} 
                 onApplicationCreated={setApplicationId}
                 applicantType={applicantType}
+                onDocumentStatusChange={setAllRequiredDocsUploaded}
               />
               {renderTabNavigation()}
             </TabsContent>
@@ -936,8 +951,9 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             <Button 
               ref={submitButtonRef}
               type="submit"
-              disabled={saving || finalSubmitLockRef.current}
+              disabled={saving || finalSubmitLockRef.current || !allRequiredDocsUploaded}
               className="bg-primary hover:bg-primary/90 font-semibold"
+              title={!allRequiredDocsUploaded ? 'Please upload all required documents before submitting' : ''}
             >
               {saving ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
