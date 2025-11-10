@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import ApplicationReviewQueue from '@/components/admin/ApplicationReviewQueue';
+import ContactMessagesQueue from '@/components/admin/ContactMessagesQueue';
 
 const AdminDashboard = () => {
   const { user, loading, signOut, isAdmin } = useAuth();
@@ -131,12 +132,17 @@ const AdminDashboard = () => {
         <Tabs defaultValue="applications" className="space-y-4">
           <TabsList>
             <TabsTrigger value="applications">Applications</TabsTrigger>
+            <TabsTrigger value="contact">Contact Messages</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
           </TabsList>
 
           <TabsContent value="applications" className="space-y-4">
             <ApplicationReviewQueue />
+          </TabsContent>
+
+          <TabsContent value="contact" className="space-y-4">
+            <ContactMessagesQueue />
           </TabsContent>
 
           <TabsContent value="users" className="space-y-4">
