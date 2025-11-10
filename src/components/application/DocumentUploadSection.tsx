@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Upload, FileText, CheckCircle2, XCircle, AlertCircle, Loader2 } from 'lucide-react';
@@ -46,13 +46,64 @@ interface DocumentStatus {
 interface DocumentUploadSectionProps {
   applicationId: string | null;
   onUploadComplete?: () => void;
+  onApplicationCreated?: (appId: string) => void;
+  applicantType?: string;
 }
 
-const DocumentUploadSection = ({ applicationId, onUploadComplete }: DocumentUploadSectionProps) => {
+const DocumentUploadSection = ({ applicationId, onUploadComplete, onApplicationCreated, applicantType }: DocumentUploadSectionProps) => {
   const [documentStatus, setDocumentStatus] = useState<DocumentStatus>({});
   const [uploadedFiles, setUploadedFiles] = useState<{ [key: string]: string }>({});
+  const [localApplicationId, setLocalApplicationId] = useState<string | null>(applicationId);
   const { user } = useAuth();
   const { toast } = useToast();
+
+  // Sync localApplicationId with applicationId prop
+  useEffect(() => {
+    if (applicationId) {
+      setLocalApplicationId(applicationId);
+    }
+  }, [applicationId]);
+
+  const createDraftApplication = async () => {
+    if (!user || !applicantType) return null;
+
+    try {
+      const { data: newApp, error } = await supabase
+        .from('applications')
+        .insert([{
+          user_id: user.id,
+          applicant_type: applicantType,
+          status: 'draft',
+          preferred_advance_amount: 0,
+          credit_report_authorized: false,
+          verification_consent: false,
+          terms_agreed: false,
+          form_data: { draftName: 'Untitled Draft' },
+        }])
+        .select()
+        .single();
+
+      if (error) throw error;
+      
+      setLocalApplicationId(newApp.id);
+      onApplicationCreated?.(newApp.id);
+      
+      toast({
+        title: 'Draft Created',
+        description: 'A draft application has been created to store your documents',
+      });
+      
+      return newApp.id;
+    } catch (error: any) {
+      console.error('Error creating draft:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to create draft application',
+        variant: 'destructive',
+      });
+      return null;
+    }
+  };
 
   const handleFileUpload = async (documentId: string, file: File) => {
     if (!user) {
@@ -64,20 +115,19 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete }: DocumentUplo
       return;
     }
 
-    if (!applicationId) {
-      toast({
-        title: 'Save Required',
-        description: 'Please save your application as a draft first before uploading documents',
-        variant: 'destructive',
-      });
-      return;
+    let appId = localApplicationId || applicationId;
+    
+    // Auto-create draft if no application exists
+    if (!appId) {
+      appId = await createDraftApplication();
+      if (!appId) return;
     }
 
     setDocumentStatus(prev => ({ ...prev, [documentId]: 'uploading' }));
 
     try {
       const fileExt = file.name.split('.').pop();
-      const fileName = `${user.id}/${applicationId}/${documentId}_${Date.now()}.${fileExt}`;
+      const fileName = `${user.id}/${appId}/${documentId}_${Date.now()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
         .from('application-documents')
@@ -95,7 +145,7 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete }: DocumentUplo
       const { error: dbError } = await supabase
         .from('documents')
         .insert([{
-          application_id: applicationId,
+          application_id: appId,
           document_type: documentId as any,
           file_path: fileName,
           file_name: file.name,
@@ -170,11 +220,6 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete }: DocumentUplo
         <p className="text-sm text-muted-foreground">
           Please upload the following documents to complete your application. All required documents must be submitted before final submission.
         </p>
-        {!applicationId && (
-          <p className="text-sm text-amber-600 dark:text-amber-400 mt-2">
-            Save your application as a draft first to enable document uploads.
-          </p>
-        )}
       </div>
 
       <div className="grid gap-4">
@@ -206,7 +251,6 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete }: DocumentUplo
                     variant="outline"
                     size="sm"
                     onClick={() => handleFileSelect(doc.id)}
-                    disabled={!applicationId}
                   >
                     Replace Document
                   </Button>
@@ -215,7 +259,7 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete }: DocumentUplo
                 <Button
                   variant="outline"
                   onClick={() => handleFileSelect(doc.id)}
-                  disabled={!applicationId || documentStatus[doc.id] === 'uploading'}
+                  disabled={documentStatus[doc.id] === 'uploading'}
                 >
                   {documentStatus[doc.id] === 'uploading' ? (
                     <>
@@ -240,7 +284,7 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete }: DocumentUplo
         <div className="text-sm text-muted-foreground">
           <p className="font-medium mb-1">Important Notes:</p>
           <ul className="list-disc list-inside space-y-1">
-            <li>Save your application as a draft to enable document uploads</li>
+            <li>You can upload documents at any time during the application process</li>
             <li>All required documents must be submitted before final submission</li>
             <li>Accepted formats: PDF, JPG, PNG, DOC, DOCX</li>
             <li>Maximum file size: 10MB per document</li>

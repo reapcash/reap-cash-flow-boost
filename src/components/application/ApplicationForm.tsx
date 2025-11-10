@@ -519,7 +519,11 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
-              <DocumentUploadSection applicationId={applicationId} />
+              <DocumentUploadSection 
+                applicationId={applicationId} 
+                onApplicationCreated={setApplicationId}
+                applicantType={applicantType}
+              />
               {renderTabNavigation()}
             </TabsContent>
           </>
@@ -551,7 +555,11 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
-              <DocumentUploadSection applicationId={applicationId} />
+              <DocumentUploadSection 
+                applicationId={applicationId} 
+                onApplicationCreated={setApplicationId}
+                applicantType={applicantType}
+              />
               {renderTabNavigation()}
             </TabsContent>
           </>
@@ -583,7 +591,11 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
-              <DocumentUploadSection applicationId={applicationId} />
+              <DocumentUploadSection 
+                applicationId={applicationId} 
+                onApplicationCreated={setApplicationId}
+                applicantType={applicantType}
+              />
               {renderTabNavigation()}
             </TabsContent>
           </>
@@ -615,7 +627,11 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
-              <DocumentUploadSection applicationId={applicationId} />
+              <DocumentUploadSection 
+                applicationId={applicationId} 
+                onApplicationCreated={setApplicationId}
+                applicantType={applicantType}
+              />
               {renderTabNavigation()}
             </TabsContent>
           </>
@@ -647,7 +663,11 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
-              <DocumentUploadSection applicationId={applicationId} />
+              <DocumentUploadSection 
+                applicationId={applicationId} 
+                onApplicationCreated={setApplicationId}
+                applicantType={applicantType}
+              />
               {renderTabNavigation()}
             </TabsContent>
           </>
@@ -679,7 +699,11 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             </TabsContent>
 
             <TabsContent value="documents" className="space-y-6 pt-6">
-              <DocumentUploadSection applicationId={applicationId} />
+              <DocumentUploadSection 
+                applicationId={applicationId} 
+                onApplicationCreated={setApplicationId}
+                applicantType={applicantType}
+              />
               {renderTabNavigation()}
             </TabsContent>
           </>
