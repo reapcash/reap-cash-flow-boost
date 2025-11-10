@@ -72,9 +72,52 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete, onApplicationC
     }
   }, [applicationId]);
 
+  // Load existing documents when component mounts or applicationId changes
+  useEffect(() => {
+    const loadExistingDocuments = async () => {
+      const appId = localApplicationId || applicationId;
+      if (!appId) return;
+
+      try {
+        const { data: documents, error } = await supabase
+          .from('documents')
+          .select('document_type, file_path, file_name')
+          .eq('application_id', appId);
+
+        if (error) {
+          console.error('Error loading existing documents:', error);
+          return;
+        }
+
+        if (documents && documents.length > 0) {
+          console.log('✓ Loaded existing documents:', documents.length);
+          const newStatus: DocumentStatus = {};
+          const newFiles: { [key: string]: string } = {};
+          
+          documents.forEach(doc => {
+            newStatus[doc.document_type] = 'uploaded';
+            newFiles[doc.document_type] = doc.file_path;
+          });
+
+          setDocumentStatus(newStatus);
+          setUploadedFiles(newFiles);
+        }
+      } catch (error) {
+        console.error('Error loading documents:', error);
+      }
+    };
+
+    loadExistingDocuments();
+  }, [localApplicationId, applicationId]);
+
   // Notify parent component when document status changes
   useEffect(() => {
     const allRequiredUploaded = checkRequiredDocuments();
+    console.log('📊 Document status check:', { 
+      documentStatus, 
+      allRequiredUploaded,
+      requiredDocs: REQUIRED_DOCUMENTS.filter(d => d.required).map(d => d.id)
+    });
     onDocumentStatusChange?.(allRequiredUploaded);
   }, [documentStatus, onDocumentStatusChange]);
 

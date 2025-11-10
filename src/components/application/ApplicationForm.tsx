@@ -149,6 +149,11 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
   const [allRequiredDocsUploaded, setAllRequiredDocsUploaded] = useState(false);
   const finalSubmitLockRef = useRef(false);
+  
+  // Log document upload status changes for debugging
+  useEffect(() => {
+    console.log('📄 Document upload status changed:', allRequiredDocsUploaded ? '✓ All required documents uploaded' : '⚠️  Missing required documents');
+  }, [allRequiredDocsUploaded]);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const lastSubmitTimeRef = useRef<number>(0);
   const { user } = useAuth();
