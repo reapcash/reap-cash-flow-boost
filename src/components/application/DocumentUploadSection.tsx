@@ -68,6 +68,9 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete, onApplicationC
     if (!user || !applicantType) return null;
 
     try {
+      console.log('📄 Creating DRAFT application for document storage ONLY');
+      console.log('⚠️  Status: "draft" - NOT submitted');
+      
       const { data: newApp, error } = await supabase
         .from('applications')
         .insert([{
@@ -88,6 +91,7 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete, onApplicationC
       setLocalApplicationId(newApp.id);
       onApplicationCreated?.(newApp.id);
       
+      console.log('✓ Draft created for document storage - ID:', newApp.id);
       toast({
         title: 'Draft Created',
         description: 'A draft application has been created to store your documents',
@@ -117,12 +121,15 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete, onApplicationC
 
     let appId = localApplicationId || applicationId;
     
-    // Auto-create draft if no application exists
+    // Auto-create DRAFT if no application exists (NEVER submits application)
     if (!appId) {
+      console.log('📤 Document upload triggered - creating draft for storage');
+      console.log('⚠️  This will NOT submit the application');
       appId = await createDraftApplication();
       if (!appId) return;
     }
 
+    console.log('📤 Uploading document:', documentId, '- This does NOT trigger submission');
     setDocumentStatus(prev => ({ ...prev, [documentId]: 'uploading' }));
 
     try {
@@ -161,11 +168,14 @@ const DocumentUploadSection = ({ applicationId, onUploadComplete, onApplicationC
       setDocumentStatus(prev => ({ ...prev, [documentId]: 'uploaded' }));
       setUploadedFiles(prev => ({ ...prev, [documentId]: fileName }));
 
+      console.log('✓ Document uploaded successfully - application remains in current status');
       toast({
         title: 'Success',
         description: 'Document uploaded successfully',
       });
 
+      // CRITICAL: This callback does NOT trigger submission
+      // It only notifies the parent component that upload is complete
       onUploadComplete?.();
     } catch (error: any) {
       console.error('Upload error:', error);

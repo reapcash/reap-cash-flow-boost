@@ -148,6 +148,8 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   const [pendingDraftData, setPendingDraftData] = useState<ApplicationFormData | null>(null);
   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
   const finalSubmitLockRef = useRef(false);
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const lastSubmitTimeRef = useRef<number>(0);
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -514,6 +516,18 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   };
 
   const onSubmit = async (data: ApplicationFormData) => {
+    // CRITICAL: Prevent double-click submissions (debounce 2 seconds)
+    const now = Date.now();
+    if (now - lastSubmitTimeRef.current < 2000) {
+      console.log('⛔ DOUBLE-CLICK BLOCKED: Please wait before submitting again');
+      toast({
+        title: 'Please wait',
+        description: 'Processing your previous submission...',
+      });
+      return;
+    }
+    lastSubmitTimeRef.current = now;
+    
     console.log('═══════════════════════════════════════════════════');
     console.log('🚀 SUBMIT APPLICATION BUTTON CLICKED - USER ACTION');
     console.log('═══════════════════════════════════════════════════');
@@ -533,6 +547,9 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
       console.log('✓✓✓ Submission process completed successfully');
     } catch (error) {
       console.error('✗✗✗ Error in onSubmit:', error);
+      // Reset lock on error so user can try again
+      finalSubmitLockRef.current = false;
+      lastSubmitTimeRef.current = 0;
       toast({
         title: 'Submission Error',
         description: error instanceof Error ? error.message : 'Failed to submit application',
@@ -917,8 +934,9 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
               Save Draft
             </Button>
             <Button 
+              ref={submitButtonRef}
               type="submit"
-              disabled={saving}
+              disabled={saving || finalSubmitLockRef.current}
               className="bg-primary hover:bg-primary/90 font-semibold"
             >
               {saving ? (
@@ -946,7 +964,15 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
           onDiscard={handleLeaveAndDiscard}
         />
 
-        <Dialog open={isSuccessDialogOpen} onOpenChange={setIsSuccessDialogOpen}>
+        <Dialog open={isSuccessDialogOpen} onOpenChange={(open) => {
+          setIsSuccessDialogOpen(open);
+          // Reset submission lock when dialog closes so user can submit new applications
+          if (!open) {
+            console.log('🔓 Success dialog closed - resetting submission lock for future applications');
+            finalSubmitLockRef.current = false;
+            lastSubmitTimeRef.current = 0;
+          }
+        }}>
           <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="flex flex-col items-center text-center space-y-6 py-6">
               <div className="relative">
