@@ -27,7 +27,7 @@ import DeveloperSection from './DeveloperSection';
 import { SaveDraftDialog } from './SaveDraftDialog';
 import { LeaveConfirmationDialog } from './LeaveConfirmationDialog';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { CheckCircle, Sparkles, DollarSign } from 'lucide-react';
+import { CheckCircle, Sparkles } from 'lucide-react';
 
 const applicationSchema = z.object({
   // Property Information (optional for non-STR hosts)
@@ -912,17 +912,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         />
 
         <Dialog open={isSuccessDialogOpen} onOpenChange={setIsSuccessDialogOpen}>
-          <DialogContent className="relative w-[92vw] sm:max-w-xl md:max-w-2xl border-primary/20">
-            {/* Celebration visuals overlay */}
-            <div className="pointer-events-none absolute inset-0 overflow-hidden">
-              {Array.from({ length: 10 }).map((_, i) => (
-                <DollarSign
-                  key={i}
-                  className="absolute -top-6 text-primary opacity-40 animate-dollar-fall"
-                  style={{ left: `${(i + 1) * 8}%`, animationDelay: `${i * 0.15}s` }}
-                />
-              ))}
-            </div>
+          <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="flex flex-col items-center text-center space-y-6 py-6">
               <div className="relative">
                 <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl animate-pulse" />
