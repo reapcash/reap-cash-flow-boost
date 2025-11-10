@@ -403,8 +403,10 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
           description: 'Your application has been saved as a draft',
         });
       } else {
-        // Show success dialog
+        // Show success dialog after successful submission
+        console.log('Application submitted successfully, showing success dialog');
         setIsSuccessDialogOpen(true);
+        // Don't reset the lock here - keep it locked to prevent resubmission
       }
 
     } catch (error: any) {
@@ -474,7 +476,13 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   };
 
   const onSubmit = async (data: ApplicationFormData) => {
-    await saveApplicationAndProperty(data, false);
+    console.log('Form submitted, calling saveApplicationAndProperty');
+    try {
+      await saveApplicationAndProperty(data, false);
+      console.log('saveApplicationAndProperty completed successfully');
+    } catch (error) {
+      console.error('Error in onSubmit:', error);
+    }
   };
 
   const tabOrder = getTabOrder(applicantType);
@@ -788,7 +796,14 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit, (errors) => {
+        console.log('Form validation errors:', errors);
+        toast({
+          title: 'Validation Error',
+          description: 'Please fill in all required fields correctly',
+          variant: 'destructive'
+        });
+      })} className="space-y-6">
         <Card>
           <CardHeader>
             <CardTitle>{getApplicationTitle(applicantType)}</CardTitle>
