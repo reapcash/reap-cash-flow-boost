@@ -20,6 +20,7 @@ interface ApplicationReviewCardProps {
 const ApplicationReviewCard = ({ application, onStatusUpdate }: ApplicationReviewCardProps) => {
   const [showApprovalDialog, setShowApprovalDialog] = useState(false);
   const [actionType, setActionType] = useState<'approve' | 'reject'>('approve');
+  const [isExpanded, setIsExpanded] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
   const getStatusBadge = (status: string) => {
@@ -80,12 +81,12 @@ const ApplicationReviewCard = ({ application, onStatusUpdate }: ApplicationRevie
 
   return (
     <>
-      <Card>
-        <CardHeader>
-          <div className="flex items-start justify-between">
+      <Card className="transition-all hover:shadow-md">
+        <CardHeader className="cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
+          <div className="flex items-start justify-between gap-4">
             <div className="space-y-2 flex-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <CardTitle>Application #{application.id.slice(0, 8)}</CardTitle>
+                <CardTitle className="text-lg">Application #{application.id.slice(0, 8)}</CardTitle>
                 {getStatusBadge(application.status)}
                 <Badge variant="outline" className="font-normal">
                   {getApplicantTypeLabel(application.applicant_type)}
@@ -93,7 +94,7 @@ const ApplicationReviewCard = ({ application, onStatusUpdate }: ApplicationRevie
               </div>
               <CardDescription className="space-y-1">
                 <div className="flex items-center gap-4 flex-wrap text-sm">
-                  <span className="flex items-center gap-1">
+                  <span className="flex items-center gap-1 font-medium text-foreground">
                     <User className="h-3 w-3" />
                     {profile?.full_name || 'Unknown'}
                   </span>
@@ -108,15 +109,45 @@ const ApplicationReviewCard = ({ application, onStatusUpdate }: ApplicationRevie
                     </span>
                   )}
                 </div>
-                <div className="flex items-center gap-1 text-xs">
-                  <Calendar className="h-3 w-3" />
-                  Submitted: {format(new Date(application.submitted_at || application.created_at), 'MMM d, yyyy h:mm a')}
-                </div>
               </CardDescription>
             </div>
+            <div className="flex flex-col items-end gap-2">
+              <div className="text-right">
+                <p className="text-xs text-muted-foreground mb-1">Requested Amount</p>
+                <p className="text-xl font-bold text-primary">${application.requested_advance_amount?.toLocaleString() || '0'}</p>
+              </div>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsExpanded(!isExpanded);
+                }}
+                className="shrink-0"
+              >
+                {isExpanded ? (
+                  <>
+                    <ChevronUp className="h-4 w-4 mr-1" />
+                    Collapse
+                  </>
+                ) : (
+                  <>
+                    <Eye className="h-4 w-4 mr-1" />
+                    Review
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground mt-2">
+            <Calendar className="h-3 w-3" />
+            Submitted: {format(new Date(application.submitted_at || application.created_at), 'MMM d, yyyy h:mm a')}
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+
+        <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
+          <CollapsibleContent>
+            <CardContent className="space-y-4 pt-0">
           {/* Key Financial Summary */}
           <div className="grid md:grid-cols-3 gap-4 p-4 bg-primary/5 rounded-lg border border-primary/20">
             <div>
@@ -333,7 +364,9 @@ const ApplicationReviewCard = ({ application, onStatusUpdate }: ApplicationRevie
             </div>
           )}
         </CardContent>
-      </Card>
+      </CollapsibleContent>
+    </Collapsible>
+  </Card>
 
       <ApplicationApprovalDialog
         open={showApprovalDialog}
