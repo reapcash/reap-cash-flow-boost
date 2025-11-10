@@ -162,6 +162,14 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   const [searchParams] = useSearchParams();
   const draftId = searchParams.get('draft');
   
+  // Link existing draft application id from URL so documents load and submit unlocks
+  useEffect(() => {
+    if (draftId) {
+      setApplicationId(draftId);
+      console.log('🔗 Linked to existing draft application:', draftId);
+    }
+  }, [draftId]);
+  
   // Fire confetti when success dialog opens
   useEffect(() => {
     if (!isSuccessDialogOpen) return;
