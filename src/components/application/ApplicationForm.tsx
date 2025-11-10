@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -27,7 +27,7 @@ import DeveloperSection from './DeveloperSection';
 import { SaveDraftDialog } from './SaveDraftDialog';
 import { LeaveConfirmationDialog } from './LeaveConfirmationDialog';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { CheckCircle, Sparkles } from 'lucide-react';
+import { CheckCircle, Sparkles, DollarSign } from 'lucide-react';
 
 const applicationSchema = z.object({
   // Property Information
@@ -146,11 +146,42 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   const [draftName, setDraftName] = useState('');
   const [pendingDraftData, setPendingDraftData] = useState<ApplicationFormData | null>(null);
   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
+  const finalSubmitLockRef = useRef(false);
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
   const draftId = searchParams.get('draft');
+  
+  // Fire confetti when success dialog opens
+  useEffect(() => {
+    if (!isSuccessDialogOpen) return;
+    let cancelled = false;
+    (async () => {
+      const confetti = (await import('canvas-confetti')).default;
+      const getVar = (name: string) =>
+        getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+      const primary = getVar('--primary');
+      const colors = [`hsl(${primary})`, '#ffffff', '#e6ffe6'];
+      const end = Date.now() + 1500;
+      const frame = () => {
+        confetti({
+          particleCount: 30,
+          startVelocity: 45,
+          spread: 70,
+          ticks: 200,
+          origin: { x: Math.random(), y: Math.random() * 0.3 + 0.1 },
+          colors,
+          scalar: 0.9,
+        });
+        if (!cancelled && Date.now() < end) requestAnimationFrame(frame);
+      };
+      frame();
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [isSuccessDialogOpen]);
   
   const form = useForm<ApplicationFormData>({
     resolver: zodResolver(applicationSchema),
@@ -230,6 +261,13 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
     if (!user) return;
     
     try {
+      // Prevent rapid double submissions creating duplicates
+      if (!isDraft) {
+        if (finalSubmitLockRef.current) {
+          return;
+        }
+        finalSubmitLockRef.current = true;
+      }
       setSaving(true);
 
       // Check if application is already submitted to prevent duplicate submissions
@@ -373,6 +411,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
       // Only show error toasts for non-draft submissions
       // During draft saves (including auto-saves during document uploads), silently log errors
       if (!isDraft) {
+        finalSubmitLockRef.current = false;
         toast({
           title: 'Error',
           description: error.message,
@@ -818,7 +857,17 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         />
 
         <Dialog open={isSuccessDialogOpen} onOpenChange={setIsSuccessDialogOpen}>
-          <DialogContent className="sm:max-w-md border-primary/20">
+          <DialogContent className="relative w-[92vw] sm:max-w-xl md:max-w-2xl border-primary/20">
+            {/* Celebration visuals overlay */}
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <DollarSign
+                  key={i}
+                  className="absolute -top-6 text-primary opacity-40 animate-dollar-fall"
+                  style={{ left: `${(i + 1) * 8}%`, animationDelay: `${i * 0.15}s` }}
+                />
+              ))}
+            </div>
             <div className="flex flex-col items-center text-center space-y-6 py-6">
               <div className="relative">
                 <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl animate-pulse" />
