@@ -348,11 +348,17 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
       }
 
     } catch (error: any) {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      });
+      // Only show error toasts for non-draft submissions
+      // During draft saves (including auto-saves during document uploads), silently log errors
+      if (!isDraft) {
+        toast({
+          title: 'Error',
+          description: error.message,
+          variant: 'destructive',
+        });
+      } else {
+        console.log('Draft save error (non-critical):', error.message);
+      }
     } finally {
       setSaving(false);
     }
