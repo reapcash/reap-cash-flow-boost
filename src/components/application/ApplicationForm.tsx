@@ -229,6 +229,24 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
     try {
       setSaving(true);
 
+      // Check if application is already submitted to prevent duplicate submissions
+      if (!isDraft && applicationId) {
+        const { data: existingApp } = await supabase
+          .from('applications')
+          .select('status')
+          .eq('id', applicationId)
+          .single();
+        
+        if (existingApp?.status === 'submitted') {
+          toast({
+            title: 'Application already submitted',
+            description: 'This application has already been submitted for review.',
+          });
+          setSaving(false);
+          return;
+        }
+      }
+
       // Collect all form data based on applicant type
       const formData: any = { 
         ...data,
@@ -344,7 +362,16 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
           description: 'Your application has been saved as a draft',
         });
       } else {
-        navigate('/application-success');
+        // Show success message before navigating
+        toast({
+          title: 'Application submitted successfully!',
+          description: 'Thank you for your submission. We will review your application shortly.',
+        });
+        
+        // Navigate to success screen
+        setTimeout(() => {
+          navigate('/application-success');
+        }, 500);
       }
 
     } catch (error: any) {
