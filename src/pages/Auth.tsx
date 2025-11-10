@@ -12,7 +12,13 @@ import PhoneVerification from "@/components/auth/PhoneVerification";
 const signUpSchema = z.object({
   fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
   email: z.string().trim().email("Invalid email address").max(255),
-  phone: z.string().trim().min(10, "Phone number must be 10 digits").regex(/^[\d\s\-\+\(\)]+$/, "Invalid phone number format"),
+  phone: z.string().trim()
+    .min(10, "Phone number must be at least 10 digits")
+    .regex(/^[\d\s\-\+\(\)]+$/, "Invalid phone number format")
+    .refine((val) => {
+      const digits = val.replace(/\D/g, '');
+      return digits.length === 10 || digits.length === 11;
+    }, "Please enter a valid 10-digit phone number"),
   password: z.string().min(8, "Password must be at least 8 characters").max(100),
 });
 
@@ -178,6 +184,32 @@ const Auth = () => {
       });
     }
   };
+  if (showPhoneVerification) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--hero-bg))] to-[hsl(var(--hero-bg-end))]">
+        <nav className="px-6 py-4">
+          <Link to="/" className="inline-flex items-center gap-2 text-white hover:text-white/80 transition-colors">
+            <ArrowLeft className="w-5 h-5" />
+            <span className="font-semibold">Back to Home</span>
+          </Link>
+        </nav>
+        <div className="flex items-center justify-center px-4 pb-8">
+          <div className="w-full max-w-md">
+            <div className="bg-white rounded-2xl shadow-2xl p-8">
+              <PhoneVerification
+                phoneNumber={formatPhoneE164(formData.phone)}
+                onVerified={handleVerifyCode}
+                onResend={handleResendCode}
+                loading={loading}
+                error={verificationError}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--hero-bg))] to-[hsl(var(--hero-bg-end))]">
       {/* Navigation Bar */}
       <nav className="px-6 py-4">
@@ -258,7 +290,7 @@ const Auth = () => {
                   <Input 
                     id="phone" 
                     type="tel" 
-                    placeholder="(555) 123-4567 or 5551234567" 
+                    placeholder="(555) 123-4567" 
                     className="h-11"
                     value={formData.phone}
                     onChange={handleChange}
@@ -267,7 +299,7 @@ const Auth = () => {
                   {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
                   {!errors.phone && (
                     <p className="text-xs text-muted-foreground">
-                      Enter 10-digit US phone number
+                      10-digit US phone number
                     </p>
                   )}
                 </div>
