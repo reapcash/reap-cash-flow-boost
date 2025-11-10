@@ -366,12 +366,17 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         appId = newApp.id;
         setApplicationId(appId);
       } else {
+        console.log(`🔄 Updating existing application ${applicationId} with status: ${applicationData.status}`);
         const { error: updateError } = await supabase
           .from('applications')
           .update(applicationData)
           .eq('id', applicationId);
 
-        if (updateError) throw updateError;
+        if (updateError) {
+          console.error('❌ Database update failed:', updateError);
+          throw updateError;
+        }
+        console.log(`✅ Application ${applicationId} successfully updated to status: ${applicationData.status}`);
       }
 
       // Only create/update property for STR Host applications that have property data
@@ -447,11 +452,29 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         });
       } else {
         // CRITICAL: Show success dialog ONLY for final submission via submit button
-        console.log('✓✓✓ APPLICATION SUBMITTED SUCCESSFULLY ✓✓✓');
-        console.log('Status: submitted, submitted_at:', applicationData.submitted_at);
-        console.log('Opening success dialog with confetti animation');
+        console.log('═══════════════════════════════════════════════════');
+        console.log('✅✅✅ APPLICATION SUBMITTED SUCCESSFULLY ✅✅✅');
+        console.log(`Application ID: ${appId}`);
+        console.log(`Status: submitted`);
+        console.log(`Submitted at: ${applicationData.submitted_at}`);
+        console.log('═══════════════════════════════════════════════════');
+        
+        // Verify submission by querying the database
+        const { data: verifyData } = await supabase
+          .from('applications')
+          .select('status, submitted_at')
+          .eq('id', appId)
+          .single();
+        
+        console.log('✓ Verification - Database shows:', verifyData);
+        
         setSaving(false); // Ensure saving is false before showing dialog
         setIsSuccessDialogOpen(true);
+        
+        toast({
+          title: 'Application Submitted!',
+          description: 'Your application has been successfully submitted for review.',
+        });
         // Lock remains active to prevent resubmission
       }
 
