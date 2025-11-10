@@ -30,7 +30,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { CheckCircle, Sparkles, DollarSign } from 'lucide-react';
 
 const applicationSchema = z.object({
-  // Property Information
+  // Property Information (optional for non-STR hosts)
   properties: z.array(z.object({
     propertyStreet: z.string().min(3, 'Street address is required').max(200),
     propertyCity: z.string().min(2, 'City is required').max(100),
@@ -59,11 +59,12 @@ const applicationSchema = z.object({
     monthlyMortgagePayment: z.number().min(0).optional(),
     outstandingDebts: z.string().optional(),
     bankName: z.string().optional(),
-  })).min(1, 'Add at least one property'),
+  })).optional(),
   
   // Financial Information
   preferredAdvanceAmount: z.number().min(1000, 'Minimum advance is $1,000'),
-  payoutDate: z.string().refine((date) => {
+  payoutDate: z.string().min(1, 'Payout date is required').refine((date) => {
+    if (!date) return false;
     const selectedDate = new Date(date);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -185,7 +186,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   
   const form = useForm<ApplicationFormData>({
     resolver: zodResolver(applicationSchema),
-    defaultValues: {
+    defaultValues: applicantType === 'str_host' ? {
       properties: [{
         propertyType: 'single_family',
         ownershipStatus: 'mortgaged',
@@ -197,7 +198,17 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         averageOccupancyRate: 0,
         averageNightlyRate: 0,
         averageMonthlyRevenue: 0,
+        futureBookingsNights: 0,
+        futureBookingsRevenue: 0,
       }],
+      preferredAdvanceAmount: 0,
+      payoutDate: '',
+      creditReportAuthorized: false,
+      verificationConsent: false,
+      termsAgreed: false,
+    } : {
+      properties: undefined,
+      preferredAdvanceAmount: 0,
       payoutDate: '',
       creditReportAuthorized: false,
       verificationConsent: false,
@@ -798,9 +809,23 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit, (errors) => {
         console.log('Form validation errors:', errors);
+        
+        // Build detailed error message
+        const errorFields = [];
+        if (errors.preferredAdvanceAmount) errorFields.push('Preferred Advance Amount');
+        if (errors.payoutDate) errorFields.push('Payout Date');
+        if (errors.creditReportAuthorized) errorFields.push('Credit Report Authorization');
+        if (errors.verificationConsent) errorFields.push('Verification Consent');
+        if (errors.termsAgreed) errorFields.push('Terms and Conditions');
+        if (errors.properties) errorFields.push('Property Information');
+        
+        const errorMessage = errorFields.length > 0 
+          ? `Missing required fields: ${errorFields.join(', ')}`
+          : 'Please fill in all required fields correctly';
+        
         toast({
-          title: 'Validation Error',
-          description: 'Please fill in all required fields correctly',
+          title: 'Cannot Submit Application',
+          description: errorMessage,
           variant: 'destructive'
         });
       })} className="space-y-6">
