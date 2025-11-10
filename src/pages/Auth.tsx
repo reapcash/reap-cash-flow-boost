@@ -7,7 +7,8 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { z } from "zod";
-import PhoneVerification from "@/components/auth/PhoneVerification";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const signUpSchema = z.object({
   fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -55,8 +56,6 @@ const Auth = () => {
   const [searchParams] = useSearchParams();
   const [isLogin, setIsLogin] = useState(searchParams.get('mode') !== 'signup');
   const [loading, setLoading] = useState(false);
-  const [showPhoneVerification, setShowPhoneVerification] = useState(false);
-  const [verificationError, setVerificationError] = useState('');
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -65,7 +64,7 @@ const Auth = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   
-  const { user, signUp, signIn, sendPhoneOTP, verifyPhoneOTP } = useAuth();
+  const { user, signIn } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -94,10 +93,12 @@ const Auth = () => {
             }
           });
           setErrors(fieldErrors);
+          setLoading(false);
           return;
         }
 
         await signIn(formData.email, formData.password);
+        // Navigation handled by signIn function
       } else {
         const result = signUpSchema.safeParse(formData);
 
@@ -109,62 +110,43 @@ const Auth = () => {
             }
           });
           setErrors(fieldErrors);
+          setLoading(false);
           return;
         }
 
-        // Send OTP to phone number (format to E.164)
+        // Format phone to E.164 format for storage
         const formattedPhone = formatPhoneE164(formData.phone);
-        const { error: otpError } = await sendPhoneOTP(formattedPhone);
         
-        if (otpError) {
-          setErrors({ phone: otpError.message || 'Failed to send verification code. Please check your phone number.' });
-          return;
+        // Sign up with email/password and store phone in metadata
+        const { data, error } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+          options: {
+            data: {
+              full_name: formData.fullName,
+              phone_number: formattedPhone,
+            },
+            emailRedirectTo: `${window.location.origin}/dashboard`,
+          },
+        });
+
+        if (error) {
+          setErrors({ email: error.message });
+          toast.error(error.message);
+        } else if (data.user) {
+          toast.success('Account created! Please check your email to verify your account.');
+          // Clear form
+          setFormData({
+            fullName: '',
+            email: '',
+            phone: '',
+            password: '',
+          });
         }
-
-        // Show phone verification screen
-        setShowPhoneVerification(true);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Auth error:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleVerifyCode = async (code: string) => {
-    setLoading(true);
-    setVerificationError('');
-
-    try {
-      const formattedPhone = formatPhoneE164(formData.phone);
-      const { error } = await verifyPhoneOTP(
-        formattedPhone,
-        code,
-        formData.email,
-        formData.password,
-        formData.fullName
-      );
-
-      if (error) {
-        setVerificationError(error.message || 'Invalid verification code. Please try again.');
-      }
-    } catch (error) {
-      setVerificationError('Verification failed. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleResendCode = async () => {
-    setLoading(true);
-    setVerificationError('');
-
-    try {
-      const formattedPhone = formatPhoneE164(formData.phone);
-      const { error } = await sendPhoneOTP(formattedPhone);
-      if (error) {
-        setVerificationError(error.message || 'Failed to resend code');
-      }
+      toast.error(error?.message || 'An error occurred');
     } finally {
       setLoading(false);
     }
@@ -184,32 +166,6 @@ const Auth = () => {
       });
     }
   };
-  if (showPhoneVerification) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--hero-bg))] to-[hsl(var(--hero-bg-end))]">
-        <nav className="px-6 py-4">
-          <Link to="/" className="inline-flex items-center gap-2 text-white hover:text-white/80 transition-colors">
-            <ArrowLeft className="w-5 h-5" />
-            <span className="font-semibold">Back to Home</span>
-          </Link>
-        </nav>
-        <div className="flex items-center justify-center px-4 pb-8">
-          <div className="w-full max-w-md">
-            <div className="bg-white rounded-2xl shadow-2xl p-8">
-              <PhoneVerification
-                phoneNumber={formatPhoneE164(formData.phone)}
-                onVerified={handleVerifyCode}
-                onResend={handleResendCode}
-                loading={loading}
-                error={verificationError}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--hero-bg))] to-[hsl(var(--hero-bg-end))]">
       {/* Navigation Bar */}
       <nav className="px-6 py-4">
@@ -299,7 +255,7 @@ const Auth = () => {
                   {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
                   {!errors.phone && (
                     <p className="text-xs text-muted-foreground">
-                      10-digit US phone number
+                      10-digit US phone number (no verification required)
                     </p>
                   )}
                 </div>
