@@ -209,6 +209,7 @@ export type Database = {
           credit_report_authorized: boolean | null
           form_data: Json | null
           id: string
+          payout_date: string | null
           preferred_advance_amount: number | null
           repayment_terms: Database["public"]["Enums"]["repayment_terms"] | null
           requested_advance_amount: number | null
@@ -230,6 +231,7 @@ export type Database = {
           credit_report_authorized?: boolean | null
           form_data?: Json | null
           id?: string
+          payout_date?: string | null
           preferred_advance_amount?: number | null
           repayment_terms?:
             | Database["public"]["Enums"]["repayment_terms"]
@@ -253,6 +255,7 @@ export type Database = {
           credit_report_authorized?: boolean | null
           form_data?: Json | null
           id?: string
+          payout_date?: string | null
           preferred_advance_amount?: number | null
           repayment_terms?:
             | Database["public"]["Enums"]["repayment_terms"]
