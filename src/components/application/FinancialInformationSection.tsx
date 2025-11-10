@@ -151,22 +151,20 @@ const FinancialInformationSection = ({ form }: FinancialInformationSectionProps)
 
         <FormField
           control={form.control}
-          name="repaymentTerms"
+          name="payoutDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Repayment Terms Preference</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select repayment frequency" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="weekly">Weekly</SelectItem>
-                  <SelectItem value="bi_weekly">Bi-weekly</SelectItem>
-                  <SelectItem value="monthly">Monthly</SelectItem>
-                </SelectContent>
-              </Select>
+              <FormLabel>Expected Payout Date</FormLabel>
+              <FormDescription>
+                Select the date when you expect to receive your revenue/payment
+              </FormDescription>
+              <FormControl>
+                <Input 
+                  type="date"
+                  min={new Date(Date.now() + 86400000).toISOString().split('T')[0]}
+                  {...field}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

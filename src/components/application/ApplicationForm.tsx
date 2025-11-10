@@ -61,7 +61,12 @@ const applicationSchema = z.object({
   
   // Financial Information
   preferredAdvanceAmount: z.number().min(1000, 'Minimum advance is $1,000'),
-  repaymentTerms: z.enum(['weekly', 'bi_weekly', 'monthly']),
+  payoutDate: z.string().refine((date) => {
+    const selectedDate = new Date(date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return selectedDate > today;
+  }, { message: 'Payout date must be in the future' }),
   
   // Consent
   creditReportAuthorized: z.boolean().refine(val => val === true, {
@@ -159,7 +164,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         averageNightlyRate: 0,
         averageMonthlyRevenue: 0,
       }],
-      repaymentTerms: 'monthly',
+      payoutDate: '',
       creditReportAuthorized: false,
       verificationConsent: false,
       termsAgreed: false,
@@ -236,7 +241,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         applicant_type: applicantType,
         status: (isDraft ? 'draft' : 'submitted') as 'draft' | 'submitted',
         preferred_advance_amount: data.preferredAdvanceAmount || 0,
-        repayment_terms: data.repaymentTerms || 'monthly',
+        payout_date: data.payoutDate || null,
         credit_report_authorized: data.creditReportAuthorized || false,
         verification_consent: data.verificationConsent || false,
         terms_agreed: data.termsAgreed || false,
