@@ -315,9 +315,13 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
 
           if (propError) {
             console.error('Property creation error:', propError);
-            throw new Error(`Failed to save property: ${propError.message}`);
+            // Don't throw error during draft saves - property data might be incomplete
+            if (!isDraft) {
+              throw new Error(`Failed to save property: ${propError.message}`);
+            }
+          } else {
+            setPropertyId(newProperty.id);
           }
-          setPropertyId(newProperty.id);
         } else {
           const { error: updateError } = await supabase
             .from('properties')
@@ -326,20 +330,21 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
 
           if (updateError) {
             console.error('Property update error:', updateError);
-            throw new Error(`Failed to update property: ${updateError.message}`);
+            // Don't throw error during draft saves - property data might be incomplete
+            if (!isDraft) {
+              throw new Error(`Failed to update property: ${updateError.message}`);
+            }
           }
         }
       }
 
-      toast({
-        title: isDraft ? 'Draft saved' : 'Application submitted',
-        description: isDraft 
-          ? 'Your application has been saved as a draft' 
-          : 'Your application has been submitted successfully',
-      });
-
-      if (!isDraft) {
-        navigate('/dashboard');
+      if (isDraft) {
+        toast({
+          title: 'Draft saved',
+          description: 'Your application has been saved as a draft',
+        });
+      } else {
+        navigate('/application-success');
       }
 
     } catch (error: any) {
