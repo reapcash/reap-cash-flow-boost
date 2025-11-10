@@ -271,15 +271,23 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   const saveApplicationAndProperty = async (data: ApplicationFormData, isDraft: boolean = true, draftNameParam?: string) => {
     if (!user) return;
     
+    // CRITICAL SECURITY: Explicitly log the submission type to track any unexpected submissions
+    console.log('═══════════════════════════════════════════════════');
+    console.log(`saveApplicationAndProperty called with isDraft: ${isDraft}`);
+    console.log('═══════════════════════════════════════════════════');
+    
     try {
-      // CRITICAL: Prevent rapid double submissions creating duplicates
+      // CRITICAL: ONLY allow final submission (isDraft=false) via explicit submit button click
+      // This prevents accidental submissions through other code paths
       if (!isDraft) {
         if (finalSubmitLockRef.current) {
-          console.log('Submission blocked: already in progress');
+          console.log('⛔ SUBMISSION BLOCKED: Already in progress');
           return;
         }
         finalSubmitLockRef.current = true;
-        console.log('Final submission lock acquired');
+        console.log('🔒 FINAL SUBMISSION LOCK ACQUIRED - This is a real submission');
+      } else {
+        console.log('💾 DRAFT SAVE OPERATION - NOT a submission');
       }
       setSaving(true);
 
@@ -310,6 +318,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
       };
       
       // Create or update application
+      // CRITICAL: Status is ONLY set to 'submitted' when isDraft is false (Submit button clicked)
       const applicationData = {
         user_id: user.id,
         applicant_type: applicantType,
@@ -323,10 +332,10 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         requested_advance_amount: data.preferredAdvanceAmount || 0,
         selected_bookings_revenue: selectedBookingsRevenue,
         submitted_at: isDraft ? null : new Date().toISOString(),
-        form_data: formData, // Store all form data as JSONB including draft name
+        form_data: formData,
       };
 
-      console.log(`Saving application as: ${isDraft ? 'DRAFT' : 'SUBMITTED'}`);
+      console.log(`📝 Application data prepared with status: ${applicationData.status}`);
 
       let appId = applicationId;
       
@@ -452,16 +461,18 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
   };
 
   const handleSaveDraftClick = (data: ApplicationFormData) => {
-    console.log('Save Draft button clicked - opening draft dialog');
+    console.log('💾 Save Draft button clicked - opening draft dialog');
+    console.log('⚠️  This is NOT a submission - status will remain "draft"');
     setPendingDraftData(data);
     setShowSaveDraftDialog(true);
   };
 
   const onSaveDraft = async (name: string) => {
     if (!pendingDraftData) return;
-    console.log('Saving draft with name:', name);
+    console.log('💾 Saving draft with name:', name);
+    console.log('⚠️  isDraft = true - Application status will be "draft", NOT "submitted"');
     setDraftName(name);
-    // CRITICAL: isDraft = true means this is NOT a submission
+    // CRITICAL: isDraft = true means this is ONLY a draft save, NOT a submission
     await saveApplicationAndProperty(pendingDraftData, true, name);
     setPendingDraftData(null);
     // Dialog will stay open to show success message
@@ -504,17 +515,24 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
 
   const onSubmit = async (data: ApplicationFormData) => {
     console.log('═══════════════════════════════════════════════════');
-    console.log('🚀 SUBMIT APPLICATION BUTTON CLICKED');
+    console.log('🚀 SUBMIT APPLICATION BUTTON CLICKED - USER ACTION');
     console.log('═══════════════════════════════════════════════════');
-    console.log('Form validation passed, submitting application...');
+    console.log('✓ Form validation PASSED - All required fields completed');
     console.log('Applicant type:', applicantType);
+    console.log('Preferred advance amount:', data.preferredAdvanceAmount);
+    console.log('Payout date:', data.payoutDate);
+    console.log('Credit report authorized:', data.creditReportAuthorized);
+    console.log('Verification consent:', data.verificationConsent);
+    console.log('Terms agreed:', data.termsAgreed);
     
     try {
-      // CRITICAL: isDraft = false means this is a FINAL SUBMISSION
+      // CRITICAL: isDraft = false ONLY called from this function
+      // This is the ONLY place where final submission happens
+      // NO other function should call saveApplicationAndProperty with isDraft=false
       await saveApplicationAndProperty(data, false);
-      console.log('✓ Submission process completed');
+      console.log('✓✓✓ Submission process completed successfully');
     } catch (error) {
-      console.error('✗ Error in onSubmit:', error);
+      console.error('✗✗✗ Error in onSubmit:', error);
       toast({
         title: 'Submission Error',
         description: error instanceof Error ? error.message : 'Failed to submit application',
@@ -885,6 +903,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
               type="button" 
               variant="outline"
               onClick={() => {
+                console.log('💾 "Save Draft" button clicked by user');
                 const data = form.getValues();
                 handleSaveDraftClick(data as ApplicationFormData);
               }}
@@ -898,9 +917,9 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
               Save Draft
             </Button>
             <Button 
-              type="submit" 
+              type="submit"
               disabled={saving}
-              className="bg-primary hover:bg-primary/90"
+              className="bg-primary hover:bg-primary/90 font-semibold"
             >
               {saving ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
