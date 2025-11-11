@@ -6,32 +6,24 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { TrendingUp, DollarSign, Target, Zap, Users, PieChart, BarChart3, CheckCircle2, ArrowRight, Rocket, Shield, LineChart, AlertCircle, Clock, CreditCard, Building2, Repeat, Code, Database, GitBranch, Mail, Phone, MapPin, FileText, Award, TrendingDown, BanknoteIcon, Percent, Calendar } from 'lucide-react';
-
 const SeedInvestment = () => {
   const [isUnlocked, setIsUnlocked] = useState(false);
-
   useEffect(() => {
     const unlocked = localStorage.getItem('seed_access') === 'true';
     setIsUnlocked(unlocked);
   }, []);
-
   const handleUnlock = () => {
     localStorage.setItem('seed_access', 'true');
     setIsUnlocked(true);
   };
-
   if (!isUnlocked) {
-    return (
-      <div className="min-h-screen flex flex-col">
+    return <div className="min-h-screen flex flex-col">
         <Header />
         <InvestorLock onUnlock={handleUnlock} />
         <Footer />
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="min-h-screen flex flex-col">
+  return <div className="min-h-screen flex flex-col">
       <Header />
       
       <main className="flex-1 pt-16">
@@ -104,20 +96,7 @@ const SeedInvestment = () => {
               </div>
               
               {/* Integration Badges */}
-              <div className="flex flex-wrap gap-6 justify-center pt-8">
-                <div className="flex items-center gap-2 px-4 py-2 bg-background border rounded-lg">
-                  <Shield className="w-5 h-5 text-primary" />
-                  <span className="text-sm font-medium">DocuSign Integrated</span>
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-background border rounded-lg">
-                  <Database className="w-5 h-5 text-primary" />
-                  <span className="text-sm font-medium">Plaid Connected</span>
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-background border rounded-lg">
-                  <Award className="w-5 h-5 text-primary" />
-                  <span className="text-sm font-medium">Experian Verified</span>
-                </div>
-              </div>
+              
 
               {/* CTAs */}
               <div className="flex flex-wrap gap-4 justify-center pt-8">
@@ -1378,8 +1357,6 @@ const SeedInvestment = () => {
       </main>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default SeedInvestment;
