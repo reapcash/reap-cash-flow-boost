@@ -12,6 +12,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ManageAirbnb from "./pages/ManageAirbnb";
 import Contact from "./pages/Contact";
 import Investors from "./pages/Investors";
+import SeedInvestment from "./pages/SeedInvestment";
 import FAQ from "./pages/FAQ";
 import NotFound from "./pages/NotFound";
 import ApplicationSuccess from "./components/application/ApplicationSuccess";
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/manage-airbnb" element={<ManageAirbnb />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/investors" element={<Investors />} />
+          <Route path="/seed-investment" element={<SeedInvestment />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/admin" element={<AdminDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
