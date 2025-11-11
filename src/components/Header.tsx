@@ -64,7 +64,7 @@ const Header = () => {
               
             </Button>
             <Button variant="ghost" asChild>
-              <Link to="/seed-investment">Seed Round</Link>
+              <Link to="/seed-investment">Investor Portal</Link>
             </Button>
             <Button variant="outline" asChild>
               <Link to="/auth">Login</Link>
