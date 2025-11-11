@@ -1,10 +1,35 @@
+import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import InvestorLock from '@/components/InvestorLock';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { TrendingUp, DollarSign, Target, Zap, Users, PieChart, BarChart3, CheckCircle2, ArrowRight, Rocket, Shield, LineChart, AlertCircle, Clock, CreditCard, Building2, Repeat, TrendingDown, Code, Database, GitBranch } from 'lucide-react';
 
 const SeedInvestment = () => {
+  const [isUnlocked, setIsUnlocked] = useState(false);
+
+  useEffect(() => {
+    // Check if previously unlocked
+    const unlocked = localStorage.getItem('seed_access') === 'true';
+    setIsUnlocked(unlocked);
+  }, []);
+
+  const handleUnlock = () => {
+    localStorage.setItem('seed_access', 'true');
+    setIsUnlocked(true);
+  };
+
+  if (!isUnlocked) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <InvestorLock onUnlock={handleUnlock} />
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-muted/20">
       <Header />
