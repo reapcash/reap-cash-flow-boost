@@ -928,28 +928,27 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit, (errors) => {
-        console.log('Form validation errors:', errors);
-        
-        // Build detailed error message
-        const errorFields = [];
-        if (errors.preferredAdvanceAmount) errorFields.push('Preferred Advance Amount');
-        if (errors.payoutDate) errorFields.push('Payout Date');
-        if (errors.creditReportAuthorized) errorFields.push('Credit Report Authorization');
-        if (errors.verificationConsent) errorFields.push('Verification Consent');
-        if (errors.termsAgreed) errorFields.push('Terms and Conditions');
-        if (errors.properties) errorFields.push('Property Information');
-        
-        const errorMessage = errorFields.length > 0 
-          ? `Missing required fields: ${errorFields.join(', ')}`
-          : 'Please fill in all required fields correctly';
-        
-        toast({
-          title: 'Cannot Submit Application',
-          description: errorMessage,
-          variant: 'destructive'
-        });
-      })} className="space-y-6">
+      <form 
+        onSubmit={(e) => {
+          // CRITICAL: Prevent all implicit form submissions
+          e.preventDefault();
+          console.log('⛔ Form auto-submit blocked - Only explicit Submit Application button clicks allowed');
+          toast({
+            title: 'Please Use Submit Button',
+            description: 'To submit your application, click the green "Submit Application" button.',
+            variant: 'destructive'
+          });
+        }}
+        onKeyDown={(e) => {
+          // Prevent Enter key from triggering any submission
+          const target = e.target as HTMLElement;
+          if (e.key === 'Enter' && target.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+            console.log('⛔ Enter key blocked - Use Submit Application button');
+          }
+        }}
+        className="space-y-6"
+      >
         <Card>
           <CardHeader>
             <CardTitle>{getApplicationTitle(applicantType)}</CardTitle>
@@ -994,7 +993,12 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             </Button>
             <Button 
               ref={submitButtonRef}
-              type="submit"
+              type="button"
+              onClick={async () => {
+                console.log('🖱️  EXPLICIT Submit Application button click detected');
+                const data = form.getValues() as ApplicationFormData;
+                await onSubmit(data);
+              }}
               disabled={saving || finalSubmitLockRef.current || !allRequiredDocsUploaded}
               className="bg-primary hover:bg-primary/90 font-semibold"
               title={!allRequiredDocsUploaded ? 'Please upload all required documents before submitting' : ''}
