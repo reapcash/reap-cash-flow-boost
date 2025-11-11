@@ -675,6 +675,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      submit_application: { Args: { app_id: string }; Returns: boolean }
       user_owns_application: {
         Args: { _application_id: string; _user_id: string }
         Returns: boolean
