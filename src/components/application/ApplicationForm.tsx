@@ -726,6 +726,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
                 applicationId={applicationId} 
                 onApplicationCreated={setApplicationId}
                 applicantType={applicantType}
+                onDocumentStatusChange={setAllRequiredDocsUploaded}
               />
               {renderTabNavigation()}
             </TabsContent>
@@ -762,6 +763,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
                 applicationId={applicationId} 
                 onApplicationCreated={setApplicationId}
                 applicantType={applicantType}
+                onDocumentStatusChange={setAllRequiredDocsUploaded}
               />
               {renderTabNavigation()}
             </TabsContent>
@@ -798,6 +800,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
                 applicationId={applicationId} 
                 onApplicationCreated={setApplicationId}
                 applicantType={applicantType}
+                onDocumentStatusChange={setAllRequiredDocsUploaded}
               />
               {renderTabNavigation()}
             </TabsContent>
@@ -834,6 +837,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
                 applicationId={applicationId} 
                 onApplicationCreated={setApplicationId}
                 applicantType={applicantType}
+                onDocumentStatusChange={setAllRequiredDocsUploaded}
               />
               {renderTabNavigation()}
             </TabsContent>
@@ -870,6 +874,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
                 applicationId={applicationId} 
                 onApplicationCreated={setApplicationId}
                 applicantType={applicantType}
+                onDocumentStatusChange={setAllRequiredDocsUploaded}
               />
               {renderTabNavigation()}
             </TabsContent>
