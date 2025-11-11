@@ -284,8 +284,8 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
     loadDraft();
   }, [draftId, user, form, toast]);
 
-  const saveApplicationAndProperty = async (data: ApplicationFormData, isDraft: boolean = true, draftNameParam?: string) => {
-    if (!user) return;
+  const saveApplicationAndProperty = async (data: ApplicationFormData, isDraft: boolean = true, draftNameParam?: string): Promise<string | null> => {
+    if (!user) return null;
     
     // CRITICAL SECURITY: Explicitly log the submission type to track any unexpected submissions
     console.log('═══════════════════════════════════════════════════');
@@ -293,15 +293,11 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
     console.log('═══════════════════════════════════════════════════');
     
     try {
-      // CRITICAL: ONLY allow final submission (isDraft=false) via explicit submit button click
+      // CRITICAL: ONLY allow final submission via explicit RPC call in onSubmit
       // This prevents accidental submissions through other code paths
       if (!isDraft) {
-        if (finalSubmitLockRef.current) {
-          console.log('⛔ SUBMISSION BLOCKED: Already in progress');
-          return;
-        }
-        finalSubmitLockRef.current = true;
-        console.log('🔒 FINAL SUBMISSION LOCK ACQUIRED - This is a real submission');
+        console.log('⛔ SUBMISSION BLOCKED: Direct final submission is disabled in saveApplicationAndProperty');
+        return null;
       } else {
         console.log('💾 DRAFT SAVE OPERATION - NOT a submission');
       }
@@ -334,11 +330,11 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
       };
       
       // Create or update application
-      // CRITICAL: Status is ONLY set to 'submitted' when isDraft is false (Submit button clicked)
+      // CRITICAL: Status is ALWAYS kept as 'draft' during saves. Final submission uses backend RPC.
       const applicationData = {
         user_id: user.id,
         applicant_type: applicantType,
-        status: (isDraft ? 'draft' : 'submitted') as 'draft' | 'submitted',
+        status: 'draft' as 'draft',
         preferred_advance_amount: data.preferredAdvanceAmount || 0,
         payout_date: data.payoutDate || null,
         credit_report_authorized: data.creditReportAuthorized || false,
@@ -347,7 +343,7 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
         selected_booking_ids: selectedBookingIds,
         requested_advance_amount: data.preferredAdvanceAmount || 0,
         selected_bookings_revenue: selectedBookingsRevenue,
-        submitted_at: isDraft ? null : new Date().toISOString(),
+        submitted_at: null,
         form_data: formData,
       };
 
@@ -450,33 +446,10 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
           title: 'Draft saved',
           description: 'Your application has been saved as a draft',
         });
-      } else {
-        // CRITICAL: Show success dialog ONLY for final submission via submit button
-        console.log('═══════════════════════════════════════════════════');
-        console.log('✅✅✅ APPLICATION SUBMITTED SUCCESSFULLY ✅✅✅');
-        console.log(`Application ID: ${appId}`);
-        console.log(`Status: submitted`);
-        console.log(`Submitted at: ${applicationData.submitted_at}`);
-        console.log('═══════════════════════════════════════════════════');
-        
-        // Verify submission by querying the database
-        const { data: verifyData } = await supabase
-          .from('applications')
-          .select('status, submitted_at')
-          .eq('id', appId)
-          .single();
-        
-        console.log('✓ Verification - Database shows:', verifyData);
-        
-        setSaving(false); // Ensure saving is false before showing dialog
-        setIsSuccessDialogOpen(true);
-        
-        toast({
-          title: 'Application Submitted!',
-          description: 'Your application has been successfully submitted for review.',
-        });
-        // Lock remains active to prevent resubmission
       }
+
+      // Always return the application id so callers (e.g. onSubmit) can perform final submission via RPC
+      return appId as string;
 
     } catch (error: any) {
       // Only show error toasts for non-draft submissions
@@ -578,6 +551,13 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
     }
     lastSubmitTimeRef.current = now;
     
+    // Lock final submission to ensure only explicit user click triggers submit
+    if (finalSubmitLockRef.current) {
+      console.log('⛔ SUBMISSION BLOCKED: Already in progress');
+      return;
+    }
+    finalSubmitLockRef.current = true;
+    
     console.log('═══════════════════════════════════════════════════');
     console.log('🚀 SUBMIT APPLICATION BUTTON CLICKED - USER ACTION');
     console.log('═══════════════════════════════════════════════════');
@@ -590,10 +570,33 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
     console.log('Terms agreed:', data.termsAgreed);
     
     try {
-      // CRITICAL: isDraft = false ONLY called from this function
-      // This is the ONLY place where final submission happens
-      // NO other function should call saveApplicationAndProperty with isDraft=false
-      await saveApplicationAndProperty(data, false);
+      // 1) Save/ensure draft (never sets status to submitted)
+      const draftId = await saveApplicationAndProperty(data, true);
+      if (!draftId) {
+        throw new Error('Failed to save draft before submission');
+      }
+      
+      // 2) Perform final submission via secured backend RPC
+      const { error: submitError } = await supabase.rpc('submit_application', { app_id: draftId });
+      if (submitError) {
+        console.error('❌ RPC submit_application error:', submitError);
+        throw new Error(submitError.message);
+      }
+
+      // Verify submission by querying the database
+      const { data: verifyData } = await supabase
+        .from('applications')
+        .select('status, submitted_at')
+        .eq('id', draftId)
+        .single();
+      console.log('✓ Verification - Database shows:', verifyData);
+
+      setSaving(false);
+      setIsSuccessDialogOpen(true);
+      toast({
+        title: 'Application Submitted!',
+        description: 'Your application has been successfully submitted for review.',
+      });
       console.log('✓✓✓ Submission process completed successfully');
     } catch (error) {
       console.error('✗✗✗ Error in onSubmit:', error);
