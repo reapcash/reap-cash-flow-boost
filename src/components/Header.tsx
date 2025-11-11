@@ -51,23 +51,17 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map(link => 
-              link.isRoute ? (
-                <Link key={link.name} to={link.href} className="text-foreground hover:text-primary transition-colors normal-case">
+            {navLinks.map(link => link.isRoute ? <Link key={link.name} to={link.href} className="text-foreground hover:text-primary transition-colors normal-case">
                   {link.name}
-                </Link>
-              ) : (
-                <a key={link.name} href={link.href} className="text-foreground hover:text-primary transition-colors normal-case">
+                </Link> : <a key={link.name} href={link.href} className="text-foreground hover:text-primary transition-colors normal-case">
                   {link.name}
-                </a>
-              )
-            )}
+                </a>)}
           </nav>
 
           {/* Desktop CTAs */}
           <div className="hidden lg:flex items-center gap-4">
             <Button variant="ghost" asChild>
-              <Link to="/investors">Investors</Link>
+              
             </Button>
             <Button variant="ghost" asChild>
               <Link to="/seed-investment">Seed Round</Link>
@@ -89,17 +83,11 @@ const Header = () => {
         {/* Mobile Menu */}
         {isMenuOpen && <div className="lg:hidden py-4 border-t border-border">
             <nav className="flex flex-col gap-4">
-              {navLinks.map(link => 
-                link.isRoute ? (
-                  <Link key={link.name} to={link.href} className="text-foreground hover:text-primary transition-colors py-2 normal-case" onClick={() => setIsMenuOpen(false)}>
+              {navLinks.map(link => link.isRoute ? <Link key={link.name} to={link.href} className="text-foreground hover:text-primary transition-colors py-2 normal-case" onClick={() => setIsMenuOpen(false)}>
                     {link.name}
-                  </Link>
-                ) : (
-                  <a key={link.name} href={link.href} className="text-foreground hover:text-primary transition-colors py-2 normal-case" onClick={() => setIsMenuOpen(false)}>
+                  </Link> : <a key={link.name} href={link.href} className="text-foreground hover:text-primary transition-colors py-2 normal-case" onClick={() => setIsMenuOpen(false)}>
                     {link.name}
-                  </a>
-                )
-              )}
+                  </a>)}
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
                 <Button variant="ghost" asChild className="w-full">
                   <Link to="/investors">Investors</Link>
