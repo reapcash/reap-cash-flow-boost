@@ -4,15 +4,16 @@ import { Lock, TrendingUp, DollarSign, Building2, ArrowRight } from 'lucide-reac
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-
 interface InvestorLockProps {
   onUnlock: () => void;
 }
-
-const InvestorLock = ({ onUnlock }: InvestorLockProps) => {
+const InvestorLock = ({
+  onUnlock
+}: InvestorLockProps) => {
   const [password, setPassword] = useState('');
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === 'REAP') {
@@ -26,18 +27,14 @@ const InvestorLock = ({ onUnlock }: InvestorLockProps) => {
       setPassword('');
     }
   };
-
-  return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-muted/20">
+  return <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-muted/20">
       <main className="flex-1 pt-20">
         {/* Hero Section */}
         <section className="container mx-auto px-4 py-20 text-center animate-fade-in">
           <div className="inline-block px-4 py-2 bg-primary/10 rounded-full mb-6">
             <span className="text-primary font-semibold">Seed Investment Opportunity</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-            REAP Cash
-          </h1>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">REAP</h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-4">
             The Financial Operating System for Real Estate Professionals
           </p>
@@ -61,14 +58,7 @@ const InvestorLock = ({ onUnlock }: InvestorLockProps) => {
                 
                 <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
                   <div>
-                    <Input
-                      type="password"
-                      placeholder="Enter password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="text-center text-lg h-12"
-                      autoFocus
-                    />
+                    <Input type="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.target.value)} className="text-center text-lg h-12" autoFocus />
                   </div>
                   <Button type="submit" size="lg" className="w-full text-lg">
                     Access Investor Materials
@@ -89,8 +79,6 @@ const InvestorLock = ({ onUnlock }: InvestorLockProps) => {
           </div>
         </section>
       </main>
-    </div>
-  );
+    </div>;
 };
-
 export default InvestorLock;
