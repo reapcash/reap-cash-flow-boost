@@ -32,20 +32,21 @@ const SeedInvestment = () => {
   return <div className="min-h-screen flex flex-col">
       <Header />
       
-      {/* Logout Button */}
-      <div className="fixed top-20 left-4 z-50">
-        <Button
-          onClick={handleLogout}
-          variant="outline"
-          size="sm"
-          className="gap-2"
-        >
-          <LogOut className="w-4 h-4" />
-          Logout
-        </Button>
-      </div>
-      
       <main className="flex-1 pt-16">
+        {/* Logout Button */}
+        <div className="container mx-auto px-4 max-w-7xl pt-4">
+          <div className="flex justify-end">
+            <Button
+              onClick={handleLogout}
+              variant="outline"
+              size="sm"
+              className="gap-2"
+            >
+              <LogOut className="w-4 h-4" />
+              Logout
+            </Button>
+          </div>
+        </div>
         {/* Hero Section */}
         <section className="relative py-24 px-4 bg-gradient-to-br from-primary/5 via-background to-muted/10 border-b">
           <div className="container mx-auto max-w-7xl">
