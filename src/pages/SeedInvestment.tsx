@@ -5,7 +5,7 @@ import InvestorLock from '@/components/InvestorLock';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { TrendingUp, DollarSign, Target, Zap, Users, PieChart, BarChart3, CheckCircle2, ArrowRight, Rocket, Shield, LineChart, AlertCircle, Clock, CreditCard, Building2, Repeat, Code, Database, GitBranch, Mail, Phone, MapPin, FileText, Award, TrendingDown, BanknoteIcon, Percent, Calendar } from 'lucide-react';
+import { TrendingUp, DollarSign, Target, Zap, Users, PieChart, BarChart3, CheckCircle2, ArrowRight, Rocket, Shield, LineChart, AlertCircle, Clock, CreditCard, Building2, Repeat, Code, Database, GitBranch, Mail, Phone, MapPin, FileText, Award, TrendingDown, BanknoteIcon, Percent, Calendar, LogOut } from 'lucide-react';
 const SeedInvestment = () => {
   const [isUnlocked, setIsUnlocked] = useState(false);
   useEffect(() => {
@@ -16,6 +16,12 @@ const SeedInvestment = () => {
     localStorage.setItem('seed_access', 'true');
     setIsUnlocked(true);
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('seed_access');
+    setIsUnlocked(false);
+    window.scrollTo(0, 0);
+  };
   if (!isUnlocked) {
     return <div className="min-h-screen flex flex-col">
         <Header />
@@ -25,6 +31,19 @@ const SeedInvestment = () => {
   }
   return <div className="min-h-screen flex flex-col">
       <Header />
+      
+      {/* Logout Button */}
+      <div className="fixed top-20 left-4 z-50">
+        <Button
+          onClick={handleLogout}
+          variant="outline"
+          size="sm"
+          className="gap-2"
+        >
+          <LogOut className="w-4 h-4" />
+          Logout
+        </Button>
+      </div>
       
       <main className="flex-1 pt-16">
         {/* Hero Section */}
