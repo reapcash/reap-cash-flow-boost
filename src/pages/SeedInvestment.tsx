@@ -384,8 +384,184 @@ const SeedInvestment = () => {
           </div>
         </section>
 
-        {/* How It Works - Complete Flow */}
+        {/* Growth Phases */}
         <section className="py-20 bg-background">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">REAP Growth Phases</h2>
+              <p className="text-xl text-muted-foreground">
+                Strategic expansion from beachhead to full-stack financial platform
+              </p>
+            </div>
+
+            <div className="relative">
+              {/* Timeline connector */}
+              <div className="hidden md:block absolute top-24 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary to-primary/30 z-0"></div>
+              
+              <div className="grid md:grid-cols-4 gap-6 relative z-10">
+                {/* Phase 1 */}
+                <Card className="border-2 border-primary hover:border-primary/70 transition-all hover:shadow-xl">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold shadow-lg">
+                      1
+                    </div>
+                  </div>
+                  <CardContent className="p-6 pt-10">
+                    <div className="text-center mb-4">
+                      <Rocket className="w-12 h-12 text-primary mx-auto mb-3" />
+                      <h3 className="text-xl font-bold mb-1">Phase 1</h3>
+                      <p className="text-sm font-semibold text-primary">STR Beachhead</p>
+                      <p className="text-xs text-muted-foreground mt-1">Months 0-18</p>
+                    </div>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Launch STR advance product</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Airbnb + VRBO integrations</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Target $25-30M GMV</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Prove unit economics &lt;1.5% loss rate</span>
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                {/* Phase 2 */}
+                <Card className="border-2 border-primary/70 hover:border-primary transition-all hover:shadow-xl">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold shadow-lg">
+                      2
+                    </div>
+                  </div>
+                  <CardContent className="p-6 pt-10">
+                    <div className="text-center mb-4">
+                      <Users className="w-12 h-12 text-primary mx-auto mb-3" />
+                      <h3 className="text-xl font-bold mb-1">Phase 2</h3>
+                      <p className="text-sm font-semibold text-primary">Expand Verticals</p>
+                      <p className="text-xs text-muted-foreground mt-1">Months 18-30</p>
+                    </div>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Agent commission advances</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Developer earnouts & contractor invoices</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>PMS partnership integrations</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Scale to $100M+ GMV</span>
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                {/* Phase 3 */}
+                <Card className="border-2 border-primary/50 hover:border-primary transition-all hover:shadow-xl">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold shadow-lg">
+                      3
+                    </div>
+                  </div>
+                  <CardContent className="p-6 pt-10">
+                    <div className="text-center mb-4">
+                      <Building2 className="w-12 h-12 text-primary mx-auto mb-3" />
+                      <h3 className="text-xl font-bold mb-1">Phase 3</h3>
+                      <p className="text-sm font-semibold text-primary">Lending Products</p>
+                      <p className="text-xs text-muted-foreground mt-1">Months 30-42</p>
+                    </div>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Bridge loans & renovation lines</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Property investment LOCs</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Leverage receivables data for underwriting</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Enter $650B investment loan market</span>
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                {/* Phase 4 */}
+                <Card className="border-2 border-primary/30 hover:border-primary transition-all hover:shadow-xl">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold shadow-lg">
+                      4
+                    </div>
+                  </div>
+                  <CardContent className="p-6 pt-10">
+                    <div className="text-center mb-4">
+                      <LineChart className="w-12 h-12 text-primary mx-auto mb-3" />
+                      <h3 className="text-xl font-bold mb-1">Phase 4</h3>
+                      <p className="text-sm font-semibold text-primary">Full FinServ Stack</p>
+                      <p className="text-xs text-muted-foreground mt-1">Months 42+</p>
+                    </div>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Banking rails & payment processing</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Wealth management & insurance</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Full financial OS for RE pros</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>Capture $4.5T addressable market</span>
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Summary Card */}
+              <Card className="mt-12 bg-primary/5 border-2 border-primary/20">
+                <CardContent className="p-8">
+                  <div className="flex items-start gap-4">
+                    <Target className="w-8 h-8 text-primary flex-shrink-0 mt-1" />
+                    <div>
+                      <h3 className="text-xl font-bold mb-3">Strategic Sequencing</h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Each phase builds on proven traction from the previous stage. We start with the highest-signal, lowest-friction beachhead (STR advances), 
+                        then leverage that customer relationship and data infrastructure to cross-sell adjacent financial products. This approach de-risks each 
+                        expansion step while maximizing customer lifetime value and creating a durable competitive moat through integrated financial data.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works - Complete Flow */}
+        <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4 max-w-7xl">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6">Complete Flow Cycle</h2>
