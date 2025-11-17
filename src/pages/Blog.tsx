@@ -70,27 +70,27 @@ export default function Blog() {
       
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="pt-32 pb-16 px-4 bg-gradient-to-br from-primary/5 via-background to-muted/10">
+        <section className="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-14 md:pb-16 px-4 bg-gradient-to-br from-primary/5 via-background to-muted/10">
           <div className="container mx-auto max-w-7xl text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-foreground px-2">
               REAP Insights & Resources
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto px-4">
               Expert advice, industry insights, and actionable strategies to help you succeed in the short-term rental business.
             </p>
           </div>
         </section>
 
         {/* Category Filter */}
-        <section className="py-8 px-4 border-b bg-background/50 backdrop-blur-sm sticky top-16 z-40">
+        <section className="py-4 sm:py-6 md:py-8 px-3 sm:px-4 border-b bg-background/50 backdrop-blur-sm sticky top-16 z-40">
           <div className="container mx-auto max-w-7xl">
-            <div className="flex flex-wrap gap-2 justify-center">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center">
               {categories.map((category) => (
                 <Button
                   key={category}
                   variant={category === "All" ? "default" : "outline"}
                   size="sm"
-                  className="rounded-full"
+                  className="rounded-full text-xs sm:text-sm h-8 sm:h-9 px-3 sm:px-4"
                 >
                   {category}
                 </Button>
@@ -100,9 +100,9 @@ export default function Blog() {
         </section>
 
         {/* Blog Posts Grid */}
-        <section className="py-16 px-4">
+        <section className="py-10 sm:py-12 md:py-16 px-4">
           <div className="container mx-auto max-w-7xl">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
               {blogPosts.map((post) => (
                 <Card key={post.id} className="group hover:shadow-lg transition-shadow duration-300 overflow-hidden">
                   <div className="aspect-video bg-muted overflow-hidden">
@@ -112,33 +112,34 @@ export default function Blog() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
-                  <CardHeader>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
+                  <CardHeader className="p-4 sm:p-6">
+                    <div className="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-2">
                       <span className="inline-flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        {post.date}
+                        <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">{post.date}</span>
+                        <span className="sm:hidden">{post.date.split(' ')[0]} {post.date.split(' ')[1]}</span>
                       </span>
                       <span className="inline-flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
+                        <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         {post.readTime}
                       </span>
                     </div>
-                    <div className="mb-3">
-                      <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary">
+                    <div className="mb-2.5 sm:mb-3">
+                      <span className="inline-block px-2.5 sm:px-3 py-0.5 sm:py-1 text-xs font-medium rounded-full bg-primary/10 text-primary">
                         {post.category}
                       </span>
                     </div>
-                    <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                    <CardTitle className="text-lg sm:text-xl group-hover:text-primary transition-colors line-clamp-2">
                       {post.title}
                     </CardTitle>
-                    <CardDescription className="line-clamp-2">
+                    <CardDescription className="line-clamp-2 text-sm">
                       {post.excerpt}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <Button variant="ghost" className="group/btn p-0 h-auto font-semibold">
+                  <CardContent className="p-4 sm:p-6 pt-0">
+                    <Button variant="ghost" className="group/btn p-0 h-auto font-semibold text-sm">
                       Read More
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
                     </Button>
                   </CardContent>
                 </Card>
@@ -148,21 +149,21 @@ export default function Blog() {
         </section>
 
         {/* Newsletter CTA */}
-        <section className="py-16 px-4 bg-gradient-to-br from-primary/5 to-muted/10">
+        <section className="py-12 sm:py-14 md:py-16 px-4 bg-gradient-to-br from-primary/5 to-muted/10">
           <div className="container mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-foreground px-2">
               Stay Updated with REAP
             </h2>
-            <p className="text-lg text-muted-foreground mb-8">
+            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 px-4">
               Get the latest insights, tips, and industry news delivered to your inbox.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
+            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 justify-center max-w-md mx-auto px-4">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-md border border-input bg-background text-foreground"
+                className="flex-1 px-3.5 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-md border border-input bg-background text-foreground"
               />
-              <Button size="lg">
+              <Button size="lg" className="h-10 sm:h-11 text-sm sm:text-base">
                 Subscribe
               </Button>
             </div>

@@ -46,33 +46,33 @@ const Pricing = () => {
 
   return (
     <>
-      <section id="simulate" className="py-20 bg-muted relative">
+      <section id="simulate" className="py-12 sm:py-16 lg:py-20 bg-muted relative">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16 px-4">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6">
+            <div className="text-center mb-10 sm:mb-12 lg:mb-16 px-2 sm:px-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 sm:mb-6">
                 Estimate Your Advance
               </h2>
-              <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                 See exactly how much cash you can unlock today. Adjust the inputs and watch your advance update in real-time.
               </p>
             </div>
 
-            <div className="bg-card border border-border rounded-3xl p-8 lg:p-12 shadow-xl">
+            <div className="bg-card border border-border rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 xl:p-12 shadow-xl">
               {/* Interactive Controls */}
-              <div className="space-y-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <TrendingUp className="w-6 h-6 text-primary" />
-                  <h3 className="text-2xl">
+              <div className="space-y-6 sm:space-y-8">
+                <div className="flex items-center gap-2.5 sm:gap-3 mb-4 sm:mb-6">
+                  <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0" />
+                  <h3 className="text-xl sm:text-2xl">
                     Adjust Your Details
                   </h3>
                 </div>
 
                 {/* All Inputs in Grid */}
-                <div className="grid md:grid-cols-3 gap-6">
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                   {/* Payout Amount */}
-                  <div className="space-y-3">
-                    <Label htmlFor="amount-input" className="text-base">Payout Amount</Label>
+                  <div className="space-y-2.5 sm:space-y-3 sm:col-span-2 md:col-span-1">
+                    <Label htmlFor="amount-input" className="text-sm sm:text-base">Payout Amount</Label>
                     <div className="space-y-2">
                       <Input
                         id="amount-input"
@@ -82,7 +82,7 @@ const Pricing = () => {
                         step={1000}
                         value={payoutAmount}
                         onChange={(e) => setPayoutAmount(Number(e.target.value))}
-                        className="h-12 text-base"
+                        className="h-11 sm:h-12 text-sm sm:text-base"
                         placeholder="Enter amount"
                       />
                       <Slider
