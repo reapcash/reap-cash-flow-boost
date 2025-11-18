@@ -94,10 +94,7 @@ const Header = () => {
                   </a>)}
               <div className="flex flex-col gap-2.5 pt-4 mt-2 border-t border-border">
                 <Button variant="ghost" asChild className="w-full justify-start h-11 text-base">
-                  <Link to="/investors" onClick={() => setIsMenuOpen(false)}>Investors</Link>
-                </Button>
-                <Button variant="ghost" asChild className="w-full justify-start h-11 text-base">
-                  <Link to="/seed-investment" onClick={() => setIsMenuOpen(false)}>Seed Round</Link>
+                  <Link to="/seed-investment" onClick={() => setIsMenuOpen(false)}>Investor Portal</Link>
                 </Button>
                 <Button variant="outline" asChild className="w-full h-11 text-base">
                   <Link to="/auth" onClick={() => setIsMenuOpen(false)}>Login</Link>
