@@ -36,8 +36,8 @@ const Hero = () => {
           {/* Main Content - Centered */}
           <div className="space-y-8 sm:space-y-12 text-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 animate-slide-up">
-              <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white flex-shrink-0" />
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-gold/40 animate-slide-up">
+              <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold flex-shrink-0" />
               <span className="text-xs sm:text-sm text-white/90">Trusted by 500+ Real Estate Professionals</span>
             </div>
 
@@ -77,25 +77,25 @@ const Hero = () => {
 
             {/* Feature Cards */}
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 pt-8 sm:pt-12 animate-slide-up px-2" style={{ animationDelay: '0.3s' }}>
-              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl lg:rounded-2xl p-4 sm:p-5 lg:p-6 hover:bg-white/10 transition-all hover:scale-105 group">
+              <div className="bg-white/5 backdrop-blur-md border border-gold/20 rounded-xl lg:rounded-2xl p-4 sm:p-5 lg:p-6 hover:bg-white/10 hover:border-gold/40 transition-all hover:scale-105 group">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-lg lg:rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform">
-                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-gold" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold text-white mb-1.5 sm:mb-2">Lightning Fast</h3>
                 <p className="text-sm sm:text-base text-white/70 normal-case">Get funded within 24 hours of approval</p>
               </div>
 
-              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl lg:rounded-2xl p-4 sm:p-5 lg:p-6 hover:bg-white/10 transition-all hover:scale-105 group">
+              <div className="bg-white/5 backdrop-blur-md border border-gold/20 rounded-xl lg:rounded-2xl p-4 sm:p-5 lg:p-6 hover:bg-white/10 hover:border-gold/40 transition-all hover:scale-105 group">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-lg lg:rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform">
-                  <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-gold" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold text-white mb-1.5 sm:mb-2">Secure & Trusted</h3>
                 <p className="text-sm sm:text-base text-white/70 normal-case">Bank-level security and full transparency</p>
               </div>
 
-              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl lg:rounded-2xl p-4 sm:p-5 lg:p-6 hover:bg-white/10 transition-all hover:scale-105 group sm:col-span-2 md:col-span-1">
+              <div className="bg-white/5 backdrop-blur-md border border-gold/20 rounded-xl lg:rounded-2xl p-4 sm:p-5 lg:p-6 hover:bg-white/10 hover:border-gold/40 transition-all hover:scale-105 group sm:col-span-2 md:col-span-1">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-lg lg:rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform">
-                  <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-gold" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold text-white mb-1.5 sm:mb-2">Grow Your Business</h3>
                 <p className="text-sm sm:text-base text-white/70 normal-case">Reinvest in opportunities without delay</p>
