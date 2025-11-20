@@ -36,15 +36,15 @@ const Header = () => {
                 </div>
                 {/* Dollar bills falling animation */}
                 <div className="absolute -top-8 left-0 w-full overflow-hidden h-32 pointer-events-none">
-                  <DollarSign className="absolute text-primary/30 w-4 h-4 animate-dollar-fall" style={{
+                  <DollarSign className="absolute text-gold/40 w-4 h-4 animate-dollar-fall" style={{
                   left: "10%",
                   animationDelay: "0s"
                 }} />
-                  <DollarSign className="absolute text-primary/30 w-4 h-4 animate-dollar-fall" style={{
+                  <DollarSign className="absolute text-gold/40 w-4 h-4 animate-dollar-fall" style={{
                   left: "50%",
                   animationDelay: "1s"
                 }} />
-                  <DollarSign className="absolute text-primary/30 w-4 h-4 animate-dollar-fall" style={{
+                  <DollarSign className="absolute text-gold/40 w-4 h-4 animate-dollar-fall" style={{
                   left: "80%",
                   animationDelay: "2s"
                 }} />

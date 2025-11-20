@@ -28,6 +28,10 @@ All colors MUST be HSL.
 
     --accent: 219 70% 32%;
     --accent-foreground: 0 0% 100%;
+    
+    --gold: 43 74% 49%;
+    --gold-muted: 45 65% 60%;
+    --gold-glow: 45 100% 70%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -83,6 +87,10 @@ All colors MUST be HSL.
 
     --accent: 158 64% 52%;
     --accent-foreground: 0 0% 100%;
+    
+    --gold: 43 74% 49%;
+    --gold-muted: 45 65% 60%;
+    --gold-glow: 45 100% 70%;
 
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 98%;
