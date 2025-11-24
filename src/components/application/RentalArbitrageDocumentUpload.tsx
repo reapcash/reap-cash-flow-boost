@@ -1,23 +1,36 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Upload, FileText, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Upload, FileText, CheckCircle, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
-interface PropertyDocumentUploadProps {
+interface RentalArbitrageDocumentUploadProps {
   applicationId?: string;
+  documentType: 'sublet_permission' | 'rent_payment_proof';
   onUploadComplete?: () => void;
   onApplicationCreated?: (appId: string) => void;
 }
 
-const PropertyDocumentUpload = ({ 
+const RentalArbitrageDocumentUpload = ({ 
   applicationId,
+  documentType,
   onUploadComplete,
   onApplicationCreated 
-}: PropertyDocumentUploadProps) => {
+}: RentalArbitrageDocumentUploadProps) => {
   const [isUploading, setIsUploading] = useState(false);
   const [hasDocument, setHasDocument] = useState(false);
   const [fileName, setFileName] = useState<string>('');
+
+  const documentConfig = {
+    sublet_permission: {
+      title: 'Sublet Permission',
+      description: 'Upload written permission from landlord to sublet the property',
+    },
+    rent_payment_proof: {
+      title: 'Proof of Rent Payments',
+      description: 'Upload bank statements or receipts showing rent payment history',
+    },
+  };
 
   useEffect(() => {
     if (applicationId) {
@@ -33,7 +46,8 @@ const PropertyDocumentUpload = ({
         .from('documents')
         .select('file_name')
         .eq('application_id', applicationId)
-        .eq('document_type', 'property_documents')
+        .eq('document_type', 'additional_documents')
+        .ilike('file_name', `%${documentType}%`)
         .maybeSingle();
 
       if (error) throw error;
@@ -73,7 +87,6 @@ const PropertyDocumentUpload = ({
       const file = (e.target as HTMLInputElement).files?.[0];
       if (!file) return;
 
-      // Validate file size (10MB max)
       if (file.size > 10 * 1024 * 1024) {
         toast.error('File size must be less than 10MB');
         return;
@@ -91,28 +104,25 @@ const PropertyDocumentUpload = ({
     try {
       let appId = applicationId;
 
-      // Create draft application if it doesn't exist
       if (!appId) {
         appId = await createDraftApplication();
         onApplicationCreated?.(appId);
       }
 
-      // Upload to storage
       const fileExt = file.name.split('.').pop();
-      const fileName = `${appId}/property_documents_${Date.now()}.${fileExt}`;
+      const fileName = `${appId}/${documentType}_${Date.now()}.${fileExt}`;
       const { error: uploadError } = await supabase.storage
         .from('application-documents')
         .upload(fileName, file);
 
       if (uploadError) throw uploadError;
 
-      // Save to database
       const { error: dbError } = await supabase
         .from('documents')
         .insert({
           application_id: appId,
-          document_type: 'property_documents',
-          file_name: file.name,
+          document_type: 'additional_documents',
+          file_name: `${documentType}_${file.name}`,
           file_path: fileName,
           file_size: file.size,
           mime_type: file.type,
@@ -122,7 +132,7 @@ const PropertyDocumentUpload = ({
 
       setHasDocument(true);
       setFileName(file.name);
-      toast.success('Property document uploaded successfully');
+      toast.success('Document uploaded successfully');
       onUploadComplete?.();
     } catch (error: any) {
       console.error('Upload error:', error);
@@ -131,6 +141,8 @@ const PropertyDocumentUpload = ({
       setIsUploading(false);
     }
   };
+
+  const config = documentConfig[documentType];
 
   return (
     <div className="border border-dashed border-border rounded-lg p-4 bg-muted/30">
@@ -142,9 +154,9 @@ const PropertyDocumentUpload = ({
             {!isUploading && !hasDocument && <FileText className="h-5 w-5 text-muted-foreground" />}
           </div>
           <div className="flex-1">
-            <h4 className="font-medium text-sm">Property Documents</h4>
+            <h4 className="font-medium text-sm">{config.title}</h4>
             <p className="text-xs text-muted-foreground mt-1">
-              Upload property deed, mortgage statement, or title documents
+              {config.description}
             </p>
             {hasDocument && fileName && (
               <p className="text-xs text-green-600 mt-2 flex items-center gap-1">
@@ -181,4 +193,4 @@ const PropertyDocumentUpload = ({
   );
 };
 
-export default PropertyDocumentUpload;
+export default RentalArbitrageDocumentUpload;
