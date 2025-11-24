@@ -4,12 +4,15 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Plus, Trash2 } from 'lucide-react';
+import PropertyDocumentUpload from './PropertyDocumentUpload';
 
 interface PropertyInformationSectionProps {
   form: UseFormReturn<any>;
+  applicationId?: string;
+  onApplicationCreated?: (appId: string) => void;
 }
 
-const PropertyInformationSection = ({ form }: PropertyInformationSectionProps) => {
+const PropertyInformationSection = ({ form, applicationId, onApplicationCreated }: PropertyInformationSectionProps) => {
   const properties = form.watch('properties') || [];
 
   const addProperty = () => {
@@ -272,6 +275,14 @@ const PropertyInformationSection = ({ form }: PropertyInformationSectionProps) =
                   <FormMessage />
                 </FormItem>
               )}
+            />
+          </div>
+
+          {/* Property Document Upload */}
+          <div className="pt-4">
+            <PropertyDocumentUpload 
+              applicationId={applicationId}
+              onApplicationCreated={onApplicationCreated}
             />
           </div>
         </div>
