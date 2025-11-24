@@ -3,10 +3,8 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescripti
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { Plus, Trash2, AlertCircle } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import PropertyDocumentUpload from './PropertyDocumentUpload';
-import RentalArbitrageDocumentUpload from './RentalArbitrageDocumentUpload';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface PropertyInformationSectionProps {
   form: UseFormReturn<any>;
@@ -185,43 +183,6 @@ const PropertyInformationSection = ({ form, applicationId, onApplicationCreated 
             />
           </div>
 
-          {/* Rental Arrangement Type */}
-          <div className="space-y-4">
-            <FormField
-              control={form.control}
-              name={`properties.${index}.rentalArrangement`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Rental Arrangement</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value || 'direct_ownership'}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select arrangement type" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent className="bg-background z-50">
-                      <SelectItem value="direct_ownership">Direct Ownership</SelectItem>
-                      <SelectItem value="rental_arbitrage">Rental Arbitrage</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormDescription>
-                    Select "Rental Arbitrage" if you're renting this property and subletting it as an STR
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {form.watch(`properties.${index}.rentalArrangement`) === 'rental_arbitrage' && (
-              <Alert className="border-gold/50 bg-gold-muted/20">
-                <AlertCircle className="h-4 w-4 text-gold" />
-                <AlertDescription>
-                  Rental Arbitrage requires additional documentation. Please upload the required documents below.
-                </AlertDescription>
-              </Alert>
-            )}
-          </div>
-
           <div className="grid md:grid-cols-3 gap-4">
             <FormField
               control={form.control}
@@ -318,27 +279,11 @@ const PropertyInformationSection = ({ form, applicationId, onApplicationCreated 
           </div>
 
           {/* Property Document Upload */}
-          <div className="pt-4 space-y-4">
+          <div className="pt-4">
             <PropertyDocumentUpload 
               applicationId={applicationId}
               onApplicationCreated={onApplicationCreated}
             />
-
-            {/* Rental Arbitrage Documents */}
-            {form.watch(`properties.${index}.rentalArrangement`) === 'rental_arbitrage' && (
-              <>
-                <RentalArbitrageDocumentUpload
-                  applicationId={applicationId}
-                  documentType="sublet_permission"
-                  onApplicationCreated={onApplicationCreated}
-                />
-                <RentalArbitrageDocumentUpload
-                  applicationId={applicationId}
-                  documentType="rent_payment_proof"
-                  onApplicationCreated={onApplicationCreated}
-                />
-              </>
-            )}
           </div>
         </div>
       ))}

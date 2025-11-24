@@ -142,7 +142,7 @@ const PropertyDocumentUpload = ({
             {!isUploading && !hasDocument && <FileText className="h-5 w-5 text-muted-foreground" />}
           </div>
           <div className="flex-1">
-            <h4 className="font-medium text-sm">Property Documents</h4>
+            <h4 className="font-medium text-sm">Property Documents (Optional)</h4>
             <p className="text-xs text-muted-foreground mt-1">
               Upload property deed, mortgage statement, or title documents
             </p>
