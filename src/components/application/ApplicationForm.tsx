@@ -661,7 +661,11 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
             </TabsList>
 
             <TabsContent value="property" className="space-y-6 pt-6">
-              <PropertyInformationSection form={form} />
+              <PropertyInformationSection 
+                form={form}
+                applicationId={applicationId || undefined}
+                onApplicationCreated={setApplicationId}
+              />
               {renderTabNavigation()}
             </TabsContent>
 
