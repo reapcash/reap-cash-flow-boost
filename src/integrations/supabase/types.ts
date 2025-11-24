@@ -706,7 +706,7 @@ export type Database = {
         | "proof_of_income"
         | "property_documents"
         | "additional_documents"
-      ownership_status: "owned_outright" | "mortgaged"
+      ownership_status: "owned_outright" | "mortgaged" | "rental_arbitrage"
       property_type:
         | "single_family"
         | "multi_family"
@@ -862,7 +862,7 @@ export const Constants = {
         "property_documents",
         "additional_documents",
       ],
-      ownership_status: ["owned_outright", "mortgaged"],
+      ownership_status: ["owned_outright", "mortgaged", "rental_arbitrage"],
       property_type: [
         "single_family",
         "multi_family",
