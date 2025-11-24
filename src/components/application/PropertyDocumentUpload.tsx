@@ -124,7 +124,7 @@ const PropertyDocumentUpload = ({
           <div className="flex-1">
             <h4 className="font-medium text-sm">Property Documents  </h4>
             <p className="text-xs text-muted-foreground mt-1">
-              Upload property deed, mortgage statement, or title documents
+              Upload property deed, mortgage statement, Sublet permission, or Rent receipt                                                                                               
             </p>
             {hasDocument && fileName && <p className="text-xs text-green-600 mt-2 flex items-center gap-1">
                 <CheckCircle className="h-3 w-3" />
