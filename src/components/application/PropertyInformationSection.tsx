@@ -175,6 +175,7 @@ const PropertyInformationSection = ({ form, applicationId, onApplicationCreated 
                     <SelectContent>
                       <SelectItem value="owned_outright">Owned Outright</SelectItem>
                       <SelectItem value="mortgaged">Mortgaged</SelectItem>
+                      <SelectItem value="rental_arbitrage">Rental Arbitrage</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
