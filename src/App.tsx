@@ -15,6 +15,7 @@ import Investors from "./pages/Investors";
 import SeedInvestment from "./pages/SeedInvestment";
 import FAQ from "./pages/FAQ";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 import ApplicationSuccess from "./components/application/ApplicationSuccess";
 
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/seed-investment" element={<SeedInvestment />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/admin" element={<AdminDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
