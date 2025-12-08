@@ -4,6 +4,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 
+// Import blog images
+import blogStrRevenue from "@/assets/blog-str-revenue.jpg";
+import blogRbfFinancing from "@/assets/blog-rbf-financing.jpg";
+import blogPeakSeason from "@/assets/blog-peak-season.jpg";
+import blogStrTrends from "@/assets/blog-str-trends.jpg";
+import blogTaxBenefits from "@/assets/blog-tax-benefits.jpg";
+import blogStrPortfolio from "@/assets/blog-str-portfolio.jpg";
+
 const blogPosts = [
   {
     id: 1,
@@ -14,7 +22,7 @@ const blogPosts = [
     readTime: "5 min read",
     category: "Revenue Optimization",
     author: "Sarah Mitchell",
-    image: "/placeholder.svg"
+    image: blogStrRevenue
   },
   {
     id: 2,
@@ -25,7 +33,7 @@ const blogPosts = [
     readTime: "7 min read",
     category: "Financing",
     author: "Michael Chen",
-    image: "/placeholder.svg"
+    image: blogRbfFinancing
   },
   {
     id: 3,
@@ -36,7 +44,7 @@ const blogPosts = [
     readTime: "4 min read",
     category: "Property Management",
     author: "Jennifer Brooks",
-    image: "/placeholder.svg"
+    image: blogPeakSeason
   },
   {
     id: 4,
@@ -47,7 +55,7 @@ const blogPosts = [
     readTime: "6 min read",
     category: "Industry Insights",
     author: "David Park",
-    image: "/placeholder.svg"
+    image: blogStrTrends
   },
   {
     id: 5,
@@ -58,7 +66,7 @@ const blogPosts = [
     readTime: "8 min read",
     category: "Finance",
     author: "Amanda Torres",
-    image: "/placeholder.svg"
+    image: blogTaxBenefits
   },
   {
     id: 6,
@@ -69,7 +77,7 @@ const blogPosts = [
     readTime: "10 min read",
     category: "Growth Strategy",
     author: "Robert Hayes",
-    image: "/placeholder.svg"
+    image: blogStrPortfolio
   }
 ];
 
