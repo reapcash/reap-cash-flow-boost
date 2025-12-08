@@ -1,4 +1,4 @@
-import { Calendar, Clock, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -142,18 +142,6 @@ export default function Blog() {
                   <p className="text-muted-foreground mb-6 line-clamp-3 text-base md:text-lg leading-relaxed">
                     {blogPosts[0].excerpt}
                   </p>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
-                    <span className="font-medium text-foreground">{blogPosts[0].author}</span>
-                    <span>·</span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <Calendar className="w-4 h-4" />
-                      {blogPosts[0].date}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <Clock className="w-4 h-4" />
-                      {blogPosts[0].readTime}
-                    </span>
-                  </div>
                   <span className="inline-flex items-center gap-2 text-primary font-semibold group-hover:gap-3 transition-all">
                     Read Article
                     <ArrowRight className="w-4 h-4" />
@@ -179,17 +167,6 @@ export default function Blog() {
                       />
                     </div>
                     <div className="flex-1 flex flex-col p-5 sm:p-6">
-                      <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
-                        <span className="inline-flex items-center gap-1">
-                          <Calendar className="w-3.5 h-3.5" />
-                          {post.date}
-                        </span>
-                        <span>·</span>
-                        <span className="inline-flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5" />
-                          {post.readTime}
-                        </span>
-                      </div>
                       <div className="mb-3">
                         <span className="inline-block px-2.5 py-0.5 text-xs font-medium rounded-full bg-primary/10 text-primary">
                           {post.category}
@@ -201,10 +178,7 @@ export default function Blog() {
                       <p className="text-sm text-muted-foreground line-clamp-2 mb-4 flex-1">
                         {post.excerpt}
                       </p>
-                      <div className="flex items-center justify-between pt-4 border-t">
-                        <span className="text-sm font-medium text-muted-foreground">
-                          {post.author}
-                        </span>
+                      <div className="flex items-center justify-end pt-4 border-t">
                         <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:gap-2.5 transition-all">
                           Read
                           <ArrowRight className="w-4 h-4" />
