@@ -1,5 +1,5 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Calendar, Clock, ArrowLeft, Share2, Bookmark, ChevronRight } from "lucide-react";
+import { ArrowLeft, Share2, Bookmark, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -240,32 +240,6 @@ export default function BlogPost() {
               {post.excerpt}
             </p>
             
-            <div className="flex flex-wrap items-center gap-4 md:gap-6 text-sm text-muted-foreground">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span className="text-primary font-semibold text-sm">
-                    {post.author.split(' ').map(n => n[0]).join('')}
-                  </span>
-                </div>
-                <div>
-                  <p className="font-medium text-foreground">{post.author}</p>
-                  <p className="text-xs">{post.authorRole}</p>
-                </div>
-              </div>
-              
-              <Separator orientation="vertical" className="h-8 hidden md:block" />
-              
-              <div className="flex items-center gap-4">
-                <span className="inline-flex items-center gap-1.5">
-                  <Calendar className="w-4 h-4" />
-                  {post.date}
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Clock className="w-4 h-4" />
-                  {post.readTime}
-                </span>
-              </div>
-            </div>
           </header>
 
           {/* Featured Image */}
@@ -314,24 +288,6 @@ export default function BlogPost() {
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
 
-          {/* Author Box */}
-          <div className="mt-12 p-6 md:p-8 rounded-xl bg-muted/50 border">
-            <div className="flex flex-col sm:flex-row items-start gap-4">
-              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                <span className="text-primary font-bold text-lg">
-                  {post.author.split(' ').map(n => n[0]).join('')}
-                </span>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">Written by</p>
-                <h3 className="text-lg font-semibold text-foreground">{post.author}</h3>
-                <p className="text-sm text-muted-foreground mb-3">{post.authorRole}</p>
-                <p className="text-sm text-muted-foreground">
-                  Expert contributor providing insights on short-term rental strategies and industry best practices.
-                </p>
-              </div>
-            </div>
-          </div>
 
           {/* Related Articles */}
           {otherPosts.length > 0 && (
