@@ -1,5 +1,5 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Share2, Bookmark, ChevronRight } from "lucide-react";
+import { ArrowLeft, Share2, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -263,16 +263,10 @@ export default function BlogPost() {
               Back to Blog
             </Button>
             
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" className="gap-2">
-                <Share2 className="w-4 h-4" />
-                <span className="hidden sm:inline">Share</span>
-              </Button>
-              <Button variant="outline" size="sm" className="gap-2">
-                <Bookmark className="w-4 h-4" />
-                <span className="hidden sm:inline">Save</span>
-              </Button>
-            </div>
+            <Button variant="outline" size="sm" className="gap-2">
+              <Share2 className="w-4 h-4" />
+              <span className="hidden sm:inline">Share</span>
+            </Button>
           </div>
 
           {/* Article Content */}
