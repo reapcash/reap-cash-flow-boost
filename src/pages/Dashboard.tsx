@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Loader2, LogOut, FileText, Plus, DollarSign, TrendingUp, Clock, CheckCircle2, AlertCircle, ArrowUpRight, Edit2, Trash2 } from 'lucide-react';
+import { Loader2, LogOut, FileText, Plus, DollarSign, TrendingUp, Clock, CheckCircle2, AlertCircle, ArrowUpRight, Edit2, Trash2, Eye } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import AirbnbConnectionStatus from '@/components/dashboard/AirbnbConnectionStatus';
 import NotificationBell from '@/components/dashboard/NotificationBell';
+import ApplicationDetailsDialog from '@/components/dashboard/ApplicationDetailsDialog';
 import { supabase } from '@/integrations/supabase/client';
 
 const Dashboard = () => {
@@ -29,6 +30,8 @@ const Dashboard = () => {
   const [loadingData, setLoadingData] = useState(true);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [applicationToDelete, setApplicationToDelete] = useState<string | null>(null);
+  const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
+  const [detailsDialogOpen, setDetailsDialogOpen] = useState(false);
 
   // Fetch user's applications and advances
   useEffect(() => {
@@ -126,6 +129,11 @@ const Dashboard = () => {
   const openDeleteDialog = (applicationId: string) => {
     setApplicationToDelete(applicationId);
     setDeleteDialogOpen(true);
+  };
+
+  const handleViewApplication = (applicationId: string) => {
+    setSelectedApplicationId(applicationId);
+    setDetailsDialogOpen(true);
   };
 
   return (
@@ -275,7 +283,13 @@ const Dashboard = () => {
                   ) : (
                     <div className="space-y-4">
                       {[...applications.slice(0, 3)].map((app) => (
-                        <div key={app.id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                        <div 
+                          key={app.id} 
+                          className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
+                            app.status !== 'draft' ? 'cursor-pointer hover:bg-muted/50 hover:border-primary/30' : 'hover:bg-muted/50'
+                          }`}
+                          onClick={() => app.status !== 'draft' && handleViewApplication(app.id)}
+                        >
                           <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                             <FileText className="h-5 w-5 text-primary" />
                           </div>
@@ -332,7 +346,13 @@ const Dashboard = () => {
                         : (app.applicant_type ? app.applicant_type.replace(/_/g, ' ').toUpperCase() : 'Application');
                       
                       return (
-                        <div key={app.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                        <div 
+                          key={app.id} 
+                          className={`flex items-center justify-between p-4 border rounded-lg transition-colors ${
+                            app.status !== 'draft' ? 'cursor-pointer hover:bg-muted/50 hover:border-primary/30' : 'hover:bg-muted/50'
+                          }`}
+                          onClick={() => app.status !== 'draft' && handleViewApplication(app.id)}
+                        >
                           <div className="flex items-center gap-4 flex-1 min-w-0">
                             <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                               <FileText className="h-6 w-6 text-primary" />
@@ -356,12 +376,15 @@ const Dashboard = () => {
                             <Badge variant="outline" className={getStatusColor(app.status)}>
                               {app.status}
                             </Badge>
-                            {app.status === 'draft' && (
+                            {app.status === 'draft' ? (
                               <div className="flex gap-2">
                                 <Button 
                                   size="icon" 
                                   variant="outline"
-                                  onClick={() => handleEditDraft(app.id)}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleEditDraft(app.id);
+                                  }}
                                   className="h-9 w-9"
                                 >
                                   <Edit2 className="h-4 w-4" />
@@ -369,12 +392,27 @@ const Dashboard = () => {
                                 <Button 
                                   size="icon" 
                                   variant="outline"
-                                  onClick={() => openDeleteDialog(app.id)}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    openDeleteDialog(app.id);
+                                  }}
                                   className="h-9 w-9 text-destructive hover:text-destructive"
                                 >
                                   <Trash2 className="h-4 w-4" />
                                 </Button>
                               </div>
+                            ) : (
+                              <Button 
+                                size="icon" 
+                                variant="ghost"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleViewApplication(app.id);
+                                }}
+                                className="h-9 w-9"
+                              >
+                                <Eye className="h-4 w-4" />
+                              </Button>
                             )}
                           </div>
                         </div>
@@ -470,6 +508,12 @@ const Dashboard = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <ApplicationDetailsDialog 
+        applicationId={selectedApplicationId}
+        open={detailsDialogOpen}
+        onOpenChange={setDetailsDialogOpen}
+      />
     </div>
   );
 };
