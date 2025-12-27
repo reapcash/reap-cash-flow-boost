@@ -24,6 +24,7 @@ import PropertyManagerSection from './PropertyManagerSection';
 import ContractorSection from './ContractorSection';
 import BrokerSection from './BrokerSection';
 import DeveloperSection from './DeveloperSection';
+import ReviewSummarySection from './ReviewSummarySection';
 import { SaveDraftDialog } from './SaveDraftDialog';
 import { LeaveConfirmationDialog } from './LeaveConfirmationDialog';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -116,17 +117,17 @@ const getApplicationDescription = (type: ApplicantType): string => {
 const getTabOrder = (type: ApplicantType): string[] => {
   switch (type) {
     case 'str_host':
-      return ['property', 'str', 'financial', 'consent', 'documents'];
+      return ['property', 'str', 'financial', 'consent', 'documents', 'review'];
     case 'real_estate_agent':
-      return ['agent', 'financial', 'consent', 'documents'];
+      return ['agent', 'financial', 'consent', 'documents', 'review'];
     case 'property_manager':
-      return ['manager', 'financial', 'consent', 'documents'];
+      return ['manager', 'financial', 'consent', 'documents', 'review'];
     case 'contractor':
-      return ['contractor', 'financial', 'consent', 'documents'];
+      return ['contractor', 'financial', 'consent', 'documents', 'review'];
     case 'broker':
-      return ['broker', 'financial', 'consent', 'documents'];
+      return ['broker', 'financial', 'consent', 'documents', 'review'];
     case 'developer':
-      return ['developer', 'financial', 'consent', 'documents'];
+      return ['developer', 'financial', 'consent', 'documents', 'review'];
     default:
       return [];
   }
@@ -652,12 +653,13 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
       case 'str_host':
         return (
           <>
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList className="grid w-full grid-cols-6">
               <TabsTrigger value="property">Property</TabsTrigger>
               <TabsTrigger value="str">STR Details</TabsTrigger>
               <TabsTrigger value="financial">Financial</TabsTrigger>
               <TabsTrigger value="consent">Consent</TabsTrigger>
               <TabsTrigger value="documents">Documents</TabsTrigger>
+              <TabsTrigger value="review">Review</TabsTrigger>
             </TabsList>
 
             <TabsContent value="property" className="space-y-6 pt-6">
@@ -737,17 +739,29 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
               />
               {renderTabNavigation()}
             </TabsContent>
+
+            <TabsContent value="review" className="space-y-6 pt-6">
+              <ReviewSummarySection 
+                form={form}
+                applicantType={applicantType}
+                onEditSection={setActiveTab}
+                selectedBookingsRevenue={selectedBookingsRevenue}
+                allRequiredDocsUploaded={allRequiredDocsUploaded}
+              />
+              {renderTabNavigation()}
+            </TabsContent>
           </>
         );
 
       case 'real_estate_agent':
         return (
           <>
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="agent">Agent Info</TabsTrigger>
               <TabsTrigger value="financial">Financial</TabsTrigger>
               <TabsTrigger value="consent">Consent</TabsTrigger>
               <TabsTrigger value="documents">Documents</TabsTrigger>
+              <TabsTrigger value="review">Review</TabsTrigger>
             </TabsList>
 
             <TabsContent value="agent" className="space-y-6 pt-6">
@@ -774,17 +788,28 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
               />
               {renderTabNavigation()}
             </TabsContent>
+
+            <TabsContent value="review" className="space-y-6 pt-6">
+              <ReviewSummarySection 
+                form={form}
+                applicantType={applicantType}
+                onEditSection={setActiveTab}
+                allRequiredDocsUploaded={allRequiredDocsUploaded}
+              />
+              {renderTabNavigation()}
+            </TabsContent>
           </>
         );
 
       case 'property_manager':
         return (
           <>
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="manager">Management Info</TabsTrigger>
               <TabsTrigger value="financial">Financial</TabsTrigger>
               <TabsTrigger value="consent">Consent</TabsTrigger>
               <TabsTrigger value="documents">Documents</TabsTrigger>
+              <TabsTrigger value="review">Review</TabsTrigger>
             </TabsList>
 
             <TabsContent value="manager" className="space-y-6 pt-6">
@@ -811,17 +836,28 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
               />
               {renderTabNavigation()}
             </TabsContent>
+
+            <TabsContent value="review" className="space-y-6 pt-6">
+              <ReviewSummarySection 
+                form={form}
+                applicantType={applicantType}
+                onEditSection={setActiveTab}
+                allRequiredDocsUploaded={allRequiredDocsUploaded}
+              />
+              {renderTabNavigation()}
+            </TabsContent>
           </>
         );
 
       case 'contractor':
         return (
           <>
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="contractor">Contractor Info</TabsTrigger>
               <TabsTrigger value="financial">Financial</TabsTrigger>
               <TabsTrigger value="consent">Consent</TabsTrigger>
               <TabsTrigger value="documents">Documents</TabsTrigger>
+              <TabsTrigger value="review">Review</TabsTrigger>
             </TabsList>
 
             <TabsContent value="contractor" className="space-y-6 pt-6">
@@ -848,17 +884,28 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
               />
               {renderTabNavigation()}
             </TabsContent>
+
+            <TabsContent value="review" className="space-y-6 pt-6">
+              <ReviewSummarySection 
+                form={form}
+                applicantType={applicantType}
+                onEditSection={setActiveTab}
+                allRequiredDocsUploaded={allRequiredDocsUploaded}
+              />
+              {renderTabNavigation()}
+            </TabsContent>
           </>
         );
 
       case 'broker':
         return (
           <>
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="broker">Brokerage Info</TabsTrigger>
               <TabsTrigger value="financial">Financial</TabsTrigger>
               <TabsTrigger value="consent">Consent</TabsTrigger>
               <TabsTrigger value="documents">Documents</TabsTrigger>
+              <TabsTrigger value="review">Review</TabsTrigger>
             </TabsList>
 
             <TabsContent value="broker" className="space-y-6 pt-6">
@@ -885,17 +932,28 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
               />
               {renderTabNavigation()}
             </TabsContent>
+
+            <TabsContent value="review" className="space-y-6 pt-6">
+              <ReviewSummarySection 
+                form={form}
+                applicantType={applicantType}
+                onEditSection={setActiveTab}
+                allRequiredDocsUploaded={allRequiredDocsUploaded}
+              />
+              {renderTabNavigation()}
+            </TabsContent>
           </>
         );
 
       case 'developer':
         return (
           <>
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="developer">Developer Info</TabsTrigger>
               <TabsTrigger value="financial">Financial</TabsTrigger>
               <TabsTrigger value="consent">Consent</TabsTrigger>
               <TabsTrigger value="documents">Documents</TabsTrigger>
+              <TabsTrigger value="review">Review</TabsTrigger>
             </TabsList>
 
             <TabsContent value="developer" className="space-y-6 pt-6">
@@ -919,6 +977,16 @@ const ApplicationForm = ({ applicantType }: ApplicationFormProps) => {
                 onApplicationCreated={setApplicationId}
                 applicantType={applicantType}
                 onDocumentStatusChange={setAllRequiredDocsUploaded}
+              />
+              {renderTabNavigation()}
+            </TabsContent>
+
+            <TabsContent value="review" className="space-y-6 pt-6">
+              <ReviewSummarySection 
+                form={form}
+                applicantType={applicantType}
+                onEditSection={setActiveTab}
+                allRequiredDocsUploaded={allRequiredDocsUploaded}
               />
               {renderTabNavigation()}
             </TabsContent>
