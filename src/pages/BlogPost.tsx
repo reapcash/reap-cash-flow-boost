@@ -1,10 +1,10 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Share2, ChevronRight } from "lucide-react";
+import DOMPurify from "dompurify";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-
 // Import blog images
 import blogStrRevenue from "@/assets/blog-str-revenue.jpg";
 import blogRbfFinancing from "@/assets/blog-rbf-financing.jpg";
@@ -287,7 +287,7 @@ export default function BlogPost() {
               prose-a:text-primary prose-a:no-underline hover:prose-a:underline
               prose-strong:text-foreground prose-strong:font-semibold
             "
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
           />
 
 
