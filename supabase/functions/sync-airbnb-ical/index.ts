@@ -1,11 +1,20 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
 
-// TODO: Replace '*' with your actual domain (e.g., 'https://yourdomain.com') for production
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+function getCorsHeaders(req: Request) {
+  const origin = req.headers.get('Origin') || '';
+  const allowedOrigins = (Deno.env.get('ALLOWED_ORIGINS') || '').split(',').map(o => o.trim()).filter(Boolean);
+  
+  // Default to Lovable preview domains if no ALLOWED_ORIGINS set
+  const isAllowed = allowedOrigins.length === 0 
+    ? origin.endsWith('.lovable.app') || origin.endsWith('.lovableproject.com') || origin === 'http://localhost:5173' || origin === 'http://localhost:8080'
+    : allowedOrigins.includes(origin);
+
+  return {
+    'Access-Control-Allow-Origin': isAllowed ? origin : '',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  };
+}
 
 interface ICalEvent {
   summary: string;
@@ -105,6 +114,8 @@ function parseICalDate(dateStr: string): Date {
 }
 
 Deno.serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req);
+  
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
