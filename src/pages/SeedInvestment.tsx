@@ -129,7 +129,7 @@ const SeedInvestment = () => {
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6">One-Line Pitch</h2>
               <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed italic">
-                "Reap turns verified future income into instant liquidity for real estate operators."
+                "REAP turns verified future real-estate income into instant liquidity, then scales into the full finance stack."
               </p>
             </div>
             
@@ -148,9 +148,7 @@ const SeedInvestment = () => {
                 <CardContent className="p-8">
                   <Zap className="w-12 h-12 text-primary mb-4" />
                   <h3 className="text-xl font-bold mb-3">The Product</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Instant advances on verified future income with automated repayment—48hr time-to-cash, no credit checks
-                  </p>
+                  <p className="text-muted-foreground leading-relaxed">Instant advances on verified future income with automated repayment— less than 48hr time-to-cash.</p>
                 </CardContent>
               </Card>
               
