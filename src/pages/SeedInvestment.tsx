@@ -16,7 +16,6 @@ const SeedInvestment = () => {
     localStorage.setItem('seed_access', 'true');
     setIsUnlocked(true);
   };
-
   const handleLogout = () => {
     localStorage.removeItem('seed_access');
     setIsUnlocked(false);
@@ -36,12 +35,7 @@ const SeedInvestment = () => {
         {/* Logout Button */}
         <div className="container mx-auto px-4 max-w-7xl pt-4">
           <div className="flex justify-end">
-            <Button
-              onClick={handleLogout}
-              variant="outline"
-              size="sm"
-              className="gap-2"
-            >
+            <Button onClick={handleLogout} variant="outline" size="sm" className="gap-2">
               <LogOut className="w-4 h-4" />
               Logout
             </Button>
@@ -217,9 +211,7 @@ const SeedInvestment = () => {
 
             <Card className="bg-primary/5 border-2 border-primary/20">
               <CardContent className="p-8 text-center">
-                <p className="text-xl italic text-foreground font-medium">
-                  "I have $50K in confirmed bookings and pending commissions—but the cash arrives weeks later when I need it now for renovations."
-                </p>
+                <p className="text-xl italic text-foreground font-medium">"I have $50K in confirmed bookings and pending commissions—but the cash arrives weeks later when I need it now to pay bills."</p>
                 <p className="text-sm text-muted-foreground mt-4">— STR Host & Real Estate Investor</p>
               </CardContent>
             </Card>
