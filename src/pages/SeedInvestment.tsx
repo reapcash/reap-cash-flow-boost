@@ -129,7 +129,7 @@ const SeedInvestment = () => {
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6">One-Line Pitch</h2>
               <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed italic">
-                "REAP turns verified future real-estate income into instant liquidity, then scales into the full finance stack."
+                "Reap turns verified future income into instant liquidity for real estate operators."
               </p>
             </div>
             
