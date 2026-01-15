@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        lato: ['Lato', 'sans-serif'],
+        display: ['"DM Serif Display"', 'Georgia', 'serif'],
         inter: ['Inter', 'sans-serif'],
       },
       colors: {
