@@ -198,6 +198,9 @@ const Pricing = () => {
                     <span><span className="font-medium text-foreground">Built for your business</span> — Designed specifically around the unique cashflow needs of real estate professionals</span>
                   </li>
                 </ul>
+                <p className="text-xs text-muted-foreground mt-6 normal-case">
+                  *Estimates are for illustrative purposes only. Actual advance amounts, fees, and terms are subject to verification of income, eligibility requirements, and final approval.
+                </p>
               </div>
             </div>
           </div>
