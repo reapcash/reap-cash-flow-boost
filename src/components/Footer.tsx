@@ -59,7 +59,7 @@ const Footer = () => {
           {/* Brand Column */}
           <div>
             <div className="mb-4">
-              <span className="text-2xl text-primary"><span className="text-primary">REAP</span>.CASH</span>
+              <span className="text-2xl font-bold text-primary"><span className="text-primary">REAP</span>.CASH</span>
               <span className="block text-sm text-muted-foreground mt-1">Real Estate Advance Partners.com
 support@<span className="text-primary">reap</span>.cash</span>
             </div>

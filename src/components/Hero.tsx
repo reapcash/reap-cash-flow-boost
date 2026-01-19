@@ -43,7 +43,7 @@ const Hero = () => {
 
             {/* Main Headline */}
             <div className="space-y-4 sm:space-y-6 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight px-2">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight font-bold px-2">
                 <span className="text-white">Turn Your </span>
                 <span className="block text-gradient-primary mt-1 sm:mt-2">Real Estate Income</span>
                 <span className="text-white block mt-1 sm:mt-2">Into Instant Capital</span>
