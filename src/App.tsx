@@ -33,6 +33,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/application/new" element={<ApplicationNew />} />
           <Route path="/application-success" element={<ApplicationSuccess />} />
           <Route path="/manage-airbnb" element={<ManageAirbnb />} />
