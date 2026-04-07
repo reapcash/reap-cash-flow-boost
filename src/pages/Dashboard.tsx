@@ -83,25 +83,26 @@ const Dashboard = () => {
     }
   }, [user, isAdmin, navigate]);
 
+  const fetchData = async () => {
+    if (!user) return;
+    try {
+      const [appsRes, advRes, recRes] = await Promise.all([
+        supabase.from('applications').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
+        supabase.from('advances').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
+        supabase.from('receivables').select('*').eq('user_id', user.id).order('expected_payout_date', { ascending: true }),
+      ]);
+      setApplications(appsRes.data || []);
+      setAdvances(advRes.data || []);
+      setReceivables(recRes.data || []);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoadingData(false);
+    }
+  };
+
   // Fetch data
   useEffect(() => {
-    const fetchData = async () => {
-      if (!user) return;
-      try {
-        const [appsRes, advRes, recRes] = await Promise.all([
-          supabase.from('applications').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
-          supabase.from('advances').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
-          supabase.from('receivables').select('*').eq('user_id', user.id).order('expected_payout_date', { ascending: true }),
-        ]);
-        setApplications(appsRes.data || []);
-        setAdvances(advRes.data || []);
-        setReceivables(recRes.data || []);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoadingData(false);
-      }
-    };
     if (user) fetchData();
   }, [user]);
 
