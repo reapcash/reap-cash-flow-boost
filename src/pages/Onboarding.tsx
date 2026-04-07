@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { Loader2, Home, Building2, UserCheck, Landmark, HardHat, Wrench, Briefcase } from 'lucide-react';
+import { Loader2, Home, Building2, Key, Briefcase, HardHat, Wrench, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -24,13 +24,13 @@ const industryOptions = [
     value: 'AGENT',
     label: 'Real Estate Agent',
     description: 'Licensed agent with pending commissions.',
-    icon: UserCheck,
+    icon: Key,
   },
   {
     value: 'BROKER',
     label: 'Broker',
     description: 'Brokerage owner or managing broker.',
-    icon: Landmark,
+    icon: Briefcase,
   },
   {
     value: 'DEVELOPER',
@@ -46,9 +46,9 @@ const industryOptions = [
   },
   {
     value: 'REAL_ESTATE_OPERATOR',
-    label: 'Real Estate Operator',
+    label: 'Small Real Estate Operator',
     description: 'Full-stack operator across multiple verticals.',
-    icon: Briefcase,
+    icon: User,
   },
 ] as const;
 
@@ -80,7 +80,7 @@ const Onboarding = () => {
     try {
       const { error } = await supabase
         .from('profiles')
-        .update({ industry_type: selected } as any)
+        .update({ industry_type: selected })
         .eq('id', user.id);
 
       if (error) throw error;
@@ -98,17 +98,15 @@ const Onboarding = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--hero-bg))] to-[hsl(var(--hero-bg-end))] flex items-center justify-center p-4">
       <div className="w-full max-w-2xl">
-        {/* Header */}
         <div className="text-center mb-10">
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
             What best describes you?
           </h1>
           <p className="text-white/70 text-lg max-w-md mx-auto">
-            This helps us tailor your dashboard and available advance types.
+            This helps us show you the right receivables and workflows.
           </p>
         </div>
 
-        {/* Selection Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
           {industryOptions.map((option) => {
             const Icon = option.icon;
@@ -143,7 +141,6 @@ const Onboarding = () => {
                   </p>
                 </div>
 
-                {/* Check indicator */}
                 {isSelected && (
                   <div className="absolute top-3 right-3 h-5 w-5 rounded-full bg-primary flex items-center justify-center">
                     <svg className="h-3 w-3 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -156,7 +153,6 @@ const Onboarding = () => {
           })}
         </div>
 
-        {/* Continue Button */}
         <div className="flex justify-center">
           <Button
             size="lg"
