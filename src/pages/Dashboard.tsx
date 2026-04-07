@@ -52,6 +52,7 @@ const Dashboard = () => {
   const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
   const [detailsDialogOpen, setDetailsDialogOpen] = useState(false);
   const [checkingOnboarding, setCheckingOnboarding] = useState(true);
+  const [addReceivableOpen, setAddReceivableOpen] = useState(false);
 
   // Check onboarding + fetch industry type
   useEffect(() => {
