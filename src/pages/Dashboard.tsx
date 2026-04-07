@@ -370,6 +370,7 @@ const Dashboard = () => {
                   Track your income and {labels.dateLabel.toLowerCase()}
                 </p>
               </div>
+              <AddReceivableDialog userId={user.id} industryType={industryType} onSuccess={fetchData} />
             </div>
           </CardHeader>
           <CardContent>
