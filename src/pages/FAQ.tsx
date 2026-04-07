@@ -20,8 +20,8 @@ const faqs = [
     answer: "You sign up, connect your rental or real-estate account, and verify your future income. Once approved, REAP offers you an advance (up to 100% of confirmed earnings). You e-sign the agreement via DocuSign, and funds are transferred to your bank — typically within 24–48 hours."
   },
   {
-    question: "Is this a loan or will it affect my credit score?",
-    answer: "No. REAP is not a loan and doesn't require a credit check that impacts your score. We're purchasing your future income at a discount. When your platform or brokerage pays you, that income automatically repays the advance."
+    question: "Is this an advance or will it affect my credit score?",
+    answer: "No. A REAP advance is not a traditional financial product and doesn't require a credit check that impacts your score. We're purchasing your future income at a discount. When your platform or brokerage pays you, that income automatically repays the advance."
   },
   {
     question: "How much does it cost?",
