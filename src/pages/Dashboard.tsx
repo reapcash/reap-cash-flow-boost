@@ -244,9 +244,7 @@ const Dashboard = () => {
                     <p className="text-xs text-muted-foreground">Log your upcoming income so we can evaluate eligibility</p>
                   </div>
                   {industryType && receivables.length === 0 && (
-                    <Button size="sm" variant="outline" onClick={() => navigate('/application/new')}>
-                      Add Now
-                    </Button>
+                    <AddReceivableDialog userId={user.id} industryType={industryType} onSuccess={fetchData} />
                   )}
                 </div>
 
