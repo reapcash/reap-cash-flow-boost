@@ -17,6 +17,7 @@ import FAQ from "./pages/FAQ";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
+import Onboarding from "./pages/Onboarding";
 import ApplicationSuccess from "./components/application/ApplicationSuccess";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/application/new" element={<ApplicationNew />} />
           <Route path="/application-success" element={<ApplicationSuccess />} />
           <Route path="/manage-airbnb" element={<ManageAirbnb />} />

@@ -32,6 +32,35 @@ const Dashboard = () => {
   const [applicationToDelete, setApplicationToDelete] = useState<string | null>(null);
   const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
   const [detailsDialogOpen, setDetailsDialogOpen] = useState(false);
+  const [checkingOnboarding, setCheckingOnboarding] = useState(true);
+
+  // Check if user has completed onboarding
+  useEffect(() => {
+    const checkOnboarding = async () => {
+      if (!user) return;
+      try {
+        const { data } = await supabase
+          .from('profiles')
+          .select('industry_type')
+          .eq('id', user.id)
+          .maybeSingle();
+
+        if (data && !data.industry_type) {
+          navigate('/onboarding', { replace: true });
+          return;
+        }
+      } catch (err) {
+        console.error('Onboarding check error:', err);
+      } finally {
+        setCheckingOnboarding(false);
+      }
+    };
+    if (user && !isAdmin) {
+      checkOnboarding();
+    } else {
+      setCheckingOnboarding(false);
+    }
+  }, [user, isAdmin, navigate]);
 
   // Fetch user's applications and advances
   useEffect(() => {
@@ -71,7 +100,7 @@ const Dashboard = () => {
     }
   }, [user, loading, navigate]);
 
-  if (loading) {
+  if (loading || checkingOnboarding) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
