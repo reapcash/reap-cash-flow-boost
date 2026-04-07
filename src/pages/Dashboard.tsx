@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import NotificationBell from '@/components/dashboard/NotificationBell';
 import AddReceivableDialog from '@/components/dashboard/AddReceivableDialog';
+import UnlockEarningsDialog from '@/components/dashboard/UnlockEarningsDialog';
 import ApplicationDetailsDialog from '@/components/dashboard/ApplicationDetailsDialog';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
