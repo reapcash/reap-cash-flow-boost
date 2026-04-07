@@ -15,6 +15,7 @@ import {
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import NotificationBell from '@/components/dashboard/NotificationBell';
+import AddReceivableDialog from '@/components/dashboard/AddReceivableDialog';
 import ApplicationDetailsDialog from '@/components/dashboard/ApplicationDetailsDialog';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
