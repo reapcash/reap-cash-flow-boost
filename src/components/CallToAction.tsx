@@ -16,7 +16,7 @@ const CallToAction = () => {
             </Button>
           </div>
           <p className="text-xs opacity-70 mt-6 max-w-xl mx-auto normal-case">
-            REAP is a financial technology company, not a bank or lender. All funding is subject to eligibility and approval.
+            REAP is a financial technology company, not a bank. All funding is subject to eligibility and approval.
           </p>
         </div>
       </div>

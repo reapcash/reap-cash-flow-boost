@@ -44,8 +44,8 @@ const industries = [{
   description: "Receive cash now for future bookings",
   sectionTitle: "Platform Payouts Holding Up Your Operations?",
   challenge: "Short-term rental platforms delay payouts until after guest checkout, creating cashflow gaps.",
-  currentSolution: "Credit cards or short-term business loans",
-  problem: "Risky debt accumulation and credit-based approvals that don't reflect your booking income."
+  currentSolution: "Credit cards or short-term financing",
+  problem: "Risky obligations and credit-based approvals that don't reflect your booking income."
 }, {
   icon: Briefcase,
   image: isoDeveloper,

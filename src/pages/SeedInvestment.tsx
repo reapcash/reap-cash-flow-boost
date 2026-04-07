@@ -489,7 +489,7 @@ const SeedInvestment = () => {
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                        <span>Enter $650B investment loan market</span>
+                        <span>Enter $650B investment advance market</span>
                       </li>
                     </ul>
                   </CardContent>
@@ -820,7 +820,7 @@ const SeedInvestment = () => {
                       <div className="border-t border-border pt-3 mt-3">
                         <p className="text-sm text-muted-foreground mb-1">Effective Annual Rate</p>
                         <p className="text-xl font-semibold">~42.1%</p>
-                        <p className="text-xs text-muted-foreground mt-1">For comparison only—not a loan product</p>
+                        <p className="text-xs text-muted-foreground mt-1">For comparison only—not a lending product</p>
                       </div>
                     </div>
                   </div>
@@ -931,7 +931,7 @@ const SeedInvestment = () => {
                   <CreditCard className="w-10 h-10 text-primary mb-4" />
                   <h3 className="font-bold mb-2">Facility Leverage</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Every $1 equity supports $9 debt; minimal dilution as volume scales
+                    Every $1 equity supports $9 in facility capital; minimal dilution as volume scales
                   </p>
                 </CardContent>
               </Card>

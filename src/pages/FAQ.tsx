@@ -13,15 +13,15 @@ import { MessageCircle, HelpCircle } from "lucide-react";
 const faqs = [
   {
     question: "What is REAP Cash?",
-    answer: "REAP (Real Estate Advance Partners) provides cash advances on verified future income — such as pending Airbnb bookings or real-estate commissions. We're not a lender; we simply purchase a portion of your confirmed earnings at a transparent flat fee so you can access funds today."
+    answer: "REAP (Real Estate Advance Partners) provides cash advances on verified future income — such as pending Airbnb bookings or real-estate commissions. We simply purchase a portion of your confirmed earnings at a transparent flat fee so you can access funds today."
   },
   {
     question: "How does the cash advance process work?",
     answer: "You sign up, connect your rental or real-estate account, and verify your future income. Once approved, REAP offers you an advance (up to 100% of confirmed earnings). You e-sign the agreement via DocuSign, and funds are transferred to your bank — typically within 24–48 hours."
   },
   {
-    question: "Is this a loan or will it affect my credit score?",
-    answer: "No. REAP is not a loan and doesn't require a credit check that impacts your score. We're purchasing your future income at a discount. When your platform or brokerage pays you, that income automatically repays the advance."
+    question: "Is this an advance or will it affect my credit score?",
+    answer: "No. A REAP advance is not a traditional financial product and doesn't require a credit check that impacts your score. We're purchasing your future income at a discount. When your platform or brokerage pays you, that income automatically repays the advance."
   },
   {
     question: "How much does it cost?",
@@ -48,8 +48,8 @@ const faqs = [
     answer: "If a booking is canceled or a payout is delayed, REAP works with you directly to adjust or reschedule repayment. Because we purchase your receivables (not lend), there are no late fees or penalties. We evaluate each case fairly to protect both your cash flow and REAP's capital."
   },
   {
-    question: "Is REAP a lender or financial institution?",
-    answer: "No — REAP is not a lender. We operate as a receivables-purchase platform, meaning we advance funds based on income you've already earned through verified contracts or bookings. This model allows faster approvals, simplified terms, and zero impact on your credit score."
+    question: "Is REAP a financial institution?",
+    answer: "No — REAP is not a bank or traditional financial institution. We operate as a receivables-purchase platform, meaning we advance funds based on income you've already earned through verified contracts or bookings. This model allows faster approvals, simplified terms, and zero impact on your credit score."
   }
 ];
 
