@@ -778,6 +778,7 @@ export type Database = {
         | "BROKER"
         | "DEVELOPER"
         | "CONTRACTOR"
+        | "REAL_ESTATE_OPERATOR"
       ownership_status: "owned_outright" | "mortgaged" | "rental_arbitrage"
       property_type:
         | "single_family"
@@ -943,6 +944,7 @@ export const Constants = {
         "BROKER",
         "DEVELOPER",
         "CONTRACTOR",
+        "REAL_ESTATE_OPERATOR",
       ],
       ownership_status: ["owned_outright", "mortgaged", "rental_arbitrage"],
       property_type: [
