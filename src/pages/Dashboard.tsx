@@ -8,7 +8,7 @@ import { Progress } from '@/components/ui/progress';
 import {
   Loader2, LogOut, FileText, Plus, DollarSign, TrendingUp, Clock,
   CheckCircle2, AlertCircle, ArrowUpRight, Edit2, Trash2, Eye,
-  Unlock, CalendarClock, Wallet
+  Unlock, CalendarClock, Wallet, Lock, Sparkles, Building2, Receipt, Banknote
 } from 'lucide-react';
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
@@ -191,6 +191,89 @@ const Dashboard = () => {
       </header>
 
       <main className="container mx-auto px-4 py-6 space-y-6 max-w-6xl">
+        {/* Empty state checklist */}
+        {!loadingData && receivables.length === 0 && advances.length === 0 ? (
+          <div className="space-y-6">
+            <div className="text-center pt-4 pb-2">
+              <Sparkles className="h-10 w-10 text-primary mx-auto mb-3" />
+              <h2 className="text-2xl font-bold text-foreground">Welcome to REAP — let's get you set up</h2>
+              <p className="text-sm text-muted-foreground mt-1">Complete these steps to unlock your first advance.</p>
+            </div>
+
+            <Card className="border max-w-lg mx-auto">
+              <CardContent className="p-6 space-y-1">
+                {/* Step 1 */}
+                <div className={cn(
+                  'flex items-center gap-4 p-4 rounded-lg transition-colors',
+                  industryType ? 'bg-primary/5' : 'bg-muted/50'
+                )}>
+                  <div className={cn(
+                    'h-9 w-9 rounded-full flex items-center justify-center flex-shrink-0',
+                    industryType ? 'bg-primary text-primary-foreground' : 'bg-muted-foreground/20 text-muted-foreground'
+                  )}>
+                    {industryType ? <CheckCircle2 className="h-5 w-5" /> : <Building2 className="h-5 w-5" />}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className={cn('font-medium text-sm', industryType && 'text-muted-foreground line-through')}>
+                      Select your industry
+                    </p>
+                    <p className="text-xs text-muted-foreground">Tell us what you do so we can tailor your experience</p>
+                  </div>
+                  {!industryType && (
+                    <Button size="sm" onClick={() => navigate('/onboarding')}>
+                      Get Started
+                    </Button>
+                  )}
+                </div>
+
+                {/* Step 2 */}
+                <div className={cn(
+                  'flex items-center gap-4 p-4 rounded-lg transition-colors',
+                  !industryType ? 'opacity-50' : receivables.length > 0 ? 'bg-primary/5' : 'bg-muted/50'
+                )}>
+                  <div className={cn(
+                    'h-9 w-9 rounded-full flex items-center justify-center flex-shrink-0',
+                    receivables.length > 0 ? 'bg-primary text-primary-foreground' : 'bg-muted-foreground/20 text-muted-foreground'
+                  )}>
+                    {!industryType ? <Lock className="h-5 w-5" /> : receivables.length > 0 ? <CheckCircle2 className="h-5 w-5" /> : <Receipt className="h-5 w-5" />}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-sm">Add your first receivable</p>
+                    <p className="text-xs text-muted-foreground">Log your upcoming income so we can evaluate eligibility</p>
+                  </div>
+                  {industryType && receivables.length === 0 && (
+                    <Button size="sm" variant="outline" onClick={() => navigate('/application/new')}>
+                      Add Now
+                    </Button>
+                  )}
+                </div>
+
+                {/* Step 3 */}
+                <div className={cn(
+                  'flex items-center gap-4 p-4 rounded-lg transition-colors',
+                  receivables.length === 0 ? 'opacity-50' : advances.length > 0 ? 'bg-primary/5' : 'bg-muted/50'
+                )}>
+                  <div className={cn(
+                    'h-9 w-9 rounded-full flex items-center justify-center flex-shrink-0',
+                    advances.length > 0 ? 'bg-primary text-primary-foreground' : 'bg-muted-foreground/20 text-muted-foreground'
+                  )}>
+                    {receivables.length === 0 ? <Lock className="h-5 w-5" /> : advances.length > 0 ? <CheckCircle2 className="h-5 w-5" /> : <Banknote className="h-5 w-5" />}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-sm">Request your first advance</p>
+                    <p className="text-xs text-muted-foreground">Unlock your verified income and get funded</p>
+                  </div>
+                  {receivables.length > 0 && advances.length === 0 && (
+                    <Button size="sm" variant="outline" onClick={() => navigate('/application/new')}>
+                      Request
+                    </Button>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        ) : (
+        <>
         {/* Welcome */}
         <div className="flex items-center justify-between">
           <div>
@@ -457,6 +540,8 @@ const Dashboard = () => {
             </CardContent>
           </Card>
         </div>
+        </>
+        )}
       </main>
 
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
