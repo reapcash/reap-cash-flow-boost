@@ -14,12 +14,17 @@ const signUpSchema = z.object({
   fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
   email: z.string().trim().email("Invalid email address").max(255),
   phone: z.string().trim()
-    .min(10, "Phone number must be at least 10 digits")
-    .regex(/^[\d\s\-\+\(\)]+$/, "Invalid phone number format")
-    .refine((val) => {
-      const digits = val.replace(/\D/g, '');
-      return digits.length === 10 || digits.length === 11;
-    }, "Please enter a valid 10-digit phone number"),
+    .transform(val => val === '' ? undefined : val)
+    .pipe(
+      z.string()
+        .min(10, "Phone number must be at least 10 digits")
+        .regex(/^[\d\s\-\+\(\)]+$/, "Invalid phone number format")
+        .refine((val) => {
+          const digits = val.replace(/\D/g, '');
+          return digits.length === 10 || digits.length === 11;
+        }, "Please enter a valid 10-digit phone number")
+        .optional()
+    ),
   password: z.string().min(8, "Password must be at least 8 characters").max(100),
 });
 
@@ -114,8 +119,8 @@ const Auth = () => {
           return;
         }
 
-        // Format phone to E.164 format for storage
-        const formattedPhone = formatPhoneE164(formData.phone);
+        // Format phone to E.164 format for storage (if provided)
+        const formattedPhone = formData.phone.trim() ? formatPhoneE164(formData.phone) : '';
         
         // Sign up with email/password and store phone in metadata
         const { data, error } = await supabase.auth.signUp({
@@ -242,7 +247,7 @@ const Auth = () => {
                   {errors.fullName && <p className="text-sm text-destructive">{errors.fullName}</p>}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number</Label>
+                  <Label htmlFor="phone">Phone Number <span className="text-muted-foreground font-normal">(optional)</span></Label>
                   <Input 
                     id="phone" 
                     type="tel" 
@@ -255,7 +260,7 @@ const Auth = () => {
                   {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
                   {!errors.phone && (
                     <p className="text-xs text-muted-foreground">
-                      10-digit US phone number (no verification required)
+                      You can add and verify your phone number later from your profile settings.
                     </p>
                   )}
                 </div>
