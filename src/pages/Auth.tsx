@@ -14,12 +14,17 @@ const signUpSchema = z.object({
   fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
   email: z.string().trim().email("Invalid email address").max(255),
   phone: z.string().trim()
-    .min(10, "Phone number must be at least 10 digits")
-    .regex(/^[\d\s\-\+\(\)]+$/, "Invalid phone number format")
-    .refine((val) => {
-      const digits = val.replace(/\D/g, '');
-      return digits.length === 10 || digits.length === 11;
-    }, "Please enter a valid 10-digit phone number"),
+    .transform(val => val === '' ? undefined : val)
+    .pipe(
+      z.string()
+        .min(10, "Phone number must be at least 10 digits")
+        .regex(/^[\d\s\-\+\(\)]+$/, "Invalid phone number format")
+        .refine((val) => {
+          const digits = val.replace(/\D/g, '');
+          return digits.length === 10 || digits.length === 11;
+        }, "Please enter a valid 10-digit phone number")
+        .optional()
+    ),
   password: z.string().min(8, "Password must be at least 8 characters").max(100),
 });
 
