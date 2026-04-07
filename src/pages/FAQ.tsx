@@ -13,7 +13,7 @@ import { MessageCircle, HelpCircle } from "lucide-react";
 const faqs = [
   {
     question: "What is REAP Cash?",
-    answer: "REAP (Real Estate Advance Partners) provides cash advances on verified future income — such as pending Airbnb bookings or real-estate commissions. We're not a lender; we simply purchase a portion of your confirmed earnings at a transparent flat fee so you can access funds today."
+    answer: "REAP (Real Estate Advance Partners) provides cash advances on verified future income — such as pending Airbnb bookings or real-estate commissions. We simply purchase a portion of your confirmed earnings at a transparent flat fee so you can access funds today."
   },
   {
     question: "How does the cash advance process work?",
