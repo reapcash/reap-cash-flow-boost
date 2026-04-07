@@ -540,6 +540,8 @@ const Dashboard = () => {
             </CardContent>
           </Card>
         </div>
+        </>
+        )}
       </main>
 
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
