@@ -16,6 +16,9 @@ export type Database = {
     Tables: {
       advances: {
         Row: {
+          advance_status:
+            | Database["public"]["Enums"]["advance_request_status"]
+            | null
           amount_repaid: number
           application_id: string
           approved_amount: number
@@ -24,7 +27,11 @@ export type Database = {
           disbursed_amount: number | null
           disbursed_at: string | null
           expected_completion_date: string | null
+          fee_amount: number | null
           id: string
+          net_amount: number | null
+          receivable_id: string | null
+          repaid_at: string | null
           repayment_percentage: number
           status: string
           total_repayment_amount: number
@@ -32,6 +39,9 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          advance_status?:
+            | Database["public"]["Enums"]["advance_request_status"]
+            | null
           amount_repaid?: number
           application_id: string
           approved_amount: number
@@ -40,7 +50,11 @@ export type Database = {
           disbursed_amount?: number | null
           disbursed_at?: string | null
           expected_completion_date?: string | null
+          fee_amount?: number | null
           id?: string
+          net_amount?: number | null
+          receivable_id?: string | null
+          repaid_at?: string | null
           repayment_percentage?: number
           status?: string
           total_repayment_amount: number
@@ -48,6 +62,9 @@ export type Database = {
           user_id: string
         }
         Update: {
+          advance_status?:
+            | Database["public"]["Enums"]["advance_request_status"]
+            | null
           amount_repaid?: number
           application_id?: string
           approved_amount?: number
@@ -56,7 +73,11 @@ export type Database = {
           disbursed_amount?: number | null
           disbursed_at?: string | null
           expected_completion_date?: string | null
+          fee_amount?: number | null
           id?: string
+          net_amount?: number | null
+          receivable_id?: string | null
+          repaid_at?: string | null
           repayment_percentage?: number
           status?: string
           total_repayment_amount?: number
@@ -69,6 +90,13 @@ export type Database = {
             columns: ["application_id"]
             isOneToOne: false
             referencedRelation: "applications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "advances_receivable_id_fkey"
+            columns: ["receivable_id"]
+            isOneToOne: false
+            referencedRelation: "receivables"
             referencedColumns: ["id"]
           },
         ]
@@ -448,6 +476,7 @@ export type Database = {
           email: string
           full_name: string
           id: string
+          industry_type: Database["public"]["Enums"]["industry_type"] | null
           phone_number: string | null
           updated_at: string | null
         }
@@ -456,6 +485,7 @@ export type Database = {
           email: string
           full_name: string
           id: string
+          industry_type?: Database["public"]["Enums"]["industry_type"] | null
           phone_number?: string | null
           updated_at?: string | null
         }
@@ -464,6 +494,7 @@ export type Database = {
           email?: string
           full_name?: string
           id?: string
+          industry_type?: Database["public"]["Enums"]["industry_type"] | null
           phone_number?: string | null
           updated_at?: string | null
         }
@@ -560,6 +591,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      receivables: {
+        Row: {
+          amount: number
+          created_at: string
+          expected_payout_date: string | null
+          id: string
+          source_type: string | null
+          status: Database["public"]["Enums"]["receivable_status"]
+          title: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          expected_payout_date?: string | null
+          id?: string
+          source_type?: string | null
+          status?: Database["public"]["Enums"]["receivable_status"]
+          title: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          expected_payout_date?: string | null
+          id?: string
+          source_type?: string | null
+          status?: Database["public"]["Enums"]["receivable_status"]
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       repayment_transactions: {
         Row: {
@@ -686,6 +750,7 @@ export type Database = {
       }
     }
     Enums: {
+      advance_request_status: "REQUESTED" | "ACTIVE" | "REPAID"
       app_role: "admin" | "user"
       application_status:
         | "draft"
@@ -706,12 +771,20 @@ export type Database = {
         | "proof_of_income"
         | "property_documents"
         | "additional_documents"
+      industry_type:
+        | "STR_HOST"
+        | "PROPERTY_MANAGER"
+        | "AGENT"
+        | "BROKER"
+        | "DEVELOPER"
+        | "CONTRACTOR"
       ownership_status: "owned_outright" | "mortgaged" | "rental_arbitrage"
       property_type:
         | "single_family"
         | "multi_family"
         | "condo_apartment"
         | "other"
+      receivable_status: "PENDING" | "ELIGIBLE" | "ADVANCED" | "SETTLED"
       repayment_terms: "weekly" | "bi_weekly" | "monthly"
     }
     CompositeTypes: {
@@ -840,6 +913,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      advance_request_status: ["REQUESTED", "ACTIVE", "REPAID"],
       app_role: ["admin", "user"],
       application_status: [
         "draft",
@@ -862,6 +936,14 @@ export const Constants = {
         "property_documents",
         "additional_documents",
       ],
+      industry_type: [
+        "STR_HOST",
+        "PROPERTY_MANAGER",
+        "AGENT",
+        "BROKER",
+        "DEVELOPER",
+        "CONTRACTOR",
+      ],
       ownership_status: ["owned_outright", "mortgaged", "rental_arbitrage"],
       property_type: [
         "single_family",
@@ -869,6 +951,7 @@ export const Constants = {
         "condo_apartment",
         "other",
       ],
+      receivable_status: ["PENDING", "ELIGIBLE", "ADVANCED", "SETTLED"],
       repayment_terms: ["weekly", "bi_weekly", "monthly"],
     },
   },
