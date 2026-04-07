@@ -8,7 +8,7 @@ import { Progress } from '@/components/ui/progress';
 import {
   Loader2, LogOut, FileText, Plus, DollarSign, TrendingUp, Clock,
   CheckCircle2, AlertCircle, ArrowUpRight, Edit2, Trash2, Eye,
-  Unlock, CalendarClock, Wallet
+  Unlock, CalendarClock, Wallet, Lock, Sparkles, Building2, Receipt, Banknote
 } from 'lucide-react';
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
