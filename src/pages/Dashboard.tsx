@@ -15,6 +15,7 @@ import {
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import NotificationBell from '@/components/dashboard/NotificationBell';
+import AddReceivableDialog from '@/components/dashboard/AddReceivableDialog';
 import ApplicationDetailsDialog from '@/components/dashboard/ApplicationDetailsDialog';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
@@ -82,25 +83,26 @@ const Dashboard = () => {
     }
   }, [user, isAdmin, navigate]);
 
+  const fetchData = async () => {
+    if (!user) return;
+    try {
+      const [appsRes, advRes, recRes] = await Promise.all([
+        supabase.from('applications').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
+        supabase.from('advances').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
+        supabase.from('receivables').select('*').eq('user_id', user.id).order('expected_payout_date', { ascending: true }),
+      ]);
+      setApplications(appsRes.data || []);
+      setAdvances(advRes.data || []);
+      setReceivables(recRes.data || []);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoadingData(false);
+    }
+  };
+
   // Fetch data
   useEffect(() => {
-    const fetchData = async () => {
-      if (!user) return;
-      try {
-        const [appsRes, advRes, recRes] = await Promise.all([
-          supabase.from('applications').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
-          supabase.from('advances').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
-          supabase.from('receivables').select('*').eq('user_id', user.id).order('expected_payout_date', { ascending: true }),
-        ]);
-        setApplications(appsRes.data || []);
-        setAdvances(advRes.data || []);
-        setReceivables(recRes.data || []);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoadingData(false);
-      }
-    };
     if (user) fetchData();
   }, [user]);
 
@@ -242,9 +244,7 @@ const Dashboard = () => {
                     <p className="text-xs text-muted-foreground">Log your upcoming income so we can evaluate eligibility</p>
                   </div>
                   {industryType && receivables.length === 0 && (
-                    <Button size="sm" variant="outline" onClick={() => navigate('/application/new')}>
-                      Add Now
-                    </Button>
+                    <AddReceivableDialog userId={user.id} industryType={industryType} onSuccess={fetchData} />
                   )}
                 </div>
 
@@ -282,10 +282,13 @@ const Dashboard = () => {
               You have income on the way. Here's your snapshot.
             </p>
           </div>
-          <Button onClick={() => navigate('/application/new')} size="sm">
-            <Plus className="mr-1.5 h-4 w-4" />
-            New Application
-          </Button>
+          <div className="flex items-center gap-2">
+            <AddReceivableDialog userId={user.id} industryType={industryType} onSuccess={fetchData} />
+            <Button onClick={() => navigate('/application/new')} size="sm" variant="outline">
+              <Plus className="mr-1.5 h-4 w-4" />
+              New Application
+            </Button>
+          </div>
         </div>
 
         {/* 4 Metric Cards */}
@@ -367,6 +370,7 @@ const Dashboard = () => {
                   Track your income and {labels.dateLabel.toLowerCase()}
                 </p>
               </div>
+              <AddReceivableDialog userId={user.id} industryType={industryType} onSuccess={fetchData} />
             </div>
           </CardHeader>
           <CardContent>
