@@ -489,7 +489,7 @@ const SeedInvestment = () => {
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                        <span>Enter $650B investment loan market</span>
+                        <span>Enter $650B investment advance market</span>
                       </li>
                     </ul>
                   </CardContent>
