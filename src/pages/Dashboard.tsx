@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import NotificationBell from '@/components/dashboard/NotificationBell';
 import AddReceivableDialog from '@/components/dashboard/AddReceivableDialog';
+import UnlockEarningsDialog from '@/components/dashboard/UnlockEarningsDialog';
 import ApplicationDetailsDialog from '@/components/dashboard/ApplicationDetailsDialog';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
@@ -51,6 +52,7 @@ const Dashboard = () => {
   const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
   const [detailsDialogOpen, setDetailsDialogOpen] = useState(false);
   const [checkingOnboarding, setCheckingOnboarding] = useState(true);
+  const [addReceivableOpen, setAddReceivableOpen] = useState(false);
 
   // Check onboarding + fetch industry type
   useEffect(() => {
@@ -264,9 +266,13 @@ const Dashboard = () => {
                     <p className="text-xs text-muted-foreground">Unlock your verified income and get funded</p>
                   </div>
                   {receivables.length > 0 && advances.length === 0 && (
-                    <Button size="sm" variant="outline" onClick={() => navigate('/application/new')}>
-                      Request
-                    </Button>
+                    <UnlockEarningsDialog
+                      userId={user.id}
+                      eligibleReceivables={eligibleReceivables}
+                      onSuccess={fetchData}
+                      onAddReceivable={() => setAddReceivableOpen(true)}
+                      trigger={<Button size="sm" variant="outline">Unlock</Button>}
+                    />
                   )}
                 </div>
               </CardContent>
@@ -283,11 +289,13 @@ const Dashboard = () => {
             </p>
           </div>
           <div className="flex items-center gap-2">
+            <UnlockEarningsDialog
+              userId={user.id}
+              eligibleReceivables={eligibleReceivables}
+              onSuccess={fetchData}
+              onAddReceivable={() => setAddReceivableOpen(true)}
+            />
             <AddReceivableDialog userId={user.id} industryType={industryType} onSuccess={fetchData} />
-            <Button onClick={() => navigate('/application/new')} size="sm" variant="outline">
-              <Plus className="mr-1.5 h-4 w-4" />
-              New Application
-            </Button>
           </div>
         </div>
 
