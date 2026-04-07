@@ -266,9 +266,13 @@ const Dashboard = () => {
                     <p className="text-xs text-muted-foreground">Unlock your verified income and get funded</p>
                   </div>
                   {receivables.length > 0 && advances.length === 0 && (
-                    <Button size="sm" variant="outline" onClick={() => navigate('/application/new')}>
-                      Request
-                    </Button>
+                    <UnlockEarningsDialog
+                      userId={user.id}
+                      eligibleReceivables={eligibleReceivables}
+                      onSuccess={fetchData}
+                      onAddReceivable={() => setAddReceivableOpen(true)}
+                      trigger={<Button size="sm" variant="outline">Unlock</Button>}
+                    />
                   )}
                 </div>
               </CardContent>
