@@ -284,10 +284,13 @@ const Dashboard = () => {
               You have income on the way. Here's your snapshot.
             </p>
           </div>
-          <Button onClick={() => navigate('/application/new')} size="sm">
-            <Plus className="mr-1.5 h-4 w-4" />
-            New Application
-          </Button>
+          <div className="flex items-center gap-2">
+            <AddReceivableDialog userId={user.id} industryType={industryType} onSuccess={fetchData} />
+            <Button onClick={() => navigate('/application/new')} size="sm" variant="outline">
+              <Plus className="mr-1.5 h-4 w-4" />
+              New Application
+            </Button>
+          </div>
         </div>
 
         {/* 4 Metric Cards */}
