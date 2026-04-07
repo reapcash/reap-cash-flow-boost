@@ -320,14 +320,14 @@ const Auth = () => {
 
           {/* Terms */}
           <p className="mt-6 text-xs text-center text-muted-foreground">
-            By continuing, you agree to our{" "}
-            <a href="#" className="text-primary hover:underline">
+            By signing up, you agree to our{" "}
+            <Link to="/terms" className="text-primary hover:underline">
               Terms of Service
-            </a>{" "}
+            </Link>{" "}
             and{" "}
-            <a href="#" className="text-primary hover:underline">
+            <Link to="/privacy" className="text-primary hover:underline">
               Privacy Policy
-            </a>
+            </Link>
           </p>
         </div>
         </div>

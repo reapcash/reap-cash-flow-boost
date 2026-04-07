@@ -30,10 +30,12 @@ const Footer = () => {
     }],
     legal: [{
       name: "Terms of Service",
-      href: "#terms"
+      href: "/terms",
+      isRoute: true
     }, {
       name: "Privacy Policy",
-      href: "#privacy"
+      href: "/privacy",
+      isRoute: true
     }]
   };
   const socialLinks = [{
@@ -97,9 +99,11 @@ support@<span className="text-primary">reap</span>.cash</span>
             <h4 className="text-lg mb-4">Legal</h4>
             <ul className="space-y-2">
               {footerLinks.legal.map(link => <li key={link.name}>
-                  <a href={link.href} className="text-base text-muted-foreground hover:text-primary transition-colors normal-case">
-                    {link.name}
-                  </a>
+                  {link.isRoute ? <Link to={link.href} className="text-base text-muted-foreground hover:text-primary transition-colors normal-case">
+                      {link.name}
+                    </Link> : <a href={link.href} className="text-base text-muted-foreground hover:text-primary transition-colors normal-case">
+                      {link.name}
+                    </a>}
                 </li>)}
             </ul>
           </div>
