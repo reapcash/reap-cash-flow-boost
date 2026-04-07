@@ -30,10 +30,12 @@ const Footer = () => {
     }],
     legal: [{
       name: "Terms of Service",
-      href: "#terms"
+      href: "/terms",
+      isRoute: true
     }, {
       name: "Privacy Policy",
-      href: "#privacy"
+      href: "/privacy",
+      isRoute: true
     }]
   };
   const socialLinks = [{
