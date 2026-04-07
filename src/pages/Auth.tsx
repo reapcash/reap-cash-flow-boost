@@ -119,8 +119,8 @@ const Auth = () => {
           return;
         }
 
-        // Format phone to E.164 format for storage
-        const formattedPhone = formatPhoneE164(formData.phone);
+        // Format phone to E.164 format for storage (if provided)
+        const formattedPhone = formData.phone.trim() ? formatPhoneE164(formData.phone) : '';
         
         // Sign up with email/password and store phone in metadata
         const { data, error } = await supabase.auth.signUp({
