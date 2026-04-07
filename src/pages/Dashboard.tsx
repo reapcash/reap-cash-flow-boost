@@ -289,11 +289,13 @@ const Dashboard = () => {
             </p>
           </div>
           <div className="flex items-center gap-2">
+            <UnlockEarningsDialog
+              userId={user.id}
+              eligibleReceivables={eligibleReceivables}
+              onSuccess={fetchData}
+              onAddReceivable={() => setAddReceivableOpen(true)}
+            />
             <AddReceivableDialog userId={user.id} industryType={industryType} onSuccess={fetchData} />
-            <Button onClick={() => navigate('/application/new')} size="sm" variant="outline">
-              <Plus className="mr-1.5 h-4 w-4" />
-              New Application
-            </Button>
           </div>
         </div>
 
