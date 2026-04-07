@@ -247,7 +247,7 @@ const Auth = () => {
                   {errors.fullName && <p className="text-sm text-destructive">{errors.fullName}</p>}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number</Label>
+                  <Label htmlFor="phone">Phone Number <span className="text-muted-foreground font-normal">(optional)</span></Label>
                   <Input 
                     id="phone" 
                     type="tel" 
@@ -260,7 +260,7 @@ const Auth = () => {
                   {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
                   {!errors.phone && (
                     <p className="text-xs text-muted-foreground">
-                      10-digit US phone number (no verification required)
+                      You can add and verify your phone number later from your profile settings.
                     </p>
                   )}
                 </div>
