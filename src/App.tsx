@@ -19,6 +19,8 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 import Onboarding from "./pages/Onboarding";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 import ApplicationSuccess from "./components/application/ApplicationSuccess";
 
 const queryClient = new QueryClient();
