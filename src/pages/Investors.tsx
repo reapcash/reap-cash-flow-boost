@@ -286,7 +286,7 @@ const Investors = () => {
                     <span className="font-bold">40%</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-lg">Property Acquisition Loan Origination</span>
+                    <span className="text-lg">Property Acquisition Advance Origination</span>
                     <span className="font-bold">25%</span>
                   </div>
                   <div className="flex items-center justify-between">

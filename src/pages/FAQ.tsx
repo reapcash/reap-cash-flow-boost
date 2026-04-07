@@ -48,8 +48,8 @@ const faqs = [
     answer: "If a booking is canceled or a payout is delayed, REAP works with you directly to adjust or reschedule repayment. Because we purchase your receivables (not lend), there are no late fees or penalties. We evaluate each case fairly to protect both your cash flow and REAP's capital."
   },
   {
-    question: "Is REAP a lender or financial institution?",
-    answer: "No — REAP is not a lender. We operate as a receivables-purchase platform, meaning we advance funds based on income you've already earned through verified contracts or bookings. This model allows faster approvals, simplified terms, and zero impact on your credit score."
+    question: "Is REAP a financial institution?",
+    answer: "No — REAP is not a bank or traditional financial institution. We operate as a receivables-purchase platform, meaning we advance funds based on income you've already earned through verified contracts or bookings. This model allows faster approvals, simplified terms, and zero impact on your credit score."
   }
 ];
 
