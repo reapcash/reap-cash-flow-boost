@@ -33,10 +33,10 @@ const industryLabels: Record<string, { receivablesTitle: string; dateLabel: stri
 };
 
 const receivableStatusConfig: Record<string, { class: string; label: string }> = {
-  PENDING: { class: 'bg-amber-500/10 text-amber-600 border-amber-500/20', label: 'Pending' },
+  PENDING: { class: 'bg-muted text-muted-foreground border-border', label: 'Pending' },
   ELIGIBLE: { class: 'bg-primary/10 text-primary border-primary/20', label: 'Eligible' },
-  ADVANCED: { class: 'bg-secondary/10 text-secondary border-secondary/20', label: 'Advanced' },
-  SETTLED: { class: 'bg-muted text-muted-foreground border-muted', label: 'Settled' },
+  ADVANCED: { class: 'bg-accent text-accent-foreground border-accent', label: 'Advanced' },
+  SETTLED: { class: 'bg-foreground/10 text-foreground border-foreground/20', label: 'Settled' },
 };
 
 const Dashboard = () => {
