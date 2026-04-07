@@ -820,7 +820,7 @@ const SeedInvestment = () => {
                       <div className="border-t border-border pt-3 mt-3">
                         <p className="text-sm text-muted-foreground mb-1">Effective Annual Rate</p>
                         <p className="text-xl font-semibold">~42.1%</p>
-                        <p className="text-xs text-muted-foreground mt-1">For comparison only—not a loan product</p>
+                        <p className="text-xs text-muted-foreground mt-1">For comparison only—not a lending product</p>
                       </div>
                     </div>
                   </div>
